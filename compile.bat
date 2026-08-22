@@ -1,0 +1,12 @@
+set "TCL_LIBRARY="
+set "TK_LIBRARY="
+
+rem %1 is the folder of the pyinstaller
+%1/pyinstaller main.py --exclude-module pkg_resources --onefile --noconsole
+:: --icon=icons\player.ico
+:
+:: kopie dist/micro_player.exe c:/bin/micro_player.exe
+:
+rem select.exe might be re-introduced in future
+rem %1/pyinstaller select.py --onefile --noconsole
+rem kopie dist\select.exe c:\bin\select.exe
