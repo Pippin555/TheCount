@@ -1,11 +1,15 @@
 """ data file for The Count by Scott Adams """
-from dataclasses import dataclass
-
-from dataclasses import dataclass
-from dataclasses import field
-
 
 VERBS = {
+    "I": "INVENTORY",
+    "N": "NOR",
+    "E": "EAS",
+    "S": "SOU",
+    "W": "WES",
+    "NOR": "NOR",
+    "EAS": "EAS",
+    "SOU": "SOU",
+    "WES": "WES",
     "FLY": "FLY",
     "CLO": "CLOSE",
     "SHU": "SHUT",
@@ -49,6 +53,9 @@ VERBS = {
     "HEL": "HELP",
     "INV": "INVENTORY",
     "SCO": "SCORE",
+    "RES": "RESTART",
+    "DOW": "DOWN",
+    "UP": "UP",
 }
 
 NOUNS = {
@@ -63,84 +70,116 @@ NOUNS = {
     "PAC": "package",
     "CIG": "cigarette",
     "BOT": "bottle of Type V blood",
-    # ...
+    "UP": "get up",
+    "DUM": "dumbwaiter",
+    "PIT": "pit of death",
+    "SHE": "SHE", # sheet
+    "RIN": "RIN", # ring in the wall
 }
 
 ROOMS = {
-    "bedroom": {
+    "in bed": {
         "description": "I'm lying in a large brass bed",
-        "exits": {"N": "hall"},
+        "fixed_objects": {"pillow"},
+        "free_objects": {"sheet"},
+        "exits": {"GET UP": None},
+    },
+
+    "bedroom": {
+        "description": "I'm in the bedroom",
+        "exits": {"NOR": "hall"},
+        "fixed_objects": {"bed"},
+        "free_objects": {"sheet"}
     },
 
     "hall": {
         "description": "I'm in a hall",
         "exits": {
-            "S": "bedroom",
-            "N": "bathroom",
-            "W": "kitchen",
-            "E": "courtyard",
+            "SOU": "bedroom",
+            "NOR": "bathroom",
+            "WES": "kitchen",
+            "EAS": "courtyard",
         },
     },
 
     "bathroom": {
         "description": "I'm in a bathroom",
         "exits": {
-            "S": "hall"
+            "SOU": "hall"
         }
     },
 
     "kitchen": {
         "description": "I'm in a kitchen",
         "exits": {
-            "E": "hall",
-            "W": "dumb_waiter_kitchen"
-        }
+            "EAS": "hall",
+            "WES": "dumbwaiter_kitchen"
+        },
+        "fixed_objects": {"dumbwaiter"},
     },
 
     "dumbwaiter_kitchen": {
-        "description": "I'm in the dumb-waiter",
+        "description": "I'm in the middle dumb-waiter",
         "exits": {
-            "RAI": "dumbwaiter_pantry",
-            "E": "kitchen",
-            "LOW": "dumbwaiter_workroom",
+            "RAISE": "dumbwaiter_pantry",
+            "EAS": "kitchen",
+            "LOWER": "dumbwaiter_workroom",
         },
     },
 
     "dumbwaiter_pantry": {
-        "description": "I'm in the dumb-waiter",
+        "description": "I'm in the raised dumb-waiter",
         "exits": {
-            "E": "pantry",
-            "LOW": "dumbwaiter_kitchen",
+            "EAS": "pantry",
+            "LOWER": "dumbwaiter_kitchen",
         },
     },
 
     "pantry": {
         "description": "I'm in a pantry",
         "exits": {
-            "W": "dumbwaiter_pantry"
-        }
+            "WES": "dumbwaiter_pantry"
+        },
+        "fixed_objects": {"dumbwaiter"},
     },
 
     "dumbwaiter_workroom": {
-        "description": "I'm in the dumb-waiter",
+        "description": "I'm in the lowered dumb-waiter",
         "exits": {
-            "E": "workroom",
-            "RAI": "dumbwaiter_kitchen",
+            "EAS": "workroom",
+            "RAISE": "dumbwaiter_kitchen",
         },
     },
 
     "workroom": {
         "description": "I'm in a workroom",
         "exits": {
-            "W": "dumbwaiter_workroom",
+            "WES": "dumbwaiter_workroom",
+            "DOW": "dungeon",
         },
+        "fixed_objects": {"dumbwaiter"},
     },
 
     "courtyard": {
         "description": "I'm outside the castle",
         "exits": {
-            "W": "hall"
+            "WES": "hall",
+            "EAS": "castle gates",
         }
+    },
+
+    "castle gates": {
+        "description": "I'm outside the castle gates",
+        "exits": {
+            "WES": "courtyard",
+            "EAS": "dead",
+        },
+        "fixed_objects": {"a large group of angry peasants"},
+    },
+
+    "dead": {
+        "description": "I was killed by the angry peasants",
+        "fixed_objects": {"a gravestone with the text 'Adventurer'"}
     },
 
     "closet": {
@@ -149,6 +188,12 @@ ROOMS = {
 
     "dungeon": {
         "description": "I'm in a dungeon",
+        "exits": {
+            "UP": "workroom",
+            # "EAS": "dead",
+        },
+        "fixed_objects": {"iron rings in the wall"},
+        "free_objects": set(),
     },
 
     "pit": {
@@ -163,17 +208,3 @@ ROOMS = {
         "description": "I'm in a dark passage",
     },
 }
-
-
-@dataclass
-class GameState:
-    """ ... """
-
-    location: str = "bedroom"
-    day: int = 1
-    moves_to_sunset: int = 0
-
-    inventory: set[str] = field(default_factory=set)
-
-    awake: bool = False
-    game_over: bool = False

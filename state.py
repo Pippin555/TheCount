@@ -1,6 +1,7 @@
-from parser import parse
-from data import GameState
-from data import ROOMS
+from parser import Parser
+from handlers import game
+from texts import TEXTS
+from handlers import GameHandler
 
 
 class StateMachine:
@@ -10,34 +11,45 @@ class StateMachine:
     def do_command(command: str) -> str:
         """ ... """
 
-        parsed = parse(command.upper())
+        if command == "":
+            return GameHandler.where()
+
+        parsed = Parser.parse(command.upper())
 
         if parsed is None:
-            return "I MUST BE STUPID, BUT I JUST DON'T UNDERSTAND WHAT YOU MEAN"
+            return "I must be stupid, but I do not understand what you mean"
 
         verb, noun = parsed
 
         match verb[:3]:
-            case "GO":
-                return StateMachine.go(noun)
+            case "INV":
+                return game.inventory()
 
-            case "N" | "S" | "E" | "W" | "RAI" | "LOW":
+            case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
                 return StateMachine.go(verb)
 
             case "QUI":
-                GameState.location = 'exited'
-                return "YOU HAVE EXITED THE GAME"
+                game.location = 'exited'
+                return "you have eduted the game, try: restart"
 
+            case "RES":
+                return game.start()
+
+            case "UNK"| "PWR":
+                return TEXTS[verb]
+
+            case _:
+                return GameHandler.do_command(verb, noun)
 
     @staticmethod
     def go(noun: str) -> str:
         """ ... """
 
-        current = GameState.location
-        room = ROOMS[current]
-        exits = room.exits
-        next = exits.get(noun)
-        if next is None:
-            return "I CAN'T GO IN THAT DIRECTION."
-        GameState.location = next
-        return room['description']
+        current = game.location
+        room = game.rooms()[current]
+        exits = room.get('exits', None)
+        if exits is None:
+            return "There are no exits"
+
+        next = exits.get(noun, None)
+        return GameHandler.enter(next)

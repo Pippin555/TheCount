@@ -195,6 +195,21 @@ class StringBuilder:
 
         return self._file_str.getvalue().count('\n') + offset
 
+    def position(self, number: int) -> int:
+        """ get the position in the buffer of that line number """
+
+        data = self._file_str.getvalue()
+        location = -1
+        for i in range(number):
+            location = data.find('\n', location + 1)
+
+        return location + 1 if location >= 0 else 0
+
+    def chunk(self, start: int, finish: int) -> str:
+        """ ... """
+
+        return self._file_str.getvalue()[start:finish]
+
     def to_file(self,
                 filename: str,
                 encoding: str = 'utf-8',

@@ -179,6 +179,9 @@ class SihirScrolledText(ScrolledText):
     def text(self, value: str):
         """ set the text """
 
+        self.configure(state="normal")
         self.delete("1.0", END)
         self.insert(END, value)
         self._modified = False
+        self.see(END)
+        self.configure(state="disabled")
