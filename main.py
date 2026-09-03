@@ -4,6 +4,8 @@ from sys import exit as _exit
 
 from tkinter import Tk
 
+from collections import deque
+
 from game import Gui
 
 
@@ -12,7 +14,8 @@ def main() -> int:
 
     root = Tk()
     root.protocol("WM_DELETE_WINDOW", root.destroy)
-    gui = Gui(root)
+    output = deque()
+    gui = Gui(root, output=output)
     root.mainloop()
     del gui
     return 0

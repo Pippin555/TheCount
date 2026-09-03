@@ -1,3 +1,5 @@
+from collections import deque
+
 from parser import Parser
 from handlers import game
 from texts import TEXTS
@@ -8,38 +10,44 @@ class StateMachine:
     """ ... """
 
     @staticmethod
-    def do_command(command: str) -> str:
+    def do_command(command: str, output: deque) -> bool:
         """ ... """
 
         if command == "":
-            return GameHandler.where()
+            output.append(GameHandler.where())
+            return True
 
         parsed = Parser.parse(command.upper())
 
         if parsed is None:
-            return "I must be stupid, but I do not understand what you mean"
+            output.append("I must be stupid, but I do not understand what you mean")
 
         verb, noun = parsed
 
         match verb[:3]:
             case "INV":
-                return game.inventory()
+                output.append(game.inventory())
+                return True
 
             case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
-                return StateMachine.go(verb)
+                output.append(StateMachine.go(verb))
+                return True
 
             case "QUI":
                 game.location = 'exited'
-                return "you have eduted the game, try: restart"
+                output.append("you have exited the game, try: restart")
+                return True
 
             case "RES":
-                return game.start()
+                output.append(game.start())
+                return True
 
             case "UNK"| "PWR":
-                return TEXTS[verb]
+                output.append(TEXTS[verb])
+                return True
 
             case _:
-                return GameHandler.do_command(verb, noun)
+                output.append(GameHandler.do_command(verb, noun))
 
     @staticmethod
     def go(noun: str) -> str:

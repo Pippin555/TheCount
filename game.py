@@ -2,6 +2,8 @@
 
 from tkinter import Tk
 
+from collections import deque
+
 from handlers import game
 from handlers import GameState
 from imgdict.get_dict_img import get_ico
@@ -18,10 +20,12 @@ from state import StateMachine
 class Gui:
     """ ... """
 
-    def __init__(self, master: Tk) -> None:
+    def __init__(self, master: Tk, output: deque) -> None:
         """ ... """
 
         self.master = master
+        self._output = output
+
         icon = get_ico(key='vampire.ico', size=(22, 22))
         master.iconphoto(False, icon, icon)  # noqa
 
@@ -58,15 +62,24 @@ class Gui:
 
         CommandRouter().subscribe('log', self.output)
 
+        master.after(100, self._update)
         game.start()
+
+    def _update(self):
+        """ ... """
+
+        while self._output:
+            text = self._output.popleft()
+            self.output(text)
+
+        self.master.after(100, self._update)
 
     def _command(self, key: str, command: str) -> None:
         """ ... """
 
         self.output("* " + command)
         self.entry.clear()
-        response = StateMachine.do_command(command)
-        self.output(response)
+        StateMachine.do_command(command, self._output)
 
     def output(self, message: str):
         """ ... """
