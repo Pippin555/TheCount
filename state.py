@@ -1,7 +1,7 @@
 from collections import deque
 
 from parser import Parser
-from handlers import game
+from handlers import game, GameState
 from texts import TEXTS
 from handlers import GameHandler
 
@@ -10,8 +10,10 @@ class StateMachine:
     """ ... """
 
     @staticmethod
-    def do_command(command: str, output: deque) -> bool:
+    def do_command(command: str) -> bool:
         """ ... """
+
+        output = GameState.output()
 
         if command == "":
             output.append(GameHandler.where())
@@ -30,7 +32,7 @@ class StateMachine:
                 return True
 
             case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
-                output.append(StateMachine.go(verb))
+                StateMachine.go(verb)
                 return True
 
             case "QUI":
@@ -47,17 +49,18 @@ class StateMachine:
                 return True
 
             case _:
-                output.append(GameHandler.do_command(verb, noun))
+                return GameHandler.do_command(verb, noun)
 
     @staticmethod
-    def go(noun: str) -> str:
+    def go(noun: str) -> bool:
         """ ... """
 
-        current = game.location
-        room = game.rooms()[current]
-        exits = room.get('exits', None)
+        room = game.current_room()
+        exits = room.exits
         if exits is None:
-            return "There are no exits"
+            output = GameState.output()
+            output.append("There are no exits")
+            return False
 
         next = exits.get(noun, None)
         return GameHandler.enter(next)

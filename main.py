@@ -15,7 +15,7 @@ def main() -> int:
     root = Tk()
     root.protocol("WM_DELETE_WINDOW", root.destroy)
     output = deque()
-    gui = Gui(root, output=output)
+    gui = Gui(root)
     root.mainloop()
     del gui
     return 0

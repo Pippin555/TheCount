@@ -77,20 +77,26 @@ NOUNS = {
     "RIN": "RIN", # ring in the wall
 }
 
-ROOMS = {
-    "in bed": {
-        "description": "I'm lying in a large brass bed",
-        "fixed_objects": {"pillow"},
-        "free_objects": {"sheet"},
-        "exits": {"GET UP": None},
-    },
+# movable objects
+OBJECTS = {
+    "STA": {'name': 'tent stake', 'location': 'player'},
+    "SHE": {'name': 'sheet', 'location': 'bedroom'},
+}
 
-    "bedroom": {
-        "description": "I'm in the bedroom",
-        "exits": {"NOR": "hall"},
-        "fixed_objects": {"bed"},
-        "free_objects": {"sheet"}
-    },
+ROOMS = {
+    # "in bed": {
+    #     "description": "I'm lying in a large brass bed",
+    #     "fixed_objects": {"pillow"},
+    #     "free_objects": {"sheet"},
+    #     "exits": {"GET UP": None},
+    # },
+    #
+    # "bedroom": {
+    #     "description": "I'm in the bedroom",
+    #     "exits": {"NOR": "hall"},
+    #     "fixed_objects": {"bed"},
+    #     "free_objects": {"sheet"}
+    # },
 
     "hall": {
         "description": "I'm in a hall",

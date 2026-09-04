@@ -1,16 +1,27 @@
 from copy import deepcopy
 
+from collections import deque
+
+from rooms.room import Room
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
 from data import ROOMS
+from data import OBJECTS
 from texts import TEXTS
+
+from rooms.bed import Bed
+from rooms.bedroom import Bedroom
+from rooms.hall import Hall
 
 
 class GameState:
     """ ... """
 
-    _rooms: dict = deepcopy(ROOMS)
+    _rooms: dict = None
+    _output: deque = None
+    _location: str = None
+    _day: int = None
     location: str = "in bed"
     day: int = 1
     moves_to_sunset: int = 0
@@ -24,8 +35,15 @@ class GameState:
     def start():
         """ ... """
 
-        GameState._rooms = deepcopy(ROOMS)
-        GameState.location = "in bed"
+        output = deque()
+        GameState._output = output
+        GameState._rooms = {
+            "bed": Bed(output=output),
+            "bedroom": Bedroom(output=output),
+            "hall": Hall(output=output)
+        }
+
+        GameState.location = "bed"
         GameState.day = 1
         GameState.moves_to_sunset = 0
 
@@ -34,26 +52,31 @@ class GameState:
         GameState.awake = False
         GameState.game_over = False
 
-        out = lambda msg: CommandRouter().handle('log', msg)
+        output.append('[CLEAR]')
+        output.append(TEXTS["INTRO"])
 
-        out('[CLEAR]')
-        out(TEXTS["INTRO"])
-        out(GameHandler.enter('in bed'))
+        router = CommandRouter()
+        router.subscribe('enter', GameHandler.enter)
+        router.handle('enter', 'bed')
 
     @staticmethod
     def inventory():
         """ ... """
 
+        output = GameState._output
         bld, aln = StringBuilder.bld_aln()
 
-        aln("I'm carrying the following:")
-        if GameState._inventory:
-            for item in GameState._inventory:
-                aln(item)
-        else:
+        output.append("I'm carrying the following:")
+        found = False
+        for key, value in OBJECTS.items():
+            if value['location'] == 'player':
+                aln(value['name'])
+                found = True
+
+        if not found:
             aln("not a thing!")
 
-        return str(bld)
+        GameState._output.append(str(bld))
 
     @staticmethod
     def get_inventory(noun: str):
@@ -77,6 +100,25 @@ class GameState:
 
         return GameState._rooms
 
+    @staticmethod
+    def current_room():
+        """ ... """
+
+        location = GameState.location
+        result =  GameState._rooms.get(location, None)
+        if result is None:
+            output = GameState._output
+            output.append(f"I can't find {location}")
+            output.append("try 'reset'")
+            return None
+        return result
+
+    @staticmethod
+    def output() -> deque:
+        """ ... """
+
+        return GameState._output
+
 
 game: GameState = GameState()
 
@@ -85,71 +127,87 @@ class GameHandler:
     """ ... """
 
     @staticmethod
-    def do_command(verb: str, noun: str) -> str:
+    def do_command(verb: str, noun: str) -> bool:
         """ ... """
 
-        location = game.location
-        dct = {
-            'in bed': GameHandler.in_bed_handler,
-            'kitchen': GameHandler.kitchen_handler,
-            'workroom': GameHandler.workroom_handler,
-            'dungeon': GameHandler.dungeon_handler,
-        }
+        # location = game.location
+        room = GameState.current_room()
+        if room.handle_command(verb=verb, noun=noun):
+            return True
 
-        hnd = dct.get(game.location, GameHandler.general)
-        return hnd(verb, noun, location)
+        return GameHandler.general(verb, noun, room.name)
 
     @staticmethod
-    def general(verb: str, noun: str, location: str) -> str:
+    def general(verb: str, noun: str, location: str) -> bool:
         """ ... """
+
+        output = GameState.output()
+        room = GameState.current_room()
+        location = room.name
 
         match verb:
             case "GET":
-                rooms = game.rooms()
-                room = rooms.get(game.location, None)
-                free = room.get('free_objects', None)
-                noun = noun.lower()
-                if noun in free:
-                    game.get_inventory(noun)
-                    free.discard(noun)
-                    return f'I got {noun}'
+                obj = noun[:3]
 
-        return f"I can't {verb} {noun} in {location}"
+                for key, value in OBJECTS.items():
+                    if value['location'] == location:
+                        if key == obj:
+                            value['location'] = 'player'
+                            output.append(f'I got {value["name"]}')
+                            return True
+
+            case 'DROP':
+                obj = noun[:3]
+
+                for key, value in OBJECTS.items():
+                    if key == obj:
+                        if value['location'] == 'player':
+                            value['location'] = location
+                            output.append(f'I dropped {value["name"]}')
+                            return True
+
+                output.append("I don't have {noun}")
+
+        output.append(f"I can't {verb} {noun if noun else ''} in {location}")
+        return False
 
     @staticmethod
-    def enter(location: str) -> str:
+    def enter(location: str) -> bool:
         """ ... """
 
+        output = GameState.output()
         if location is None:
-            return "I can't go in that direction."
+            output.append("I can't go in that direction.")
+            return False
 
-        game.location = location
-        return GameHandler.where()
+        GameState.location = location
+        GameHandler.where()
+        return True
 
     @staticmethod
-    def where() -> str:
+    def where() -> bool:
         """ ... """
-        rooms = game.rooms()
-        location = game.location
-        room = rooms.get(location, None)
+
+        room = GameState.current_room()
         if room is None:
-            return "I am lost"
+            GameState.output().append("I am lost")
+            return False
 
         bld, aln = StringBuilder.bld_aln()
         aln()
-        aln(room['description'])
-        fixed = room.get('fixed_objects', None)
-        free = room.get('free_objects', None)
-        if free or fixed:
-            aln("I see:")
-            if fixed:
-                for item in fixed:
-                    aln(item)
-            if free:
-                for item in free:
-                    aln(item)
+        aln(room.description)
+        # fixed = room.get('fixed_objects', None)
 
-        exits = room.get("exits", None)
+        seen = False
+        location = room.name
+        for key, value in OBJECTS.items():
+            if value['location'] == location:
+                if not seen:
+                    aln('I see:')
+                    seen = True
+                aln(value['name'])
+
+        exits = room.exits
         if exits:
             aln("some exits are:")
             for direction in exits:
@@ -158,7 +216,8 @@ class GameHandler:
             aln("there are no exits")
             aln("try: restart")
 
-        return str(bld)
+        GameState.output().append(str(bld))
+        return True
 
     @staticmethod
     def in_bed_handler(verb: str, noun: str, location: str) -> str:
