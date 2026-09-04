@@ -98,15 +98,15 @@ ROOMS = {
     #     "free_objects": {"sheet"}
     # },
 
-    "hall": {
-        "description": "I'm in a hall",
-        "exits": {
-            "SOU": "bedroom",
-            "NOR": "bathroom",
-            "WES": "kitchen",
-            "EAS": "courtyard",
-        },
-    },
+    # "hall": {
+    #     "description": "I'm in a hall",
+    #     "exits": {
+    #         "SOU": "bedroom",
+    #         "NOR": "bathroom",
+    #         "WES": "kitchen",
+    #         "EAS": "courtyard",
+    #     },
+    # },
 
     "bathroom": {
         "description": "I'm in a bathroom",
@@ -115,23 +115,23 @@ ROOMS = {
         }
     },
 
-    "kitchen": {
-        "description": "I'm in a kitchen",
-        "exits": {
-            "EAS": "hall",
-            "WES": "dumbwaiter_kitchen"
-        },
-        "fixed_objects": {"dumbwaiter"},
-    },
+    # "kitchen": {
+    #     "description": "I'm in a kitchen",
+    #     "exits": {
+    #         "EAS": "hall",
+    #         "WES": "dumbwaiter_kitchen"
+    #     },
+    #     "fixed_objects": {"dumbwaiter"},
+    # },
 
-    "dumbwaiter_kitchen": {
-        "description": "I'm in the middle dumb-waiter",
-        "exits": {
-            "RAISE": "dumbwaiter_pantry",
-            "EAS": "kitchen",
-            "LOWER": "dumbwaiter_workroom",
-        },
-    },
+    # "dumbwaiter_kitchen": {
+    #     "description": "I'm in the middle dumb-waiter",
+    #     "exits": {
+    #         "RAISE": "dumbwaiter_pantry",
+    #         "EAS": "kitchen",
+    #         "LOWER": "dumbwaiter_workroom",
+    #     },
+    # },
 
     "dumbwaiter_pantry": {
         "description": "I'm in the raised dumb-waiter",

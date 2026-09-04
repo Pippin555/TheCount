@@ -8,8 +8,8 @@ from _collections import deque
 from rooms.room import Room
 
 
-class Hall(Room):
-    """ 'Hall' as 'room' in the game 'The Count' """
+class Kitchen(Room):
+    """ 'Kitchen' as 'room' in the game 'The Count' """
 
     def __init__(self, output: deque):
         """ ... """
@@ -20,13 +20,13 @@ class Hall(Room):
     def name(self):
         """ ... """
 
-        return "hall"
+        return "kitchen"
 
     @property
     def description(self):
         """ ... """
 
-        return "I'm in a hall"
+        return "I'm in a kitchen, I see a dumb-waiter"
 
     @property
     def inventory(self):
@@ -44,8 +44,6 @@ class Hall(Room):
         """ ... """
 
         return {
-            "SOU": "bedroom",
-            "NOR": "bathroom",
-            "WES": "kitchen",
-            "EAS": "courtyard",
+            "WES": "dumbwaiter_kitchen",
+            "EAS": "hall",
         }

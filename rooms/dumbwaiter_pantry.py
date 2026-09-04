@@ -1,4 +1,4 @@
-""" the 'bedroom' as 'room' in the game 'The Count' """
+""" the 'dumb-waiter', pantry level, as 'room' in the game 'The Count' """
 
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
@@ -8,8 +8,8 @@ from _collections import deque
 from rooms.room import Room
 
 
-class Hall(Room):
-    """ 'Hall' as 'room' in the game 'The Count' """
+class DumbwaiterPantry(Room):
+    """ 'Kitchen' as 'room' in the game 'The Count' """
 
     def __init__(self, output: deque):
         """ ... """
@@ -20,13 +20,13 @@ class Hall(Room):
     def name(self):
         """ ... """
 
-        return "hall"
+        return "dumbwaiter_pantry"
 
     @property
     def description(self):
         """ ... """
 
-        return "I'm in a hall"
+        return "I'm in the dumb-waiter, raised to the pantry level"
 
     @property
     def inventory(self):
@@ -44,8 +44,6 @@ class Hall(Room):
         """ ... """
 
         return {
-            "SOU": "bedroom",
-            "NOR": "bathroom",
-            "WES": "kitchen",
-            "EAS": "courtyard",
+            "EAS": "pantry",
+            "LOWER": "dumbwaiter_kitchen",
         }

@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from collections import deque
 
+from rooms.kitchen import Kitchen
 from rooms.room import Room
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
@@ -13,6 +14,10 @@ from texts import TEXTS
 from rooms.bed import Bed
 from rooms.bedroom import Bedroom
 from rooms.hall import Hall
+from rooms.kitchen import Kitchen
+from rooms.dumbwaiter_kitchen import DumbwaiterKitchen
+from rooms.dumbwaiter_pantry import DumbwaiterPantry
+from rooms.dumbwaiter_workroom import DumbwaiterWorkroom
 
 
 class GameState:
@@ -22,7 +27,7 @@ class GameState:
     _output: deque = None
     _location: str = None
     _day: int = None
-    location: str = "in bed"
+    # location: str = "bed"
     day: int = 1
     moves_to_sunset: int = 0
 
@@ -40,10 +45,14 @@ class GameState:
         GameState._rooms = {
             "bed": Bed(output=output),
             "bedroom": Bedroom(output=output),
-            "hall": Hall(output=output)
+            "hall": Hall(output=output),
+            "kitchen": Kitchen(output=output),
+            "dumbwaiter_kitchen": DumbwaiterKitchen(output=output),
+            "dumbwaiter_pantry": DumbwaiterPantry(output=output),
+            "dumbwaiter_workroom": DumbwaiterWorkroom(output=output),
         }
 
-        GameState.location = "bed"
+        GameState._location = "bed"
         GameState.day = 1
         GameState.moves_to_sunset = 0
 
@@ -104,7 +113,7 @@ class GameState:
     def current_room():
         """ ... """
 
-        location = GameState.location
+        location = GameState._location
         result =  GameState._rooms.get(location, None)
         if result is None:
             output = GameState._output
@@ -180,7 +189,7 @@ class GameHandler:
             output.append("I can't go in that direction.")
             return False
 
-        GameState.location = location
+        GameState._location = location
         GameHandler.where()
         return True
 
