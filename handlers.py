@@ -65,6 +65,8 @@ class GameState:
         output.append(TEXTS["INTRO"])
 
         router = CommandRouter()
+        router.clear()
+
         router.subscribe('enter', GameHandler.enter)
         router.handle('enter', 'bed')
 
@@ -118,7 +120,7 @@ class GameState:
         if result is None:
             output = GameState._output
             output.append(f"I can't find {location}")
-            output.append("try 'reset'")
+            output.append("try 'restart'")
             return None
         return result
 

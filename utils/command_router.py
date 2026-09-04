@@ -51,6 +51,11 @@ class CommandRouter(metaclass=Singleton):
     def __init__(self):
         """ initialize the class """
 
+        self.clear()
+
+    def clear(self):
+        """ ... """
+
         self.subscribers: Dict[str, List[Callable]] = {}
 
     def subscribe(self, command: str, handler: Callable) -> None:

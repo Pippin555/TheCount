@@ -1,0 +1,7 @@
+get up
+get sheet
+i
+drop stake
+drop sheet
+get stake
+i

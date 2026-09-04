@@ -3,9 +3,9 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
-from _collections import deque
-
 from rooms.room import Room
+
+from utils.command_router import CommandRouter
 
 
 class Kitchen(Room):
@@ -36,6 +36,10 @@ class Kitchen(Room):
 
     def handle_command(self, verb:str, noun: str):
         """ ... """
+
+        if verb == "GO" and noun == "DUM":
+            CommandRouter().handle('enter', 'dumbwaiter_kitchen')
+            return True
 
         return False
 
