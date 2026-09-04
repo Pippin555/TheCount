@@ -9,12 +9,12 @@ from rooms.room import Room
 
 
 class DumbwaiterPantry(Room):
-    """ 'Kitchen' as 'room' in the game 'The Count' """
+    """ 'Dumb-waiter' raised to the pantry level as 'room' in the game 'The Count' """
 
-    def __init__(self, output: deque):
+    def __init__(self):
         """ ... """
 
-        super().__init__(output=output)
+        super().__init__()
 
     @property
     def name(self):

@@ -1,16 +1,16 @@
-from copy import deepcopy
+""" handlers for the game """
+
 
 from collections import deque
 
-from rooms.kitchen import Kitchen
-from rooms.room import Room
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
-from data import ROOMS
+# from data import ROOMS
 from data import OBJECTS
 from texts import TEXTS
 
+from rooms.exchange import Exchange
 from rooms.bed import Bed
 from rooms.bedroom import Bedroom
 from rooms.hall import Hall
@@ -40,16 +40,16 @@ class GameState:
     def start():
         """ ... """
 
-        output = deque()
+        output = Exchange.output
         GameState._output = output
         GameState._rooms = {
-            "bed": Bed(output=output),
-            "bedroom": Bedroom(output=output),
-            "hall": Hall(output=output),
-            "kitchen": Kitchen(output=output),
-            "dumbwaiter_kitchen": DumbwaiterKitchen(output=output),
-            "dumbwaiter_pantry": DumbwaiterPantry(output=output),
-            "dumbwaiter_workroom": DumbwaiterWorkroom(output=output),
+            "bed": Bed(),
+            "bedroom": Bedroom(),
+            "hall": Hall(),
+            "kitchen": Kitchen(),
+            "dumbwaiter_kitchen": DumbwaiterKitchen(),
+            "dumbwaiter_pantry": DumbwaiterPantry(),
+            "dumbwaiter_workroom": DumbwaiterWorkroom(),
         }
 
         GameState._location = "bed"
@@ -151,6 +151,8 @@ class GameHandler:
         """ ... """
 
         output = GameState.output()
+        router = CommandRouter()
+
         room = GameState.current_room()
         location = room.name
 
@@ -167,7 +169,6 @@ class GameHandler:
 
             case 'DROP':
                 obj = noun[:3]
-
                 for key, value in OBJECTS.items():
                     if key == obj:
                         if value['location'] == 'player':
@@ -176,6 +177,12 @@ class GameHandler:
                             return True
 
                 output.append("I don't have {noun}")
+                return False
+
+            case "AUTO":
+                output.append(f"{verb} {noun} seen")
+                router.handle('auto', noun)
+                return True
 
         output.append(f"I can't {verb} {noun if noun else ''} in {location}")
         return False
@@ -228,66 +235,32 @@ class GameHandler:
         GameState.output().append(str(bld))
         return True
 
-    @staticmethod
-    def in_bed_handler(verb: str, noun: str, location: str) -> str:
-        """ ... """
-
-        _ = location
-
-        if verb == "GET" and noun == "UP":
-            return GameHandler.enter("bedroom")
-
-        return GameHandler.general(verb, noun, location)
-
-    @staticmethod
-    def kitchen_handler(verb: str, noun: str, location: str) -> str:
-        """ ... """
-
-        _ = location
-
-        if verb == "GO" and noun == "DUM":
-            return GameHandler.enter("dumbwaiter_kitchen")
-
-        return GameHandler.general(verb, noun, location)
-
-    @staticmethod
-    def workroom_handler(verb: str, noun: str, location: str) -> str:
-        """ ... """
-
-        _ = location
-
-        if verb == "DOWN":
-            return GameHandler.enter("dungeon")
-
-        return GameHandler.general(verb, noun, location)
-
-    @staticmethod
-    def dungeon_handler(verb: str, noun: str, location: str) -> str:
-        """ ... """
-
-        _ = location
-
-        match verb:
-            case "UP":
-                return GameHandler.enter("workroom")
-            case "HELP":
-                if noun is None:
-                    return "Problem with the pit?, try HELP PIT"
-                if noun == 'PIT':
-                    return "remember the bed"
-            case "TIE":
-                if noun == "SHEET":
-                    return "To what"
-
-            case "TO":
-                if noun == "RINGS":
-                    item = game.drop_inventory("sheet")
-                    if item is None:
-                        return "I do not have a sheet"
-                    rooms = game.rooms()
-                    room = rooms.get(game.location, None)
-                    obj: set = room['free_objects']
-                    obj.add(item)
-                    return "tied to rings"
-
-        return GameHandler.general(verb, noun, location)
+    # def dungeon_handler(verb: str, noun: str, location: str) -> str:
+    #     """ ... """
+    #
+    #     _ = location
+    #
+    #     match verb:
+    #         case "UP":
+    #             return GameHandler.enter("workroom")
+    #         case "HELP":
+    #             if noun is None:
+    #                 return "Problem with the pit?, try HELP PIT"
+    #             if noun == 'PIT':
+    #                 return "remember the bed"
+    #         case "TIE":
+    #             if noun == "SHEET":
+    #                 return "To what"
+    #
+    #         case "TO":
+    #             if noun == "RINGS":
+    #                 item = game.drop_inventory("sheet")
+    #                 if item is None:
+    #                     return "I do not have a sheet"
+    #                 rooms = game.rooms()
+    #                 room = rooms.get(game.location, None)
+    #                 obj: set = room['free_objects']
+    #                 obj.add(item)
+    #                 return "tied to rings"
+    #
+    #     return GameHandler.general(verb, noun, location)

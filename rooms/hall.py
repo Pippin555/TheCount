@@ -11,10 +11,10 @@ from rooms.room import Room
 class Hall(Room):
     """ 'Hall' as 'room' in the game 'The Count' """
 
-    def __init__(self, output: deque):
+    def __init__(self):
         """ ... """
 
-        super().__init__(output=output)
+        super().__init__()
 
     @property
     def name(self):

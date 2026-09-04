@@ -56,6 +56,7 @@ VERBS = {
     "RES": "RESTART",
     "DOW": "DOWN",
     "UP": "UP",
+    "AUT": "AUTO",
 }
 
 NOUNS = {
@@ -75,6 +76,14 @@ NOUNS = {
     "PIT": "pit of death",
     "SHE": "SHE", # sheet
     "RIN": "RIN", # ring in the wall
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8",
 }
 
 # movable objects

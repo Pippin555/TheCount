@@ -1,9 +1,10 @@
-from collections import deque
+""" game state """
 
 from parser import Parser
 from handlers import game, GameState
 from texts import TEXTS
 from handlers import GameHandler
+from rooms.exchange import Exchange
 
 
 class StateMachine:
@@ -13,7 +14,7 @@ class StateMachine:
     def do_command(command: str) -> bool:
         """ ... """
 
-        output = GameState.output()
+        output = Exchange.output
 
         if command == "":
             output.append(GameHandler.where())

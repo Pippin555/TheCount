@@ -1,13 +1,17 @@
 """ GUI for 'The Count """
+from collections import deque
+from os import makedirs
+
+from os.path import join
+from os.path import abspath
+from os.path import isfile
 
 from tkinter import Tk
-
-from collections import deque
 
 from handlers import game
 
 from imgdict.get_dict_img import get_ico
-from rooms.bedroom import Bedroom
+from rooms.exchange import Exchange
 
 from widgets.entry_container import EntryContainer
 from widgets.sihir_scrolled_text import SihirScrolledText
@@ -27,6 +31,7 @@ class Gui:
         """ ... """
 
         self.master = master
+        self._in_queue = deque()
 
         icon = get_ico(key='vampire.ico', size=(22, 22))
         master.iconphoto(False, icon, icon)  # noqa
@@ -59,12 +64,21 @@ class Gui:
             pady=4,
             sticky="news")
 
+        # self.txt.bind(
+        #     "<Button-1>",
+        #     lambda event: master.after_idle(self.entry.focus_set)
+        # )
+
         self.bld = StringBuilder()
         self.entry.control.focus_set()
+
+        router = CommandRouter()
+        router.subscribe('auto', self.auto)
 
         master.after(100, self._update)
 
         game.start()
+        self.process_input()
 
     def _update(self):
         """ ... """
@@ -79,9 +93,8 @@ class Gui:
     def _command(self, key: str, command: str) -> None:
         """ ... """
 
-        self.print("* " + command)
         self.entry.clear()
-        StateMachine.do_command(command)
+        self._in_queue.append(command)
 
     def print(self, message: str):
         """ ... """
@@ -97,3 +110,29 @@ class Gui:
                 bld.delete(0, pos)
 
         self.txt.text = str(bld)
+
+    def process_input(self):
+        """ ... """
+
+        if self._in_queue:
+            command = self._in_queue.popleft()
+            self.print("* " + command)
+            StateMachine.do_command(command)
+
+        self.master.after(200, self.process_input)
+
+    def auto(self, noun: str):
+        """ ... """
+
+        output = Exchange.output
+        full = join(abspath("."), "auto")
+        output.append(full)
+        makedirs(full, exist_ok=True)
+        file = join(full, f'script_{noun}.txt')
+        if not isfile(file):
+            output.append(f"I can't find {file}")
+            return False
+
+        with open(file=file, mode='rt', encoding='utf-8') as stream:
+            for line in stream:
+                self._in_queue.append(line.strip())

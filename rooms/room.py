@@ -4,16 +4,17 @@ __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from abc import ABC, abstractmethod
-from collections import deque
+
+from rooms.exchange import Exchange
 
 
 class Room(ABC):
     """ ... """
 
-    def __init__(self, output: deque):
+    def __init__(self):
         """ ... """
 
-        self._output = output
+        self._output = Exchange.output
         self._description = 'room'
         self._inventory = set()
         self._free_objects = set()
@@ -36,7 +37,7 @@ class Room(ABC):
     def description(self) -> str:
         """ ... """
 
-        return self._description
+        ...
 
     @property
     def inventory(self) -> set:
