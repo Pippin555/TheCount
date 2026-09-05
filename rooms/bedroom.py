@@ -3,11 +3,7 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
-from _collections import deque
-
 from rooms.room import Room
-
-from data import OBJECTS
 
 
 class Bedroom(Room):
@@ -29,16 +25,6 @@ class Bedroom(Room):
         """ ... """
 
         return "I'm in the bedroom"
-
-    @property
-    def inventory(self):
-        """ ... """
-
-        result = set()
-        for obj in OBJECTS:
-            if obj['location'] == 'bedroom':
-                result.add(obj['name'])
-        return result
 
     def handle_command(self, verb:str, noun: str):
         """ ... """

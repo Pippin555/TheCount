@@ -49,6 +49,7 @@ VERBS = {
     "KIL": "KILL",
     "ATT": "ATTACK",
     "SAV": "SAVE",
+    "LOA": "LOAD",
     "QUI": "QUIT",
     "HEL": "HELP",
     "INV": "INVENTORY",
@@ -57,6 +58,11 @@ VERBS = {
     "DOW": "DOWN",
     "UP": "UP",
     "AUT": "AUTO",
+    "ENT": "ENTER",
+    "WIT": "WITH",
+    # "SMO": "OPEN",
+    "PIC": "PICK",
+    "REM": "REMOVE",
 }
 
 NOUNS = {
@@ -74,8 +80,22 @@ NOUNS = {
     "UP": "get up",
     "DUM": "dumbwaiter",
     "PIT": "pit of death",
-    "SHE": "SHE", # sheet
-    "RIN": "RIN", # ring in the wall
+    "SHE": "sheets", # sheet
+    "RIN": "ring", # ring in the wall
+    "POS": "postcard",
+    "CLI": "paperclip",
+    "NOT": "note",
+    "VIA": "vial",
+    "TAB": "tablets",
+    "DOO": "door",
+    "LOC": "lock",
+    "OVE": "oven",
+    "POR": "portrait",
+    "WIN": "window",
+    "COF": "coffin",
+    "BOL": "bolt",
+    "DRA": "Dracula",
+    "END": "end",
     "1": "1",
     "2": "2",
     "3": "3",
@@ -84,38 +104,21 @@ NOUNS = {
     "6": "6",
     "7": "7",
     "8": "8",
+    "9": "9",
+    "10": "10",
 }
 
 # movable objects
 OBJECTS = {
-    "STA": {'name': 'tent stake', 'location': 'player'},
-    "SHE": {'name': 'sheet', 'location': 'bedroom'},
+    "SHE": {'name': 'sheets', 'location': 'bed'},
+    "GAR": {'name': 'clove of garlic', 'location': 'pantry'},
+    "MAT": {'name': 'matches', 'location': 'pantry'},
+    "TOR": {'name': 'torch', 'location': 'cellar'},
+    "PAC": {'name': 'pack of cigarettes', 'location': 'package'},
+    "PKG": {'name': 'package', 'location': 'gate'},
 }
 
 ROOMS = {
-    # "in bed": {
-    #     "description": "I'm lying in a large brass bed",
-    #     "fixed_objects": {"pillow"},
-    #     "free_objects": {"sheet"},
-    #     "exits": {"GET UP": None},
-    # },
-    #
-    # "bedroom": {
-    #     "description": "I'm in the bedroom",
-    #     "exits": {"NOR": "hall"},
-    #     "fixed_objects": {"bed"},
-    #     "free_objects": {"sheet"}
-    # },
-
-    # "hall": {
-    #     "description": "I'm in a hall",
-    #     "exits": {
-    #         "SOU": "bedroom",
-    #         "NOR": "bathroom",
-    #         "WES": "kitchen",
-    #         "EAS": "courtyard",
-    #     },
-    # },
 
     "bathroom": {
         "description": "I'm in a bathroom",
@@ -124,46 +127,12 @@ ROOMS = {
         }
     },
 
-    # "kitchen": {
-    #     "description": "I'm in a kitchen",
-    #     "exits": {
-    #         "EAS": "hall",
-    #         "WES": "dumbwaiter_kitchen"
-    #     },
-    #     "fixed_objects": {"dumbwaiter"},
-    # },
-
-    # "dumbwaiter_kitchen": {
-    #     "description": "I'm in the middle dumb-waiter",
-    #     "exits": {
-    #         "RAISE": "dumbwaiter_pantry",
-    #         "EAS": "kitchen",
-    #         "LOWER": "dumbwaiter_workroom",
-    #     },
-    # },
-
-    "dumbwaiter_pantry": {
-        "description": "I'm in the raised dumb-waiter",
-        "exits": {
-            "EAS": "pantry",
-            "LOWER": "dumbwaiter_kitchen",
-        },
-    },
-
     "pantry": {
         "description": "I'm in a pantry",
         "exits": {
             "WES": "dumbwaiter_pantry"
         },
         "fixed_objects": {"dumbwaiter"},
-    },
-
-    "dumbwaiter_workroom": {
-        "description": "I'm in the lowered dumb-waiter",
-        "exits": {
-            "EAS": "workroom",
-            "RAISE": "dumbwaiter_kitchen",
-        },
     },
 
     "workroom": {
@@ -205,14 +174,13 @@ ROOMS = {
         "description": "I'm in a dungeon",
         "exits": {
             "UP": "workroom",
-            # "EAS": "dead",
         },
         "fixed_objects": {"iron rings in the wall"},
         "free_objects": set(),
     },
 
-    "pit": {
-        "description": "I'm in a pit",
+    "cellar": {
+        "description": "I'm in a dark cellar",
     },
 
     "crypt": {

@@ -27,7 +27,6 @@ class GameState:
     _output: deque = None
     _location: str = None
     _day: int = None
-    # location: str = "bed"
     day: int = 1
     moves_to_sunset: int = 0
 
@@ -85,7 +84,7 @@ class GameState:
                 found = True
 
         if not found:
-            aln("not a thing!")
+            aln("nothing!")
 
         GameState._output.append(str(bld))
 
@@ -129,6 +128,12 @@ class GameState:
         """ ... """
 
         return GameState._output
+
+    @staticmethod
+    def exited() -> None:
+        """ ... """
+
+        game._location = 'exited'
 
 
 game: GameState = GameState()
@@ -216,14 +221,11 @@ class GameHandler:
         aln(room.description)
         # fixed = room.get('fixed_objects', None)
 
-        seen = False
-        location = room.name
-        for key, value in OBJECTS.items():
-            if value['location'] == location:
-                if not seen:
-                    aln('I see:')
-                    seen = True
-                aln(value['name'])
+        objs = room.inventory
+        if objs:
+            aln('I see:')
+            for obj in objs:
+                aln(obj)
 
         exits = room.exits
         if exits:

@@ -28,12 +28,6 @@ class Kitchen(Room):
 
         return "I'm in a kitchen, I see a dumb-waiter"
 
-    @property
-    def inventory(self):
-        """ ... """
-
-        return set()
-
     def handle_command(self, verb:str, noun: str):
         """ ... """
 

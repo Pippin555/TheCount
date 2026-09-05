@@ -3,8 +3,6 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
-from _collections import deque
-
 from rooms.room import Room
 
 from data import OBJECTS
@@ -20,6 +18,9 @@ class Bed(Room):
 
         super().__init__()
 
+        self._inventory = {'bed', 'pillow' }
+        self._rooms.append('bedroom')
+
     @property
     def name(self):
         """ ... """
@@ -30,17 +31,7 @@ class Bed(Room):
     def description(self) -> str:
         """ ... """
 
-        return "I am lying in a bed on a pillow"
-
-    @property
-    def inventory(self) -> set:
-        """ ... """
-
-        result = set()
-        for obj in OBJECTS:
-            if obj['location'] in ['bed', 'bedroom']:
-                result.add(obj['name'])
-        return result
+        return "I am lying in a bed"
 
     def handle_command(self, verb: str, noun: str) -> bool:
         """ ... """

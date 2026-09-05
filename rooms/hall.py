@@ -3,8 +3,6 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
-from _collections import deque
-
 from rooms.room import Room
 
 
@@ -27,12 +25,6 @@ class Hall(Room):
         """ ... """
 
         return "I'm in a hall"
-
-    @property
-    def inventory(self):
-        """ ... """
-
-        return set()
 
     def handle_command(self, verb:str, noun: str):
         """ ... """

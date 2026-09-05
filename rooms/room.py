@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 
 from rooms.exchange import Exchange
 
+from data import OBJECTS
+
 
 class Room(ABC):
     """ ... """
@@ -17,8 +19,7 @@ class Room(ABC):
         self._output = Exchange.output
         self._description = 'room'
         self._inventory = set()
-        self._free_objects = set()
-        self._fixed_objects = set()
+        self._rooms = [self.name]
 
     def say(self, text: str):
         """ ... """
@@ -43,7 +44,14 @@ class Room(ABC):
     def inventory(self) -> set:
         """ ... """
 
-        return self._inventory
+        # the fixed inventory
+        result = self._inventory
+        # and the volatile inventory
+        for key, obj in OBJECTS.items():
+            if obj['location'] in self._rooms:
+                result.add(obj['name'])
+
+        return result
 
     @abstractmethod
     def handle_command(self, verb: str, noun: str) -> bool:

@@ -28,12 +28,6 @@ class DumbwaiterPantry(Room):
 
         return "I'm in the dumb-waiter, raised to the pantry level"
 
-    @property
-    def inventory(self):
-        """ ... """
-
-        return set()
-
     def handle_command(self, verb:str, noun: str):
         """ ... """
 

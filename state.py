@@ -17,13 +17,16 @@ class StateMachine:
         output = Exchange.output
 
         if command == "":
-            output.append(GameHandler.where())
+            GameHandler.where()
             return True
 
         parsed = Parser.parse(command.upper())
 
         if parsed is None:
             output.append("I must be stupid, but I do not understand what you mean")
+
+        if not isinstance(parsed, tuple):
+            return True
 
         verb, noun = parsed
 
@@ -37,7 +40,7 @@ class StateMachine:
                 return True
 
             case "QUI":
-                game.location = 'exited'
+                game.exited()
                 output.append("you have exited the game, try: restart")
                 return True
 
