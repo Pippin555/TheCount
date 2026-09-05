@@ -13,13 +13,13 @@ from data import OBJECTS
 class Room(ABC):
     """ ... """
 
-    def __init__(self):
+    def __init__(self, name: str, inventory: set | None = None):
         """ ... """
 
         self._output = Exchange.output
         self._description = 'room'
-        self._inventory = set()
-        self._rooms = [self.name]
+        self._inventory = inventory if inventory is not None else set()
+        self._name = name
 
     def say(self, text: str):
         """ ... """
@@ -27,11 +27,10 @@ class Room(ABC):
         self._output.append(text)
 
     @property
-    @abstractmethod
     def name(self) -> str:
         """ ... """
 
-        pass
+        return self._name
 
     @property
     @abstractmethod
@@ -44,14 +43,8 @@ class Room(ABC):
     def inventory(self) -> set:
         """ ... """
 
-        # the fixed inventory
-        result = self._inventory
-        # and the volatile inventory
-        for key, obj in OBJECTS.items():
-            if obj['location'] in self._rooms:
-                result.add(obj['name'])
-
-        return result
+        objs = {obj.name for obj in OBJECTS if obj.location == self.name}
+        return objs | self._inventory
 
     @abstractmethod
     def handle_command(self, verb: str, noun: str) -> bool:

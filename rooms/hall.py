@@ -13,6 +13,7 @@ class Hall(Room):
         """ ... """
 
         super().__init__()
+        self.name = "Hall"
 
     @property
     def name(self):

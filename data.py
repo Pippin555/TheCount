@@ -1,5 +1,10 @@
 """ data file for The Count by Scott Adams """
 
+from collections import defaultdict
+
+from game_object import GameObject
+
+
 VERBS = {
     "I": "INVENTORY",
     "N": "NOR",
@@ -108,15 +113,21 @@ NOUNS = {
     "10": "10",
 }
 
+GO = GameObject
+
 # movable objects
-OBJECTS = {
-    "SHE": {'name': 'sheets', 'location': 'bed'},
-    "GAR": {'name': 'clove of garlic', 'location': 'pantry'},
-    "MAT": {'name': 'matches', 'location': 'pantry'},
-    "TOR": {'name': 'torch', 'location': 'cellar'},
-    "PAC": {'name': 'pack of cigarettes', 'location': 'package'},
-    "PKG": {'name': 'package', 'location': 'gate'},
-}
+OBJECTS = [
+    GO('SHE', 'sheets', 'bed'),
+    GO('GAR', 'clove of garlic', 'pantry'),
+    GO('MAT', 'matches', 'pantry'),
+    GO('TOR', 'torch', 'cellar'),
+    GO('PAC', 'pack of cigarettes', 'package'),
+    GO('PKG', 'package', 'gate'),
+]
+
+# this changes the Python iteration to a dictionary lookup
+OBJ_DICT = {obj.key: obj for obj in OBJECTS}
+
 
 ROOMS = {
 

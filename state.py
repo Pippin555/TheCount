@@ -17,8 +17,7 @@ class StateMachine:
         output = Exchange.output
 
         if command == "":
-            GameHandler.where()
-            return True
+            command = "look"
 
         parsed = Parser.parse(command.upper())
 
@@ -50,6 +49,14 @@ class StateMachine:
 
             case "UNK"| "PWR":
                 output.append(TEXTS[verb])
+                return True
+
+            case "LOO":
+                GameHandler.where()
+                return True
+
+            case "CLE":
+                output.append('[CLEAR]')
                 return True
 
             case _:

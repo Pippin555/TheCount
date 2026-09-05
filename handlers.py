@@ -164,7 +164,7 @@ class GameHandler:
         location = room.name
 
         match verb:
-            case "GET":
+            case "GET" | "TAKE":
                 obj = noun[:3]
 
                 for key, value in OBJECTS.items():
