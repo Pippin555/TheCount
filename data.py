@@ -1,7 +1,5 @@
 """ data file for The Count by Scott Adams """
 
-from collections import defaultdict
-
 from game_object import GameObject
 
 
@@ -116,19 +114,18 @@ NOUNS = {
 GO = GameObject
 
 # movable objects
-OBJECTS = [
-    GO('SHE', 'sheets', 'bed'),
-    GO('GAR', 'clove of garlic', 'pantry'),
-    GO('MAT', 'matches', 'pantry'),
-    GO('TOR', 'torch', 'cellar'),
-    GO('PAC', 'pack of cigarettes', 'package'),
-    GO('PKG', 'package', 'gate'),
+OBJECT_DATA = [
+    # key, name, location
+    ('SHE', 'sheets', 'bed'),
+    ('GAR', 'clove of garlic', 'pantry'),
+    ('MAT', 'matches', 'pantry'),
+    ('TOR', 'torch', 'cellar'),
+    ('PAC', 'pack of cigarettes', 'package'),
+    ('PKG', 'package', 'gate'),
 ]
 
-# this changes the Python iteration to a dictionary lookup
-OBJ_DICT = {obj.key: obj for obj in OBJECTS}
 
-
+# obsolete
 ROOMS = {
 
     "bathroom": {

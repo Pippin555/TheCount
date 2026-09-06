@@ -5,18 +5,26 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from abc import ABC, abstractmethod
 
-from rooms.exchange import Exchange
+from collections import deque
 
-from data import OBJECTS
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from game_state import GameState
 
 
 class Room(ABC):
     """ ... """
 
-    def __init__(self, name: str, inventory: set | None = None):
+    def __init__(self,
+                 game: GameState,
+                 name: str,
+                 output: deque,
+                 inventory: set | None = None):
         """ ... """
 
-        self._output = Exchange.output
+        self._game = game
+        self._output = output
         self._description = 'room'
         self._inventory = inventory if inventory is not None else set()
         self._name = name
@@ -41,9 +49,9 @@ class Room(ABC):
 
     @property
     def inventory(self) -> set:
-        """ ... """
+        """ the current inventory, both fixed and volatile """
 
-        objs = {obj.name for obj in OBJECTS if obj.location == self.name}
+        objs = {obj.name for obj in self._game.objects if obj.location == self.name}
         return objs | self._inventory
 
     @abstractmethod

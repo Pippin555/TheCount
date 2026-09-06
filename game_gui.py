@@ -8,8 +8,6 @@ from os.path import isfile
 
 from tkinter import Tk
 
-from handlers import game
-
 from imgdict.get_dict_img import get_ico
 from rooms.exchange import Exchange
 
@@ -19,19 +17,20 @@ from widgets.sihir_scrolled_text import SihirScrolledText
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
-from state import StateMachine
-
-from handlers import GameState
+from game_machine import StateMachine
 
 
 class Gui:
     """ ... """
 
-    def __init__(self, master: Tk) -> None:
+    def __init__(self,
+                 master: Tk,
+                 machine: StateMachine) -> None:
         """ ... """
 
         self.master = master
         self._in_queue = deque()
+        self._machine = machine
 
         icon = get_ico(key='vampire.ico', size=(22, 22))
         master.iconphoto(False, icon, icon)  # noqa
@@ -77,13 +76,12 @@ class Gui:
 
         master.after(100, self._update)
 
-        game.start()
         self.process_input()
 
     def _update(self):
         """ ... """
 
-        output = GameState.output()
+        output = Exchange.output
         while output:
             text = output.popleft()
             self.print(text)
@@ -117,7 +115,7 @@ class Gui:
         if self._in_queue:
             command = self._in_queue.popleft()
             self.print("* " + command)
-            StateMachine.do_command(command)
+            self._machine.do_command(command)
 
         self.master.after(200, self.process_input)
 

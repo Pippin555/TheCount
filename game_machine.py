@@ -1,20 +1,30 @@
-""" game state """
+""" game state machine """
 
 from parser import Parser
-from handlers import game, GameState
+
+from game_state import GameState
+
+from game_handlers import GameHandler
+
 from texts import TEXTS
-from handlers import GameHandler
-from rooms.exchange import Exchange
 
 
 class StateMachine:
     """ ... """
 
-    @staticmethod
-    def do_command(command: str) -> bool:
+    def __init__(self,
+                 game: GameState,
+                 handler: GameHandler):
         """ ... """
 
-        output = Exchange.output
+        self._game = game
+        self._output = game.output()
+        self._handler = handler
+
+    def do_command(self, command: str) -> bool:
+        """ ... """
+
+        output = self._output
 
         if command == "":
             command = "look"
@@ -31,23 +41,23 @@ class StateMachine:
 
         match verb[:3]:
             case "INV":
-                output.append(game.inventory())
+                output.append(self._game.inventory())
                 return True
 
             case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
-                StateMachine.go(verb)
+                self.go(verb)
                 return True
 
             case "QUI":
-                game.exited()
+                self._game.exited()
                 output.append("you have exited the game, try: restart")
                 return True
 
             case "RES":
-                output.append(game.start())
+                self.game = GameState()
                 return True
 
-            case "UNK"| "PWR":
+            case "UNK" | "PWR":
                 output.append(TEXTS[verb])
                 return True
 
@@ -60,13 +70,12 @@ class StateMachine:
                 return True
 
             case _:
-                return GameHandler.do_command(verb, noun)
+                return self._handler.do_command(verb, noun)
 
-    @staticmethod
-    def go(noun: str) -> bool:
+    def go(self, noun: str) -> bool:
         """ ... """
 
-        room = game.current_room()
+        room = self._game.current_room
         exits = room.exits
         if exits is None:
             output = GameState.output()

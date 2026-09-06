@@ -3,9 +3,14 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
+from collections import deque
+
+from typing import TYPE_CHECKING
+
 from rooms.room import Room
 
-from data import OBJECTS
+if TYPE_CHECKING:
+    from game_handlers import GameState
 
 from utils.command_router import CommandRouter
 
@@ -13,19 +18,16 @@ from utils.command_router import CommandRouter
 class Bed(Room):
     """ 'Bed' as 'room' in the game 'The Count' """
 
-    def __init__(self):
+    def __init__(self,
+                 game: GameState,
+                 output: deque[str]):
         """ ... """
 
-        super().__init__()
-
-        self._inventory = {'bed', 'pillow' }
-        self._rooms.append('bedroom')
-
-    @property
-    def name(self):
-        """ ... """
-
-        return "bed"
+        inventory = {'bed', 'pillow'}
+        super().__init__(game=game,
+                         name='bed',
+                         output=output,
+                         inventory=inventory)
 
     @property
     def description(self) -> str:
