@@ -7,6 +7,7 @@ from game_state import GameState
 from game_handlers import GameHandler
 
 from texts import TEXTS
+from utils.command_router import CommandRouter
 
 
 class StateMachine:
@@ -33,11 +34,13 @@ class StateMachine:
 
         if parsed is None:
             output.append("I must be stupid, but I do not understand what you mean")
+            return True
 
         if not isinstance(parsed, tuple):
             return True
 
         verb, noun = parsed
+        output.append(f'* {verb} {noun if noun else ""}')
 
         match verb[:3]:
             case "INV":
@@ -54,7 +57,8 @@ class StateMachine:
                 return True
 
             case "RES":
-                self.game = GameState()
+                self._game = game = GameState()
+                self._handler = GameHandler(game=game)
                 return True
 
             case "UNK" | "PWR":
@@ -62,12 +66,25 @@ class StateMachine:
                 return True
 
             case "LOO":
-                GameHandler.where()
+                self._handler.where()
                 return True
 
             case "CLE":
                 output.append('[CLEAR]')
                 return True
+
+            case "SLE":
+                room = self._game.current_room
+                name = room.name
+                if name == 'Bed':
+                    output.append('You went to sleep')
+                else:
+                    output.append(f"Go to bed to sleep, you are now here: {name}")
+
+                return True
+
+            case "HEL":
+                output.append('Sorry, HELP is not immplemented yet')
 
             case _:
                 return self._handler.do_command(verb, noun)
@@ -75,12 +92,15 @@ class StateMachine:
     def go(self, noun: str) -> bool:
         """ ... """
 
-        room = self._game.current_room
+        game = self._game
+        handler = self._handler
+        output = game.output()
+        room = game.current_room
+
         exits = room.exits
         if exits is None:
-            output = GameState.output()
             output.append("There are no exits")
             return False
 
         next = exits.get(noun, None)
-        return GameHandler.enter(next)
+        return handler.enter(location=next)

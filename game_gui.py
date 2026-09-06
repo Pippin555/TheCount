@@ -31,6 +31,7 @@ class Gui:
         self.master = master
         self._in_queue = deque()
         self._machine = machine
+        self.limit_lines = 1000
 
         icon = get_ico(key='vampire.ico', size=(22, 22))
         master.iconphoto(False, icon, icon)  # noqa
@@ -103,8 +104,8 @@ class Gui:
         else:
             bld.append_line(message)
             count = bld.count_lines()
-            if count > 100:
-                pos = bld.position(number = count - 100)
+            if count > self.limit_lines:
+                pos = bld.position(number = count - self.limit_lines)
                 bld.delete(0, pos)
 
         self.txt.text = str(bld)
@@ -114,7 +115,6 @@ class Gui:
 
         if self._in_queue:
             command = self._in_queue.popleft()
-            self.print("* " + command)
             self._machine.do_command(command)
 
         self.master.after(200, self.process_input)
@@ -133,4 +133,6 @@ class Gui:
 
         with open(file=file, mode='rt', encoding='utf-8') as stream:
             for line in stream:
+                if line.startswith('#'):
+                    continue
                 self._in_queue.append(line.strip())

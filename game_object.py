@@ -12,3 +12,4 @@ class GameObject:
     key: str = ''
     name: str = ''
     location: str = ''
+    plural: bool = False

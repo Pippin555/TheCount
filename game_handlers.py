@@ -23,7 +23,9 @@ class GameHandler:
         """ ... """
 
         room = self._game.current_room
-        if room.handle_command(verb=verb, noun=noun):
+        if room.handle_command(verb=verb[:3],
+                               noun=noun[:3] if noun else None,
+                               callback=self.handle_callback):
             return True
 
         return self.general(verb, noun, room.name)
@@ -37,22 +39,27 @@ class GameHandler:
         output = self._output
         router = CommandRouter()
 
-        key = noun[:3]
+        key = noun[:3] if noun else None
 
         match verb:
             case "GET" | "TAKE":
                 for obj in game.objects:
                     if obj.key == key:
                         obj.location = 'player'
-                        output.append(f'I got {obj.name}')
+
+                        if obj.plural:
+                            what = obj.name
+                        else:
+                            what = f'a {obj.name}'
+                        output.append(f'I got {what}')
                         return True
 
             case 'DROP':
                 for obj in game.objects:
-                    if key == obj.key:
+                    if key == noun:
                         if obj.location == 'player':
                             obj.location = location
-                            output.append(f'I dropped {obj.name} in {location}')
+                            output.append(f'I dropped the {obj.name} in the {location}')
                             return True
 
                 output.append(f"I don't have {noun}")
@@ -65,6 +72,13 @@ class GameHandler:
 
         output.append(f"I can't {verb} {noun if noun else ''} in {location}")
         return False
+
+    def handle_callback(self, verb: str, noun: str) -> bool:
+        """ ... """
+
+        match verb:
+            case 'enter':
+                return self.enter(location=noun)
 
     def enter(self, location: str | None) -> bool:
         """ ... """

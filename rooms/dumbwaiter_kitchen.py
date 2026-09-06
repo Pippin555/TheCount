@@ -3,30 +3,26 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
+from typing import Callable
+
 from rooms.room import Room
 
 
 class DumbwaiterKitchen(Room):
     """ 'Kitchen' as 'room' in the game 'The Count' """
 
-    def __init__(self):
+    def __init__(self, kwargs: dict):
         """ ... """
 
-        super().__init__()
+        kwargs['name'] = 'dumbwaiter kitchen'
+        kwargs['description'] = 'I am in a dumb-waiter at the kitchen level'
+        kwargs['inventory'] = set()
+        super().__init__(kwargs)
 
-    @property
-    def name(self):
-        """ ... """
-
-        return "dumbwaiter_kitchen"
-
-    @property
-    def description(self):
-        """ ... """
-
-        return "I'm in the dumb-waiter, at the kitchen level"
-
-    def handle_command(self, verb:str, noun: str):
+    def handle_command(self,
+                       verb:str,
+                       noun: str,
+                       callback: Callable):
         """ ... """
 
         return False
@@ -36,7 +32,7 @@ class DumbwaiterKitchen(Room):
         """ ... """
 
         return {
-            "RAISE": "dumbwaiter_pantry",
+            "RAISE": "dumbwaiter pantry",
             "EAS": "kitchen",
-            "LOWER": "dumbwaiter_workroom",
+            "LOWER": "dumbwaiter workroom",
         }

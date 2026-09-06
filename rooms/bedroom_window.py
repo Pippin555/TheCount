@@ -8,14 +8,14 @@ from typing import Callable
 from rooms.room import Room
 
 
-class Kitchen(Room):
-    """ 'Kitchen' as 'room' in the game 'The Count' """
+class BedroomWindow(Room):
+    """ 'Bed' as 'room' in the game 'The Count' """
 
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'kitchen'
-        kwargs['description'] = 'I am in a kitchen'
+        kwargs['name'] = 'window ledge'
+        kwargs['description'] = 'I am on the window ledge'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
 
@@ -25,8 +25,8 @@ class Kitchen(Room):
                        callback: Callable):
         """ ... """
 
-        if verb in ["GO", "ENT"] and noun == "DUM":
-            callback('enter', 'dumbwaiter kitchen')
+        if verb == 'CLI' and noun == 'SHE':
+            callback(verb='enter', noun='flowerbed')
             return True
 
         return False
@@ -36,6 +36,5 @@ class Kitchen(Room):
         """ ... """
 
         return {
-            "WES": "dumbwaiter kitchen",
-            "EAS": "hall",
+            "WES": "bedroom"
         }

@@ -1,4 +1,4 @@
-""" the 'bedroom' as 'room' in the game 'The Count' """
+""" the 'workroom' as 'room' in the game 'The Count' """
 
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
@@ -8,14 +8,14 @@ from typing import Callable
 from rooms.room import Room
 
 
-class Kitchen(Room):
-    """ 'Kitchen' as 'room' in the game 'The Count' """
+class Workroom(Room):
+    """ 'Bed' as 'room' in the game 'The Count' """
 
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'kitchen'
-        kwargs['description'] = 'I am in a kitchen'
+        kwargs['name'] = 'workroom'
+        kwargs['description'] = 'I am in a workroom'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
 
@@ -25,9 +25,8 @@ class Kitchen(Room):
                        callback: Callable):
         """ ... """
 
-        if verb in ["GO", "ENT"] and noun == "DUM":
-            callback('enter', 'dumbwaiter kitchen')
-            return True
+        if verb == 'DOW':
+            return callback('enter', 'dungeon')
 
         return False
 
@@ -36,6 +35,6 @@ class Kitchen(Room):
         """ ... """
 
         return {
-            "WES": "dumbwaiter kitchen",
-            "EAS": "hall",
+            "WES": "dumbwaiter workroom",
+            "DOW": "dungeon",
         }

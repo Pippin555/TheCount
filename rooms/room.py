@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 
 from collections import deque
 
+from typing import Callable
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -16,18 +17,17 @@ if TYPE_CHECKING:
 class Room(ABC):
     """ ... """
 
-    def __init__(self,
-                 game: GameState,
-                 name: str,
-                 output: deque,
-                 inventory: set | None = None):
+    def __init__(self, kwargs: dict):
         """ ... """
 
-        self._game = game
-        self._output = output
-        self._description = 'room'
-        self._inventory = inventory if inventory is not None else set()
-        self._name = name
+        # required arguments
+        self._game = kwargs['game']
+        self._output = kwargs['output']
+        self._description = kwargs['description']
+        self._name = kwargs['name']
+
+        # optional argument
+        self._inventory = kwargs.get('inventory', set())
 
     def say(self, text: str):
         """ ... """
@@ -41,11 +41,10 @@ class Room(ABC):
         return self._name
 
     @property
-    @abstractmethod
     def description(self) -> str:
         """ ... """
 
-        ...
+        return self._description
 
     @property
     def inventory(self) -> set:
@@ -55,7 +54,10 @@ class Room(ABC):
         return objs | self._inventory
 
     @abstractmethod
-    def handle_command(self, verb: str, noun: str) -> bool:
+    def handle_command(self,
+                       verb: str,
+                       noun: str,
+                       callback: Callable) -> bool:
         """ ... """
 
         ...

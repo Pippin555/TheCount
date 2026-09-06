@@ -1,7 +1,8 @@
-""" handlers for the game """
+""" game state for the game """
 
 from collections import deque
 
+from rooms.workroom import Workroom
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
@@ -12,15 +13,20 @@ from texts import TEXTS
 
 from rooms.exchange import Exchange
 
-# from game_handlers import GameHandler
-
 from rooms.bed import Bed
-# from rooms.bedroom import Bedroom
-# from rooms.hall import Hall
-# from rooms.kitchen import Kitchen
-# from rooms.dumbwaiter_kitchen import DumbwaiterKitchen
-# from rooms.dumbwaiter_pantry import DumbwaiterPantry
-# from rooms.dumbwaiter_workroom import DumbwaiterWorkroom
+from rooms.bedroom import Bedroom
+from rooms.bedroom_window import BedroomWindow
+from rooms.flowerbed import Flowerbed
+from rooms.hall import Hall
+from rooms.kitchen import Kitchen
+from rooms.dumbwaiter_kitchen import DumbwaiterKitchen
+from rooms.dumbwaiter_pantry import DumbwaiterPantry
+from rooms.dumbwaiter_workroom import DumbwaiterWorkroom
+from rooms.pantry import Pantry
+from rooms.draculas_bedroom import DraculasBedroom
+from rooms.workroom import Workroom
+from rooms.dungeon import Dungeon
+from rooms.pit import Pit
 
 
 class GameState:
@@ -32,17 +38,25 @@ class GameState:
         self._output: deque = Exchange.output
         output = self._output
 
-        # self._handler = GameHandler(game=self)
+        kwargs = {'game': self, 'output': output}
 
         self._rooms = {
-            "bed": Bed(game=self, output=output),
-            # "bedroom": Bedroom(game=self, output=output),
-            # "hall": Hall(game=self, output=output),
-            # "kitchen": Kitchen(game=self, output=output),
-            # "dumbwaiter_kitchen": DumbwaiterKitchen(game=self, output=output),
-            # "dumbwaiter_pantry": DumbwaiterPantry(game=self, output=output),
-            # "dumbwaiter_workroom": DumbwaiterWorkroom(game=self, output=output),
+            "bed": Bed(kwargs),
+            "bedroom": Bedroom(kwargs),
+            "bedroom window": BedroomWindow(kwargs),
+            "flowerbed": Flowerbed(kwargs),
+            "hall": Hall(kwargs),
+            "kitchen": Kitchen(kwargs),
+            "dumbwaiter kitchen": DumbwaiterKitchen(kwargs),
+            "dumbwaiter pantry": DumbwaiterPantry(kwargs),
+            "dumbwaiter workroom": DumbwaiterWorkroom(kwargs),
+            "pantry": Pantry(kwargs),
+            "Dracula's bedroom": DraculasBedroom(kwargs),
+            "workroom": Workroom(kwargs),
+            "dungeon": Dungeon(kwargs),
+            "pit": Pit(kwargs)
         }
+
         self.objects = [GO(*data) for data in OBJECT_DATA]
         self._location = "bed"
         self.day = 1
@@ -55,11 +69,6 @@ class GameState:
 
         output.append('[CLEAR]')
         output.append(TEXTS["INTRO"])
-
-        # note: this is a singleton
-        router = CommandRouter()
-        # needed fpr a restart:
-        router.clear()
 
     def inventory(self):
         """ ... """
@@ -82,16 +91,30 @@ class GameState:
     def get_inventory(self, noun: str):
         """ meaning: get object and add that to 'player' inventory """
 
-        self._inventory.add(noun)
+        found = False
+        for obj in self.objects:
+            if obj.key == noun:
+                found = True
+                obj.location = 'player'
+
+        if not found:
+            self._output.append(f"I can't find {noun}")
+
+        return found
 
     def drop_inventory(self, noun: str):
         """ ... """
 
-        if noun in self.inventory:
-            self._inventory.remove(noun)
-            return noun
+        found = False
+        for obj in self.objects:
+            if obj.key == noun:
+                found = True
+                obj.location = self._location
 
-        return None
+        if not found:
+            self._output.append(f"I don't have {noun}")
+
+        return found
 
     @property
     def rooms(self):

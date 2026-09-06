@@ -66,6 +66,7 @@ VERBS = {
     # "SMO": "OPEN",
     "PIC": "PICK",
     "REM": "REMOVE",
+    "CLE": "CLEAR",
 }
 
 NOUNS = {
@@ -99,6 +100,8 @@ NOUNS = {
     "BOL": "bolt",
     "DRA": "Dracula",
     "END": "end",
+    "BED": "bed",
+    "PAI": "painting of Dracula",
     "1": "1",
     "2": "2",
     "3": "3",
@@ -116,12 +119,14 @@ GO = GameObject
 # movable objects
 OBJECT_DATA = [
     # key, name, location
-    ('SHE', 'sheets', 'bed'),
-    ('GAR', 'clove of garlic', 'pantry'),
-    ('MAT', 'matches', 'pantry'),
-    ('TOR', 'torch', 'cellar'),
-    ('PAC', 'pack of cigarettes', 'package'),
-    ('PKG', 'package', 'gate'),
+    ('SHE', 'sheets', 'bed', True),
+    ('END', 'end of sheet', '', False),
+    ('GAR', 'clove of garlic', 'pantry', False),
+    ('MAT', 'matches', 'pantry', True),
+    ('TOR', 'torch', 'cellar', False),
+    ('PAC', 'pack of cigarettes', 'package', False),
+    ('PKG', 'package', 'gate', False),
+    ('STA', 'tent stake', '', False)
 ]
 
 
@@ -139,15 +144,6 @@ ROOMS = {
         "description": "I'm in a pantry",
         "exits": {
             "WES": "dumbwaiter_pantry"
-        },
-        "fixed_objects": {"dumbwaiter"},
-    },
-
-    "workroom": {
-        "description": "I'm in a workroom",
-        "exits": {
-            "WES": "dumbwaiter_workroom",
-            "DOW": "dungeon",
         },
         "fixed_objects": {"dumbwaiter"},
     },

@@ -3,6 +3,8 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
+from typing import Callable
+
 from _collections import deque
 
 from rooms.room import Room
@@ -11,24 +13,19 @@ from rooms.room import Room
 class DumbwaiterWorkroom(Room):
     """ 'Dumbwaiter at the workroom level as 'room' in the game 'The Count' """
 
-    def __init__(self):
+
+    def __init__(self, kwargs: dict):
         """ ... """
 
-        super().__init__()
+        kwargs['name'] = 'dumbwaiter workroom'
+        kwargs['description'] = "I'm in a dumb-waiter, lowered to the workroom level"
+        kwargs['inventory'] = set()
+        super().__init__(kwargs)
 
-    @property
-    def name(self):
-        """ ... """
-
-        return "dumbwaiter_workroom"
-
-    @property
-    def description(self):
-        """ ... """
-
-        return "I'm in the dumb-waiter, lowered to the workroom level"
-
-    def handle_command(self, verb:str, noun: str):
+    def handle_command(self,
+                       verb:str,
+                       noun: str,
+                       callback: Callable):
         """ ... """
 
         return False

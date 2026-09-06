@@ -8,15 +8,15 @@ from typing import Callable
 from rooms.room import Room
 
 
-class Bed(Room):
-    """ 'Bed' as 'room' in the game 'The Count' """
+class Pantry(Room):
+    """ 'Pantry' as 'room' in the game 'The Count' """
 
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'Bed'
-        kwargs['inventory'] = {'bed', 'pillow'}
-        kwargs['description'] = 'I am lying in a large brass bed'
+        kwargs['name'] = 'Pantry'
+        kwargs['inventory'] = {'matches', 'garlic'}
+        kwargs['description'] = 'I am in a pantry'
         super().__init__(kwargs)
 
     def handle_command(self,
@@ -25,8 +25,8 @@ class Bed(Room):
                        callback: Callable) -> bool:
         """ ... """
 
-        if verb == 'GET' and noun == 'UP':
-            return callback(verb='enter', noun='bedroom')
+        # if verb == 'GET' and noun == 'UP':
+        #     return callback(verb='enter', noun='bedroom')
 
         return False
 
@@ -35,5 +35,5 @@ class Bed(Room):
         """ ... """
 
         return {
-            "GET UP": None
+            "WES": 'dumbwaiter pantry'
         }

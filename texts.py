@@ -7,6 +7,7 @@ The following key entries are allowed in this game:
 n, s, e, w - go north, south, east, west
 Enter key  - show the room
 i          - Take inventory of the items I carry
+help       - some context help (when implemented)
 
 not implemented:
 c - turn on/off lowercase

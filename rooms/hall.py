@@ -3,31 +3,27 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
+from typing import Callable
+
 from rooms.room import Room
 
 
 class Hall(Room):
     """ 'Hall' as 'room' in the game 'The Count' """
 
-    def __init__(self):
+    def __init__(self, kwargs: dict):
+
         """ ... """
 
-        super().__init__()
-        self.name = "Hall"
+        kwargs['name'] = 'hall'
+        kwargs['description'] = 'I am in a hall'
+        kwargs['inventory'] = set()
+        super().__init__(kwargs)
 
-    @property
-    def name(self):
-        """ ... """
-
-        return "hall"
-
-    @property
-    def description(self):
-        """ ... """
-
-        return "I'm in a hall"
-
-    def handle_command(self, verb:str, noun: str):
+    def handle_command(self,
+                       verb:str,
+                       noun: str,
+                       callback: Callable):
         """ ... """
 
         return False
