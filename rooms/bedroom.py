@@ -5,7 +5,12 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
 
+from enum import Enum
+from enum import auto
+
 from rooms.room import Room
+
+from game_files.game_storage import GameStorage
 
 
 class Bedroom(Room):
@@ -18,9 +23,9 @@ class Bedroom(Room):
         kwargs['description'] = 'I am in a bedroom'
         kwargs['inventory'] = {'bed', 'window'}
         super().__init__(kwargs)
-
-        self.tie_sheet = False
-        self.sheet_tied = False
+        self.help_verbs = ['GO', 'HEL', 'TIE', 'TO', 'AUT',
+                           'TAK', 'GET', 'DRO', 'LOO', 'SAV',
+                           'LOA', 'QUI', 'RES']
 
     def handle_command(self,
                        verb:str,
@@ -29,57 +34,59 @@ class Bedroom(Room):
         """ ... """
 
         match verb:
+            case 'HEL':
+                self.say(self.format_help(self.help_verbs))
+                return True
+
             case 'GO':
                 match noun:
                     case 'WIN':
                         return callback(verb='enter', noun='bedroom window')
                     case 'BED':
                         return callback(verb='enter', noun='bed')
+
             case "TIE":
                 match noun:
-                    case '':
+                    case '' | None:
                         self.say('tie what')
                         return True
 
                     case 'SHE':
-                        self.tie_sheet = True
                         self.say('tie sheet to what')
                         return True
+
             case "TO":
-                if self.tie_sheet:
-                    match noun:
-                        case '':
-                            self.say('tie sheet to what')
-                            return True
-                        case 'BED':
-                            self.say('The sheet is now tied to the bed')
-                            self.sheet_tied = True
-                            self._game.drop_inventory('SHE')
-                            return True
-                else:
-                    self.say('tie what')
+                match noun:
+                    case '':
+                        self.say('tie sheet to what')
+                        return True
 
-            case "TAK":
-                if self.sheet_tied:
-                    match noun:
-                        case '':
-                            self.say('take what')
-                            return True
-                        case 'END':
-                            self.say('taken the end of the sheet')
-                            self._game.get_inventory('END')
-                            return True
+                    case 'BED':
+                        self.say('The sheet is now tied to the bed')
+                        self._game.place('SHE', 'tied bed')
+                        return True
 
-            case "GET" | "TAK":
-                if noun == "SHE":
-                    self.tie_sheet = False
-                    self.sheet_tied = False
-                    self.say('untied the sheet')
+                return True
 
-                    # let the end of the sheet vanish
-                    for obj in self._game.objects:
-                        if obj.key == 'END':
-                            obj.location = ''
+            case "TAK" | "GET":
+                match noun:
+                    case '' | None:
+                        self.say('take what')
+                        return True
+
+                    case "SHE":
+                        # player gets the sheet
+                        self._game.place('SHE', 'player')
+                        self.say('You untied the sheet')
+
+                        # let the end of the sheet vanish
+                        self._game.place('END', '')
+                        return True
+
+                    case 'END':
+                        self.say('taken the end of the sheet')
+                        self._game.place('END', 'player')
+                        return True
 
         return False
 

@@ -27,6 +27,10 @@ class DumbwaiterPantry(Room):
                        callback: Callable):
         """ ... """
 
+        if verb == "ENT" and noun == "ROO":
+            callback('enter', 'pantry')
+            return True
+
         return False
 
     @property

@@ -48,6 +48,12 @@ class StateMachine:
                 output.append(self._game.inventory())
                 return True
 
+            case "GO":
+                if noun:
+                    self.go(noun[:3])
+                    return True
+                return False
+
             case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
                 self.go(verb)
                 return True

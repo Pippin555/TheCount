@@ -25,8 +25,9 @@ class Pantry(Room):
                        callback: Callable) -> bool:
         """ ... """
 
-        # if verb == 'GET' and noun == 'UP':
-        #     return callback(verb='enter', noun='bedroom')
+        if verb == "ENT" and noun == "DUM":
+            callback('enter', 'dumbwaiter pantry')
+            return True
 
         return False
 

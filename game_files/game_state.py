@@ -143,6 +143,34 @@ class GameState:
 
         return found
 
+    def has(self, noun: str, location='player'):
+        """ ... """
+
+        for obj in self.objects:
+            if obj.key == noun and obj.location == location:
+                return  True
+
+        return False
+
+    def place(self, noun: str, location=''):
+        """ ... """
+
+        for obj in self.objects:
+            if obj.key == noun:
+                obj.location = location
+                return True
+
+        return False
+
+    # def whereis(self, noun: str):
+    #     """ ... """
+    #
+    #     for obj in self.objects:
+    #         if obj.key == noun:
+    #             return obj.location
+    #
+    #     return None
+
     @property
     def rooms(self):
         """ ... """

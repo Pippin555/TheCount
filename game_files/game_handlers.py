@@ -102,6 +102,14 @@ class GameHandler:
                     output.append("Please specify a number 1..10 for 'LOAD'")
                 return True
 
+            case "WHE":
+                output.append('-----')
+                for obj in game.objects:
+                    pos = obj.location or 'hidden'
+                    output.append(f'{obj.key:3} {obj.name}: {pos}')
+
+                return True
+
         output.append(f"I can't {verb} {noun if noun else ''} in {location}")
         return False
 

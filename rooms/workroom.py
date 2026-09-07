@@ -25,6 +25,10 @@ class Workroom(Room):
                        callback: Callable):
         """ ... """
 
+        if verb == "ENT" and noun == "DUM":
+            callback('enter', 'dumbwaiter workroom')
+            return True
+
         if verb == 'DOW':
             return callback('enter', 'dungeon')
 

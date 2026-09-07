@@ -5,14 +5,14 @@ from game_files.game_object import GameObject
 
 VERBS = {
     "I": "INVENTORY",
-    "N": "NOR",
-    "E": "EAS",
-    "S": "SOU",
-    "W": "WES",
-    "NOR": "NOR",
-    "EAS": "EAS",
-    "SOU": "SOU",
-    "WES": "WES",
+    "N": "NORTH",
+    "E": "EAST",
+    "S": "SOUTH",
+    "W": "WEST",
+    "NOR": "NORTH",
+    "EAS": "EAST",
+    "SOU": "SOUTH",
+    "WES": "WEST",
     "FLY": "FLY",
     "CLO": "CLOSE",
     "SHU": "SHUT",
@@ -63,10 +63,11 @@ VERBS = {
     "AUT": "AUTO",
     "ENT": "ENTER",
     "WIT": "WITH",
-    # "SMO": "OPEN",
     "PIC": "PICK",
     "REM": "REMOVE",
     "CLE": "CLEAR",
+    "WHE": "WHEREIS",
+    "HAL": "HALT EXECUTION"
 }
 
 NOUNS = {
@@ -84,7 +85,7 @@ NOUNS = {
     "UP": "get up",
     "DUM": "dumbwaiter",
     "PIT": "pit of death",
-    "SHE": "sheets", # sheet
+    "SHE": "sheet", # sheet
     "RIN": "ring", # ring in the wall
     "POS": "postcard",
     "CLI": "paperclip",
@@ -102,6 +103,12 @@ NOUNS = {
     "END": "end",
     "BED": "bed",
     "PAI": "painting of Dracula",
+    "NOR": "North",
+    "EAS": "Eath",
+    "SOU": "South",
+    "WES": "West",
+    "ROO": "ROOM",
+    "DOW": "DOWN",
     "1": "1",
     "2": "2",
     "3": "3",
@@ -118,8 +125,8 @@ GO = GameObject
 
 # movable objects
 OBJECT_DATA = [
-    # key, name, location
-    ('SHE', 'sheets', 'bed', True),
+    # key, name, location, plural
+    ('SHE', 'sheet', 'bed', False),
     ('END', 'end of sheet', '', False),
     ('GAR', 'clove of garlic', 'pantry', False),
     ('MAT', 'matches', 'pantry', True),
@@ -138,14 +145,6 @@ ROOMS = {
         "exits": {
             "SOU": "hall"
         }
-    },
-
-    "pantry": {
-        "description": "I'm in a pantry",
-        "exits": {
-            "WES": "dumbwaiter_pantry"
-        },
-        "fixed_objects": {"dumbwaiter"},
     },
 
     "courtyard": {

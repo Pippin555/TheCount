@@ -18,6 +18,9 @@ class BedroomWindow(Room):
         kwargs['description'] = 'I am on the window ledge'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
+        self.help_verbs = ['GO', 'HEL', 'AUT', 'LOA', 'QUI',
+                           'TAK', 'GET', 'DRO', 'LOO', 'SAV',
+                           'RES']
 
     def handle_command(self,
                        verb:str,
@@ -25,9 +28,27 @@ class BedroomWindow(Room):
                        callback: Callable):
         """ ... """
 
-        if verb == 'CLI' and noun == 'SHE':
-            callback(verb='enter', noun='flowerbed')
-            return True
+        match verb:
+            case 'HEL':
+                self.say(self.format_help(self.help_verbs))
+                return True
+
+            case 'DRO':
+                if noun == 'END':
+                    if self._game.has('END'):
+                        self.say('I dropped the end of the sheet over the ledge of the window')
+                        self._game.place('END', 'tied bed')
+                        return True
+
+            case 'CLI':
+                if noun == 'SHE' and \
+                    self._game.has('SHE', 'tied bed') and \
+                    self._game.has('END', 'tied bed'):
+                    callback(verb='enter', noun='flowerbed')
+                else:
+                    self.say(f"I can't {verb} {noun}")
+
+                return True
 
         return False
 

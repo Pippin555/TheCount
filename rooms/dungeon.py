@@ -4,25 +4,12 @@ __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
-from enum import Enum
-from enum import auto
 
 from rooms.room import Room
 
-from game_files.game_storage import GameStorage
+from data import VERBS
+from data import NOUNS
 
-
-class DungeonState(Enum):
-    """ ... """
-
-    START = auto()
-    TIE_WHAT = auto()
-    TO_WHAT = auto()
-    SHEET_TIED = auto()
-    TAKE_WHAT = auto()
-    TAKE_END = auto()
-    DROP_WHAT = auto()
-    END_DROPPED = auto()
 
 class Dungeon(Room):
     """ 'Dungeon' as 'room' in the game 'The Count' """
@@ -39,44 +26,12 @@ class Dungeon(Room):
                            'TAK', 'GET', 'DRO', 'CLI', 'I',
                            'LOO', 'SAV', 'AUT', 'QUI', 'RES'
                            ]
-        self.state = DungeonState.START
-
-        GameStorage().register(label=self.name,
-                               save=self.save,
-                               load=self.load)
-
-    def load(self) -> None:
-        """ ... """
-
-        default = DungeonState.START.name
-        value = GameStorage().load_value(section=self.name,
-                                         name='state',
-                                         default=default)
-        self.state = DungeonState[value]
-
-    def save(self):
-        """ ... """
-
-        GameStorage().store_value(section=self.name,
-                                  name='state',
-                                  value=self.state.name)
-        ...
 
     def handle_command(self,
                        verb:str,
                        noun: str,
                        callback: Callable):
         """ ... """
-
-        have_sheet = False
-        have_end = False
-
-        for obj in self._game.objects:
-            if obj.location == 'player':
-                if obj.key == 'SHE':
-                    have_sheet = True
-                if obj.key == 'END':
-                    have_end = True
 
         match verb:
             case 'UP':
@@ -96,89 +51,78 @@ class Dungeon(Room):
                 return True
 
             case "TIE":
-                if self.state == DungeonState.START:
-                    if noun == "SHE":
-                        if not have_sheet:
-                            self.say("I have no sheet")
-                            return False
-                        self.say("To what?")
-                        self.state = DungeonState.TO_WHAT
+                match noun:
+                    case '' | None:
+                        self.say('tie what')
                         return True
-                    else:
-                        self.say('Tie what?')
-                    return True
 
-                return False
+                    case 'SHE':
+                        self.say('tie sheet to what')
+                        return True
 
             case "TO":
-                if self.state == DungeonState.TO_WHAT:
-                    if not have_sheet:
-                        return False
+                match noun:
+                    case '':
+                        self.say('tie sheet to what')
+                        return True
 
-                    if noun == "RIN":
-                        self.say('The sheet is tied to one of the rings')
-                        self.state = DungeonState.TAKE_END
-                    return True
+                    case 'RIN':
+                        self.say('The sheet is now tied to a ring')
+                        self._game.place('SHE', 'tied ring')
+                        return True
 
-                return False
+                return True
 
-            case 'TAK' | 'GET':
-                if self.state == DungeonState.TAKE_END:
-                    if not have_sheet:
-                        return False
+            case "TAK" | "GET":
+                match noun:
+                    case '' | None:
+                        self.say('take what')
+                        return True
 
-                    if noun == "END":
-                        self.say('I have the end of the sheet')
-                        for obj in self._game.objects:
-                            if obj.key == 'END':
-                                obj.location = 'player'
+                    case "SHE":
+                        # player gets the sheet
+                        self._game.place('SHE', 'player')
+                        self.say('You untied the sheet')
 
-                        self.state = DungeonState.DROP_WHAT
+                        # let the end of the sheet vanish
+                        self._game.place('END', '')
+                        return True
 
-                    return True
+                    case 'END':
+                        self.say('taken the end of the sheet')
+                        self._game.place('END', 'player')
+                        return True
 
             case 'DRO':
-                if noun == "SHE":
-                    # dropping the sheet will reset the state machine
-                    self.say('You untied the sheet and dropped it')
-                    for obj in self._game.objects:
-                        if obj.key == 'SHE':
-                            obj.location = self.name
-                            break
-                    return True
+                match noun:
+                    case "SHE":
+                        # dropping the sheet will reset the state machine
+                        self.say('You untied the sheet and dropped it')
+                        self._game.place('SHE', self.name)
+                        self._game.place('END', '')
+                        return True
 
-                if self.state == DungeonState.DROP_WHAT:
-                    if not have_sheet or not have_end:
-                        self.say('I do not hold the end of the sheet')
-                        return False
+                    case 'END':
+                        if not self._game.has('END'):
+                            self.say('I do not hold the end of the sheet')
+                            return False
 
-                    if noun == 'END':
                         self.say('The end of the sheet is dropped in the pit')
-                        self.state = DungeonState.END_DROPPED
-                        for obj in self._game.objects:
-                            if obj.key == 'END':
-                                obj.location = ''
+                        self._game.place('END', 'tied ring')
 
-                    return True
-
-            case 'TAK':
-                if noun == 'SHE':
-                    self.state = DungeonState.START
-                    for obj in self._game.objects:
-                        if obj.key == 'SHE':
-                            obj.location = 'player'
-                        elif obj.key == 'END':
-                            obj.location = ''
+                        return True
 
             case 'CLI':
-                if self.state == DungeonState.END_DROPPED:
-                    if not have_sheet:
-                        return False
+                if noun == 'SHE' and \
+                    self._game.has('SHE', 'tied ring') and \
+                    self._game.has('END', 'tied ring'):
+                    return callback('enter', 'pit')
+                else:
+                    verb = VERBS.get(verb, verb)
+                    noun = NOUNS.get(noun, noun)
+                    self.say(f"I can't {verb} {noun}")
 
-                    if noun == 'SHE':
-                        return callback('enter', 'pit')
-
-                    return True
+                return True
 
         return False
 

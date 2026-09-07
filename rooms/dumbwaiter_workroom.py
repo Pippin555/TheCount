@@ -28,6 +28,10 @@ class DumbwaiterWorkroom(Room):
                        callback: Callable):
         """ ... """
 
+        if verb == "ENT" and noun == "ROO":
+            callback('enter', 'workroom')
+            return True
+
         return False
 
     @property
@@ -36,5 +40,5 @@ class DumbwaiterWorkroom(Room):
 
         return {
             "EAS": "workroom",
-            "RAI": "dumbwaiter_kitchen",
+            "RAI": "dumbwaiter kitchen",
         }

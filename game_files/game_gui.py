@@ -32,6 +32,7 @@ class Gui:
         self._in_queue = deque()
         self._machine = machine
         self.limit_lines = 1000
+        self.after_ident = None
 
         icon = get_ico(key='vampire.ico', size=(22, 22))
         master.iconphoto(False, icon, icon)  # noqa
@@ -64,10 +65,7 @@ class Gui:
             pady=4,
             sticky="news")
 
-        # self.txt.bind(
-        #     "<Button-1>",
-        #     lambda event: master.after_idle(self.entry.focus_set)
-        # )
+        self.txt.bind("<Button-1>", self.text_click)
 
         self.bld = StringBuilder()
         self.entry.control.focus_set()
@@ -78,6 +76,21 @@ class Gui:
         master.after(100, self._update)
 
         self.process_input()
+
+    def text_click(self, event) -> None:
+        """ ... """
+
+        if self.after_ident is None:
+            self.after_ident = event.widget.after(200, self.set_entry_focus)
+        else:
+            event.widget.after_cancel(self.after_ident)
+            self.after_ident = None
+
+    def set_entry_focus(self):
+        """ ... """
+
+        self.after_idnt = None
+        self.entry.control.focus_set()
 
     def _update(self):
         """ ... """
@@ -135,4 +148,9 @@ class Gui:
             for line in stream:
                 if line.startswith('#'):
                     continue
-                self._in_queue.append(line.strip())
+                line = line.strip()
+
+                if line.upper() == 'HALT':
+                    return
+
+                self._in_queue.append(line)
