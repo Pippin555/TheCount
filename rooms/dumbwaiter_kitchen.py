@@ -32,7 +32,7 @@ class DumbwaiterKitchen(Room):
         """ ... """
 
         return {
-            "RAISE": "dumbwaiter pantry",
+            "RAI": "dumbwaiter pantry",
             "EAS": "kitchen",
-            "LOWER": "dumbwaiter workroom",
+            "LOW": "dumbwaiter workroom",
         }

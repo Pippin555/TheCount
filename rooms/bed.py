@@ -19,6 +19,10 @@ class Bed(Room):
         kwargs['description'] = 'I am lying in a large brass bed'
         super().__init__(kwargs)
 
+        self.help_verbs = ['GET', 'HEL', 'LOO', 'SAV',
+                           'DRO', 'CLI', 'INV', 'AUT',
+                           'QUI', 'RES']
+
     def handle_command(self,
                        verb: str,
                        noun: str,
@@ -27,6 +31,10 @@ class Bed(Room):
 
         if verb == 'GET' and noun == 'UP':
             return callback(verb='enter', noun='bedroom')
+
+        if verb == 'HEL':
+            self.say(self.format_help(self.help_verbs))
+            return True
 
         return False
 

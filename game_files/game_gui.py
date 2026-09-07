@@ -17,7 +17,7 @@ from widgets.sihir_scrolled_text import SihirScrolledText
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
-from game_machine import StateMachine
+from game_files.game_machine import StateMachine
 
 
 class Gui:

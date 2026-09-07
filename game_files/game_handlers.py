@@ -1,9 +1,21 @@
 """ handlers for the game """
 
+__author__ = 'Sihir'
+__copyright__ = "© Sihir 2026-2026 all rights reserved"
+
+from os import makedirs
+
+from os.path import abspath
+from os.path import join
+
+from jsons import dumps
+from jsons import loads
+
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
-from game_state import GameState
+from game_files.game_state import GameState
+from game_files.game_storage import GameStorage
 
 
 class GameHandler:
@@ -42,7 +54,7 @@ class GameHandler:
         key = noun[:3] if noun else None
 
         match verb:
-            case "GET" | "TAKE":
+            case "GET" | "TAK":
                 for obj in game.objects:
                     if obj.key == key:
                         obj.location = 'player'
@@ -54,7 +66,7 @@ class GameHandler:
                         output.append(f'I got {what}')
                         return True
 
-            case 'DROP':
+            case 'DRO':
                 for obj in game.objects:
                     if key == noun:
                         if obj.location == 'player':
@@ -65,13 +77,43 @@ class GameHandler:
                 output.append(f"I don't have {noun}")
                 return False
 
-            case "AUTO":
-                output.append(f"{verb} {noun} seen")
-                router.handle('auto', noun)
+            case "AUT":
+                if noun.isnumeric():
+                    router.handle('auto', noun)
+                else:
+                    output.append("Please specify a number for 'AUTO'")
+                return True
+
+            case "HEL":
+                output.append('Sorry, HELP is not implemented yet')
+                return True
+
+            case "SAV":
+                if noun.isnumeric() if noun else False:
+                    self.save(number=int(noun))
+                else:
+                    output.append("Please specify a number 1..10 for 'SAVE'")
+                return True
+
+            case "LOA":
+                if noun.isnumeric() if noun else False:
+                    self.load(number=int(noun))
+                else:
+                    output.append("Please specify a number 1..10 for 'LOAD'")
                 return True
 
         output.append(f"I can't {verb} {noun if noun else ''} in {location}")
         return False
+
+    def save(self, number: int):
+        """ ... """
+
+        GameStorage().save(number=number)
+
+    def load(self, number: int):
+        """ ... """
+
+        GameStorage().load(number=number)
 
     def handle_callback(self, verb: str, noun: str) -> bool:
         """ ... """
@@ -79,6 +121,8 @@ class GameHandler:
         match verb:
             case 'enter':
                 return self.enter(location=noun)
+
+        return False
 
     def enter(self, location: str | None) -> bool:
         """ ... """

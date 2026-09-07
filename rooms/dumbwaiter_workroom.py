@@ -36,5 +36,5 @@ class DumbwaiterWorkroom(Room):
 
         return {
             "EAS": "workroom",
-            "RAISE": "dumbwaiter_kitchen",
+            "RAI": "dumbwaiter_kitchen",
         }

@@ -35,5 +35,5 @@ class DumbwaiterPantry(Room):
 
         return {
             "EAS": "pantry",
-            "LOWER": "dumbwaiter kitchen",
+            "LOW": "dumbwaiter kitchen",
         }

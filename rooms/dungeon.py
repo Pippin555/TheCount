@@ -9,6 +9,9 @@ from enum import auto
 
 from rooms.room import Room
 
+from game_files.game_storage import GameStorage
+
+
 class DungeonState(Enum):
     """ ... """
 
@@ -32,7 +35,32 @@ class Dungeon(Room):
         kwargs['inventory'] = {'rings on the wall', 'pit'}
         super().__init__(kwargs)
 
+        self.help_verbs = ['UP', 'GO', 'HEL', 'TIE', 'TO',
+                           'TAK', 'GET', 'DRO', 'CLI', 'I',
+                           'LOO', 'SAV', 'AUT', 'QUI', 'RES'
+                           ]
         self.state = DungeonState.START
+
+        GameStorage().register(label=self.name,
+                               save=self.save,
+                               load=self.load)
+
+    def load(self) -> None:
+        """ ... """
+
+        default = DungeonState.START.name
+        value = GameStorage().load_value(section=self.name,
+                                         name='state',
+                                         default=default)
+        self.state = DungeonState[value]
+
+    def save(self):
+        """ ... """
+
+        GameStorage().store_value(section=self.name,
+                                  name='state',
+                                  value=self.state.name)
+        ...
 
     def handle_command(self,
                        verb:str,
@@ -53,15 +81,18 @@ class Dungeon(Room):
         match verb:
             case 'UP':
                 return callback('enter', 'workroom')
+
             case 'GO':
                 if noun == 'UP':
                     return callback('enter', 'workroom')
 
             case 'HEL':
-                if noun != 'PIT':
-                    self.say("Problem with the pit?, try HELP PIT")
-                else:
+                if noun == 'PIT':
                     self.say("Remember the bed")
+                else:
+                    self.say(self.format_help(self.help_verbs))
+                    self.say("Problem with the pit?, try HELP PIT")
+
                 return True
 
             case "TIE":
@@ -107,6 +138,15 @@ class Dungeon(Room):
                     return True
 
             case 'DRO':
+                if noun == "SHE":
+                    # dropping the sheet will reset the state machine
+                    self.say('You untied the sheet and dropped it')
+                    for obj in self._game.objects:
+                        if obj.key == 'SHE':
+                            obj.location = self.name
+                            break
+                    return True
+
                 if self.state == DungeonState.DROP_WHAT:
                     if not have_sheet or not have_end:
                         self.say('I do not hold the end of the sheet')
@@ -149,37 +189,3 @@ class Dungeon(Room):
         return {
             "UP": "dungeon",
         }
-
-
-
-
-
-# def dungeon_handler(verb: st, noun: str, location: str) -> str:
-#     """ ... """
-#
-#     _ = location
-#
-#     match verb:
-#         case "UP":
-#             r:turn GameHandler.enter("workroom")
-#         case "HELP":
-#             if noun is None:
-#                 return "Problem with the pit?, try HELP PIT"
-#             if noun == 'PIT':
-#                 return "remember the bed"
-#         case "TIE":
-#             if noun == "SHEET":
-#                 return "To what"
-#
-#         case "TO":
-#             if noun == "RINGS":
-#                 item = game.drop_inventory("sheet")
-#                 if item is None:
-#                     return "I do not have a sheet"
-#                 rooms = game.rooms()
-#                 room = rooms.get(game.location, None)
-#                 obj: set = room['free_objects']
-#                 obj.add(item)
-#                 return "tied to rings"
-#
-#     return GameHandler.general(verb, noun, location)

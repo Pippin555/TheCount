@@ -5,13 +5,13 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from abc import ABC, abstractmethod
 
-from collections import deque
-
 from typing import Callable
 from typing import TYPE_CHECKING
 
+from utils.string_builder import StringBuilder
+
 if TYPE_CHECKING:
-    from game_state import GameState
+    pass
 
 
 class Room(ABC):
@@ -68,3 +68,20 @@ class Room(ABC):
         """ ... """
 
         ...
+
+    def format_help(self, verbs: list[str]) -> str:
+        """ ... """
+
+        bld, aln = StringBuilder.bld_aln()
+        app = bld.append
+
+        aln(f'Help on the verbs of {self.name}:')
+        for idx, verb in enumerate(sorted(verbs), 1):
+            app(f'{verb:3} ')
+            if idx % 8 == 0:
+                aln('')
+
+        if len(verbs) % 8 != 0:
+            app('\n')
+
+        return str(bld)

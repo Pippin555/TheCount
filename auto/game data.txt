@@ -1,0 +1,925 @@
+>GO WIN
+? IN ROOM_4
+GOTOY ROOM_5
+DSPRM1 
+"OK"
+
+>GO WIN
+? IN ROOM_5
+GOTOY ROOM_10
+DSPRM1 
+"OK"
+
+>LOO MIR
+? AVL OBJ_17 && -RM0 OBJ_22
+CONT 
+"My neck looks BITTEN!"
+"I appear pale & drained!"
+"I think I can only take"
+
+.cont
+EXM,CT 0
+DSPCT 
+EXM,CT 0
+"more days of this!"
+
+>UNL TOR
+? AVL OBJ_9
+EXX,X OBJ_9 OBJ_20
+"OK"
+DSPRM 
+
+>LIG TOR
+? AVL OBJ_20 && AVL OBJ_21
+EXX,X OBJ_9 OBJ_20
+DSPRM1 
+"OK"
+
+>EMP BOT
+? AVL OBJ_18
+EXX,X OBJ_18 OBJ_19
+"OK"
+
+>LOO MIR
+? AVL OBJ_17 && RM0 OBJ_22
+"TODAY I look healthy..."
+
+>LOO WIN
+? IN ROOM_2
+"I'm up in A cAstle, in the distAnce I see VOODOO CASTLE. There'sstAnding \"
+"room outside the window"
+
+>CLO WIN
+? IN/W OBJ_1
+EXX,X OBJ_1 OBJ_2
+DSPRM1 
+"OK"
+rem "CLO"
+
+>GO WIN
+? IN/W OBJ_1 && HAS OBJ_35
+GOTOY ROOM_3
+DROPX OBJ_6
+DSPRM1 
+"OK"
+
+>TO BED
+? AVL OBJ_0 && IN/W OBJ_34
+X-RM0 OBJ_0
+DROPX OBJ_35
+DROPX OBJ_36
+DSPRM1 
+
+>TO POL
+? AVL OBJ_0 && AVL OBJ_4
+X-RM0 OBJ_0
+DROPX OBJ_7
+DROPX OBJ_10
+DSPRM1 
+
+>CLI ANY
+? IN/W OBJ_10
+GOTOY ROOM_4
+DSPRM1 
+"OK"
+
+>CLI ANY
+? IN/W OBJ_11
+GOTOY ROOM_4
+DSPRM1 
+"OK"
+
+>SLE ANY
+SETZ 2
+CLS 
+CLRZ 4
+
+>LOO WAT
+? AVL OBJ_37
+"Strange watch says"
+DSPCT 
+"moves till sunset"
+
+>GO WIN
+? IN ROOM_3 && HAS OBJ_35
+GOTOY ROOM_2
+X-RM0 OBJ_6
+DSPRM1 
+"OK"
+
+>LOO OVE
+? CT> 0 && AVL OBJ_44
+"There's A tremendous Amount of HEAT & SUNLIGHT coming out."
+
+>LOO OVE
+? AVL OBJ_44 && CT<= 0
+"There's something there, maybe I should"
+"go there?"
+
+>TO RIN
+? IN/W OBJ_54
+X-RM0 OBJ_0
+X->Y OBJ_35 ROOM_18
+DROPX OBJ_55
+DSPRM1 
+
+>UNT ANY
+? IN/W OBJ_55
+X-RM0 OBJ_35
+X-RM0 OBJ_55
+DROPX OBJ_0
+DSPRM1 
+
+>UNT ANY
+? IN/W OBJ_7
+X-RM0 OBJ_7
+X-RM0 OBJ_10
+DROPX OBJ_0
+DSPRM1 
+
+>LOO DUM
+? IN/W OBJ_63
+"OK"
+"There's something there, maybe I should"
+"go there?"
+
+>EAT TAB
+? AVL OBJ_23
+SETZ 4
+EXX,X OBJ_23 OBJ_24
+EXM,CT 1
+CONT 
+
+.cont
+CT<-N 40
+EXM,CT 1
+"OK"
+"I'm real PEPPY now!"
+
+>EAT TAB
+? AVL OBJ_24
+SETZ 4
+EXX,X OBJ_24 OBJ_8
+EXM,CT 1
+CONT 
+rem "PILL 2"
+
+.cont
+CT<-N 40
+EXM,CT 1
+"OK"
+"I'm real PEPPY now!"
+
+>LOO PAC
+? IN ROOM_4
+"There's something there, maybe I should"
+"go there?"
+
+>SMO ANY
+? AVL OBJ_27 && IN ROOM_6 && RM0 OBJ_28
+"There's A COUGHIN (sic) in the room."
+DROPX OBJ_28
+DROPX OBJ_30
+
+>LOO TOI
+? IN/W OBJ_62
+"There's something there, maybe I should"
+"go there?"
+
+>LOO ROO
+? IN ROOM_20
+"There's something there, maybe I should"
+"go there?"
+
+>LIG CIG
+? AVL OBJ_33 && AVL OBJ_21
+EXM,CT 2
+CT<-N 8
+EXM,CT 2
+CONT 
+
+.cont
+EXX,X OBJ_33 OBJ_27
+"OK"
+
+>GET CIG
+? AVL OBJ_33
+GETX OBJ_33
+"OK"
+
+>LOO POS
+? AVL OBJ_47
+"There's writing on it."
+
+>LOO LET
+? AVL OBJ_65
+"There's writing on it."
+
+>GET CIG
+? AVL OBJ_27
+GETX OBJ_27
+"OK"
+
+>LOO GAT
+? AVL OBJ_50
+"Mob looks ANGRY"
+
+>LOO COF
+? IN/W OBJ_30
+"I see nothing special."
+
+>LOO COF
+? IN/W OBJ_29
+"There's something there, maybe I should"
+"go there?"
+
+>LOO VIA
+? AVL OBJ_42 && -BIT 6
+"There's something there, maybe I should"
+"empty it?"
+
+>OPE DOO
+? IN/W OBJ_12
+EXX,X OBJ_12 OBJ_13
+DSPRM1 
+"OK"
+
+>CLO DOO
+? IN/W OBJ_13
+EXX,X OBJ_12 OBJ_13
+DSPRM1 
+"OK"
+
+>LOC DOO
+? IN/W OBJ_12 && AVL OBJ_15
+EXX,X OBJ_12 OBJ_14
+DSPRM1 
+"OK"
+
+>LOO CAS
+? IN/W OBJ_49
+"OK"
+"I see nothing special."
+"EXCEPT"
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+
+>GET LOC
+? IN/W OBJ_14 && AVL OBJ_15
+EXX,X OBJ_14 OBJ_12
+DSPRM1 
+"OK"
+rem "."
+
+>REA NOT
+? AVL OBJ_47 && RM0 OBJ_51
+"The paper clip is in the way!"
+
+>GO BED
+? IN/W OBJ_34
+GOTOY ROOM_1
+DSPRM1 
+"OK"
+
+>GO OVE
+? AVL OBJ_44 && CT> 0
+"Sorry I can't do that"
+"There's A tremendous Amount of HEAT & SUNLIGHT coming out."
+
+>GO OVE
+? AVL OBJ_44 && CT<= 0
+GOTOY ROOM_15
+DSPRM1 
+"OK"
+
+>WIT FIL
+? AVL OBJ_41 && IN/W OBJ_39
+EXX,X OBJ_39 OBJ_40
+DSPRM1 
+"OK"
+
+>OPE WIN
+? IN/W OBJ_2
+EXX,X OBJ_1 OBJ_2
+DSPRM1 
+"OK"
+
+>GO DUM
+? IN/W OBJ_63
+GOTOY ROOM_20
+DSPRM1 
+"OK"
+
+>KIL BAT
+? AVL OBJ_52 && AVL OBJ_16 && AVL OBJ_53
+EXX,X OBJ_52 OBJ_67
+DSPRM1 
+"I drive the stake through his HEART. The townspeople^come and carry me \"
+"off cheering! (Don't worry, I tell them I^owe it all to you!!!!)"
+FINI 
+rem "WIN"
+
+>GO ROO
+? -BIT 8 && -BIT 7 && IN ROOM_20
+GOTOY ROOM_12
+DSPRM1 
+"OK"
+
+>EMP VIA
+? AVL OBJ_42 && -BIT 6
+DROPX OBJ_23
+DSPRM1 
+SETZ 6
+rem "."
+
+>UNT ANY
+? IN/W OBJ_36
+X-RM0 OBJ_36
+X-RM0 OBJ_6
+X-RM0 OBJ_35
+CONT 
+
+.cont
+X-RM0 OBJ_10
+DROPX OBJ_0
+DSPRM1 
+
+>CUT FIL
+? AVL OBJ_41
+"OK"
+"Some time passes..."
+CT-1 
+CT-1 
+
+>WAI ANY
+? CT> 5
+"Some time passes..."
+CT-N 5
+
+>PUL BEL
+? IN/W OBJ_48
+"OK"
+" ^A bell rings somewhere: `DING-DONG`.^"
+
+>EAT TAB
+? AVL OBJ_8
+SETZ 4
+X-RM0 OBJ_8
+EXM,CT 1
+CONT 
+
+.cont
+CT<-N 40
+EXM,CT 1
+"OK"
+"I'm real PEPPY now!"
+
+>WIT FIL
+? -AVL OBJ_41
+"Sorry I can't do that"
+"I've a hunch I've been robbed!"
+rem "NO FILE"
+
+>GO PAS
+? IN/W OBJ_56
+GOTOY ROOM_19
+NIGHT 
+DSPRM1 
+"OK"
+
+>FIN ANY
+"Sorry I can't do that"
+"I don't know where to look"
+
+>GO WIN
+? IN ROOM_10
+GOTOY ROOM_5
+DSPRM1 
+"OK"
+
+>GET POR
+? AVL OBJ_58
+GETX OBJ_58
+X->Y OBJ_56 ROOM_10
+"OK"
+
+>CLI ANY
+? IN/W OBJ_35 && IN ROOM_18
+GOTOY ROOM_16
+DAY 
+DSPRM1 
+"OK"
+
+>CLI ANY
+? IN/W OBJ_32
+NIGHT 
+GOTOY ROOM_18
+DSPRM1 
+"OK"
+
+>GO SHE
+"Try: `CLIMB SHEET`"
+
+>GO PIT
+? IN/W OBJ_32
+NIGHT 
+GOTOY ROOM_18
+DSPRM1 
+"OK"
+
+>CLO ANY
+? IN/W OBJ_38
+"I closed the lid and I suffocated!"
+FINI 
+
+>CLO ANY
+? IN/W OBJ_29
+EXX,X OBJ_29 OBJ_30
+DSPRM1 
+
+>OPE COF
+? IN/W OBJ_28 && -RM0 OBJ_39 && CT> 0
+"Sorry I can't do that"
+"Its LOCKED from INSIDE!"
+
+>OPE COF
+? IN/W OBJ_28
+X-RM0 OBJ_30
+DROPX OBJ_29
+DSPRM1 
+CONT 
+
+.cont
+? CT> 0
+X->Y OBJ_52 ROOM_13
+rem "PUT DRACKY"
+
+>EAT GAR
+? AVL OBJ_31
+"OK"
+X-RM0 OBJ_31
+
+>GO GAT
+? IN/W OBJ_50
+"Peasants attack me, I was SUPPOSED to destroy the VAMPIRE!"
+"YOU HAVE LOST!"
+FINI 
+
+>GO ROO
+? IN ROOM_20 && BIT 7
+GOTOY ROOM_21
+DSPRM1 
+"OK"
+
+>REA LET
+? AVL OBJ_65
+"DeAr DRACKY, Don't open this present till HALLOWEEN.^ signed COUNT YORGA."
+
+>REA POS
+? AVL OBJ_47 && -RM0 OBJ_51
+"Its for DRACULA, its and EATING & GHOULING bill from a^local mortuary!"
+
+>REA POS
+? AVL OBJ_47 && RM0 OBJ_51
+"Its for DRACULA, its and EATING & GHOULING bill from a^local mortuary!"
+"There's a note PAPER CLIPPED to the postcard"
+
+>REA NOT
+? AVL OBJ_51
+"Postmaster says he'll be delivering a package tomorrow."
+
+>GET CLI
+? AVL OBJ_47 && RM0 OBJ_15
+AGETX OBJ_15
+AGETX OBJ_51
+CLS 
+"OK"
+
+>UNC ANY
+? AVL OBJ_47 && RM0 OBJ_15
+AGETX OBJ_15
+AGETX OBJ_51
+CLS 
+"OK"
+
+>GET NOT
+? AVL OBJ_51
+AGETX OBJ_51
+"OK"
+
+>GET CLI
+? AVL OBJ_15
+AGETX OBJ_15
+"OK"
+
+>OPE PAC
+? AVL OBJ_45
+DROPX OBJ_46
+DROPX OBJ_26
+DROPX OBJ_18
+CONT 
+
+.cont
+X-RM0 OBJ_45
+"OK"
+
+>HEL ANY
+? IN/W OBJ_14
+"I'm A pretty good LOCK PICK!"
+
+>LIG MAT
+? AVL OBJ_21 && BIT 15
+DAY 
+DSPRM1 
+"The match flares up briefly ..."
+CONT 
+
+.cont
+DELAY 
+DELAY 
+DELAY 
+CLS 
+
+.cont
+"and then goes out!"
+NIGHT 
+DSPRM1 
+
+>JUM ANY
+? IN ROOM_3
+"I fall to my death"
+"as I fall"
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+GOTOY ROOM_22
+
+>GO ROO
+? IN ROOM_20 && BIT 8
+GOTOY ROOM_14
+DSPRM1 
+"OK"
+
+>CLI ANY
+? IN ROOM_4
+GOTOY ROOM_3
+DSPRM1 
+"OK"
+
+>SAV GAM
+"OK"
+SAVE 
+
+>GET SHE
+? AVL OBJ_0
+GETX OBJ_0
+"OK"
+
+>OPE WIN
+? IN ROOM_4
+"Sorry I can't do that"
+"There's something there, maybe I should"
+"go there?"
+
+>GO TOI
+? IN/W OBJ_62
+"OK"
+"Ah that's much better!"
+
+>TO ANY
+? AVL OBJ_0 && -IN ROOM_1
+"Sorry I can't do that"
+
+>GET SHE
+? AVL OBJ_35
+GETX OBJ_35
+"OK"
+
+>REA MEM
+? AVL OBJ_71
+"Dear Adventurer:^ I wanted to take this time (1 move!) to thank ALL of \"
+"you out^there in ADventureland for the fantastically warm \"
+"reception^Adventure has received!^Happy Adventuring,^ Scott Adams^(Chief \"
+"Adventurer)"
+
+>GET UP
+? IN ROOM_1
+GOTOY ROOM_2
+DSPRM1 
+"OK"
+
+>OUT ANY
+? IN ROOM_20
+"Try: `GO ROOM`"
+
+>FLY ANY
+? IN ROOM_0
+
+>OPE LET
+? AVL OBJ_65
+"There's writing on it."
+
+>EAT BOT
+? AVL OBJ_18
+GOTOY ROOM_22
+"I've turned into A VAMPIRE!"
+
+>GO DOO
+? IN/W OBJ_13
+GOTOY ROOM_7
+DSPRM1 
+"OK"
+
+>PUL ANY
+"Nothing happens."
+
+>SMO ANY
+? AVL OBJ_27
+"COUGH!"
+
+>UNL DOO
+? IN/W OBJ_14
+"How?"
+
+>HEL ANY
+? IN ROOM_20
+"I know how to RAISE and LOWER this thing!"
+
+>QUI ANY
+FINI 
+
+>CLI POL
+? IN/W OBJ_4
+CLS 
+"I'm At the tip of the pole"
+CONT 
+"I hear the"
+
+.cont
+"Flagpole splinter"
+"as I fall"
+GOTOY ROOM_22
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+
+>PUT DUM
+? IN ROOM_20 && BIT 7
+"Sorry I can't do that"
+"It won't go any"
+"lower"
+
+>PUT DUM
+? IN ROOM_20 && BIT 8
+CLRZ 8
+"OK"
+X->Y OBJ_63 ROOM_12
+
+>PUT DUM
+? IN ROOM_20
+SETZ 7
+"OK"
+X->Y OBJ_63 ROOM_21
+
+>OPE DUM
+? IN ROOM_20 && BIT 8
+"Sorry I can't do that"
+"It won't go any"
+"higher"
+rem "OPE"
+
+>OPE DUM
+? BIT 7 && IN ROOM_20
+CLRZ 7
+"OK"
+X->Y OBJ_63 ROOM_12
+rem "RAISE DUMBWAITER"
+
+>OPE DUM
+? IN ROOM_20
+SETZ 8
+"OK"
+X->Y OBJ_63 ROOM_14
+rem "RAISE DUMBWAITER"
+
+>GET CIG
+? AVL OBJ_26
+GETX OBJ_33
+"OK"
+
+>GO SLE
+SETZ 2
+CLS 
+
+>LOO UP
+? IN ROOM_9
+"OK"
+"I see nothing special."
+"EXCEPT"
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+
+>LOO CAS
+? IN ROOM_9
+"OK"
+"I see nothing special."
+"EXCEPT"
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+
+>LOO UP
+? IN/W OBJ_49
+"OK"
+"I see nothing special."
+"EXCEPT"
+"I notice a DARK WINDOW UNDER the bedroom window ledge!"
+
+>WAI ANY
+"Some time passes..."
+
+>JUM ANY
+"OK"
+"Nothing happens."
+
+>GO COF
+? IN/W OBJ_29
+GOTOY ROOM_13
+DSPRM1 
+"OK"
+
+>WIT ANY
+"It doesn't work!"
+"Nothing happens."
+
+>OUT ANY
+"go there?"
+"How?"
+
+>OPE DUM
+? IN/W OBJ_63
+"There's something there, maybe I should"
+"go there?"
+
+>GET INV
+INV 
+
+>CUT ANY
+"Tell me with what? Like: `WITH FIST`"
+
+>LOO NEC
+INV 
+
+>LOO MIR
+? -AVL OBJ_17
+"How?"
+
+>HEL ANY
+? IN ROOM_1
+"GET UP you sleepy head!"
+
+>HEL ANY
+EXM,CT 3
+CT+N 1
+CONT 
+
+.cont
+? CT> 4
+"I'm getting very tired"
+"of you always asking for help!"
+EXM,CT 3
+
+.cont
+? CT<= 4
+"Try examining things."
+EXM,CT 3
+
+>GET GLA
+? IN/W OBJ_69
+"Yuck!"
+"Sorry I can't do that"
+
+>LIG CIG
+? -AVL OBJ_33
+"First I need an unlit cigarette."
+
+>LIG MAT
+? AVL OBJ_21
+"The match flares up briefly ..."
+DELAY 
+DELAY 
+"and then goes out!"
+
+>LIG ANY
+? -HAVE OBJ_21
+"How?"
+"I've no matches!"
+
+>LIG ANY
+? AVL OBJ_21
+"Sorry I can't do that"
+"I'm not an arsonist!"
+
+>OPE OVE
+"Its already open."
+
+>CLO OVE
+"Sorry I can't do that"
+
+>GO POL
+? IN ROOM_3
+"Try: `CLIMB POLE`"
+
+>FLU TOI
+? IN/W OBJ_62
+"OK"
+
+>SAV ANY
+"Try: `SAVE GAME`"
+
+>TIE ANY
+"Sorry I can't do that"
+
+>GO VEN
+"Sorry I can't do that"
+"A bat might make it, but not me!"
+
+>LOO DOO
+? IN ROOM_21
+"There's something there, maybe I should"
+"go there?"
+
+>LOO DUS
+? AVL OBJ_70
+"A choooooo"
+"I see nothing special."
+
+>GO WIN
+? IN/W OBJ_1 && -HAVE OBJ_35
+GOTOY ROOM_3
+DSPRM1 
+"OK"
+
+>JAM ANY
+"Maybe I should BREAK it?"
+
+>EAT STA
+? AVL OBJ_52 && AVL OBJ_16 && AVL OBJ_53
+EXX,X OBJ_52 OBJ_67
+DSPRM1 
+"I drive the stake through his HEART. The townspeople^come and carry me \"
+"off cheering! (Don't worry, I tell them I^owe it all to you!!!!)"
+FINI 
+rem "DRIVE STAKE"
+
+>GO WIN
+? IN ROOM_3 && -HAVE OBJ_35
+GOTOY ROOM_2
+DSPRM1 
+"OK"
+
+>SAY ANY
+"OK"
+SAYWCR 
+
+>MAK BED
+"OK"
+
+>SCO ANY
+"How?"
+
+>SME ANY
+"OK"
+
+>EAT ANY
+"Yuck!"
+
+>FEE ANY
+"OK"
+"I see nothing special."
+
+>PUT MIR
+? HAS OBJ_17 && -IN/W OBJ_3
+X-RM0 OBJ_17
+DROPX OBJ_69
+"Mirror shatters! That's 7 years bad luck!"
+
+>PUT MIR
+? HAS OBJ_17 && IN/W OBJ_3
+"OK"
+DROPX OBJ_17
+"I set the mirror on the pillow."
+
+>LOO COA
+? AVL OBJ_5
+"It bears the Family Crest of DRACULA!"
+
+>REA ANY
+"try looking at it"
+
+>LOO MEM
+? AVL OBJ_71
+"There's writing on it."
+
+>LOO NOT
+? AVL OBJ_51
+"There's writing on it."
+
+>INV ANY
+INV 
+
+>LOO ANY
+DSPRM1 
+"I see nothing special."

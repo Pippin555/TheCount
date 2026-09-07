@@ -4,10 +4,10 @@ from sys import exit as _exit
 
 from tkinter import Tk
 
-from game_gui import Gui
-from game_state import GameState
-from game_handlers import GameHandler
-from game_machine import StateMachine
+from game_files.game_gui import Gui
+from game_files.game_state import GameState
+from game_files.game_handlers import GameHandler
+from game_files.game_machine import StateMachine
 
 
 def main() -> int:

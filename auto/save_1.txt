@@ -1,0 +1,1 @@
+{"dungeon": {"state": "END_DROPPED"}, "state": {"local": "{\"SHE\": \"dungeon\", \"END\": \"\", \"GAR\": \"pantry\", \"MAT\": \"pantry\", \"TOR\": \"cellar\", \"PAC\": \"package\", \"PKG\": \"gate\", \"STA\": \"\", \"inventory\": [], \"location\": \"dungeon\"}"}}

@@ -1,6 +1,6 @@
 """ data file for The Count by Scott Adams """
 
-from game_object import GameObject
+from game_files.game_object import GameObject
 
 
 VERBS = {

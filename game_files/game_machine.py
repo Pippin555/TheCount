@@ -2,9 +2,9 @@
 
 from parser import Parser
 
-from game_state import GameState
+from game_files.game_state import GameState
 
-from game_handlers import GameHandler
+from game_files.game_handlers import GameHandler
 
 from texts import TEXTS
 from utils.command_router import CommandRouter
@@ -41,8 +41,9 @@ class StateMachine:
 
         verb, noun = parsed
         output.append(f'* {verb} {noun if noun else ""}')
+        verb = verb[:3]
 
-        match verb[:3]:
+        match verb:
             case "INV":
                 output.append(self._game.inventory())
                 return True
@@ -82,9 +83,6 @@ class StateMachine:
                     output.append(f"Go to bed to sleep, you are now here: {name}")
 
                 return True
-
-            case "HEL":
-                output.append('Sorry, HELP is not immplemented yet')
 
             case _:
                 return self._handler.do_command(verb, noun)

@@ -2,9 +2,10 @@
 
 from collections import deque
 
-from rooms.workroom import Workroom
+from jsons import dumps
+from jsons import loads
+
 from utils.string_builder import StringBuilder
-from utils.command_router import CommandRouter
 
 from data import GO
 from data import OBJECT_DATA
@@ -27,6 +28,8 @@ from rooms.draculas_bedroom import DraculasBedroom
 from rooms.workroom import Workroom
 from rooms.dungeon import Dungeon
 from rooms.pit import Pit
+
+from game_files.game_storage import GameStorage
 
 
 class GameState:
@@ -69,6 +72,30 @@ class GameState:
 
         output.append('[CLEAR]')
         output.append(TEXTS["INTRO"])
+        GameStorage().register(label='state', save=self.save, load=self.load)
+
+    def save(self):
+        """ ... """
+
+        local = {}
+        for obj in self.objects:
+            local[obj.key] = obj.location
+
+        lst = [str(item) for item in self._inventory]
+        local['inventory'] = lst
+        local['location'] = self.location
+
+        GameStorage().store_value(section='state',
+                                  name='local',
+                                  value = dumps(local))
+
+    def load(self):
+        """ ... """
+
+        local = GameStorage().load_value(section='state',
+                                         name='local',
+                                         default=dumps({}))
+        ...
 
     def inventory(self):
         """ ... """
