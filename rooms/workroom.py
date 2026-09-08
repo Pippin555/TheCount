@@ -25,6 +25,7 @@ class Workroom(Room):
                        callback: Callable):
         """ ... """
 
+        print(f'workroom {verb} {noun}')
         match verb:
             case "ENT":
                 match noun:
@@ -56,6 +57,18 @@ class Workroom(Room):
                 match noun:
                     case "DOO":
                         self.say('You opened the door')
+                        return True
+
+            case 'CLO':
+                match noun:
+                    case "DOO":
+                        self.say('You closed the door')
+                        return True
+
+            case 'LOC':
+                match noun:
+                    case "DOO":
+                        self.say('You locked the door')
                         return True
 
         return False

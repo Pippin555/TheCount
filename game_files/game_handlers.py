@@ -64,7 +64,7 @@ class GameHandler:
                 key = noun[:3]
                 if self._game.has(noun=key, location='player'):
                     self._game.place(noun=key, location=location)
-                    name = NOUNS.get(noun, noun)
+                    name = NOUNS.get(key, noun)
                     output.append(f'I dropped the {name} in the {location}')
                     return True
 
