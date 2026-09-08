@@ -109,6 +109,7 @@ NOUNS = {
     "WES": "West",
     "ROO": "ROOM",
     "DOW": "DOWN",
+    "VEN": "VENT",
     "1": "1",
     "2": "2",
     "3": "3",
@@ -130,10 +131,15 @@ OBJECT_DATA = [
     ('END', 'end of sheet', '', False),
     ('GAR', 'clove of garlic', 'pantry', False),
     ('MAT', 'matches', 'pantry', True),
-    ('TOR', 'torch', 'cellar', False),
+    ('TOR', 'torch', '', False),
     ('PAC', 'pack of cigarettes', 'package', False),
     ('PKG', 'package', 'gate', False),
-    ('STA', 'tent stake', '', False)
+    ('STA', 'tent stake', '', False),
+    ('POS', 'postcard', 'courtyard', False),
+    ('NOT', 'note', '', False),
+    ('CLI', 'clip', '', False),
+    ('VIA', 'vial', 'closet', False),
+    ('TAB', 'tablets', 'closet', False),
 ]
 
 

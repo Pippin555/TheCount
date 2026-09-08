@@ -3,13 +3,7 @@
 __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
-from os import makedirs
-
-from os.path import abspath
-from os.path import join
-
-from jsons import dumps
-from jsons import loads
+from data import NOUNS
 
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
@@ -67,15 +61,16 @@ class GameHandler:
                         return True
 
             case 'DRO':
-                for obj in game.objects:
-                    if key == noun:
-                        if obj.location == 'player':
-                            obj.location = location
-                            output.append(f'I dropped the {obj.name} in the {location}')
-                            return True
+                key = noun[:3]
+                if self._game.has(noun=key, location='player'):
+                    self._game.place(noun=key, location=location)
+                    name = NOUNS.get(noun, noun)
+                    output.append(f'I dropped the {name} in the {location}')
+                    return True
 
-                output.append(f"I don't have {noun}")
-                return False
+                else:
+                    output.append(f"I don't have {noun}")
+                    return False
 
             case "AUT":
                 if noun.isnumeric():

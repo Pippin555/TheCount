@@ -30,8 +30,17 @@ class Pit(Room):
             case 'CLI':
                 if noun == 'SHE':
                     return callback('enter', 'dungeon')
-
                     return True
+
+            case 'LIG':
+                match noun:
+                    case 'MAT':
+                        self.say('You light a match')
+                        if self._game.has('TOR', ''):
+                            self._game.place('TOR', self.name)
+                            self.say('You found a TORCH!')
+                            return True
+
         return False
 
     @property

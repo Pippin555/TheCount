@@ -19,7 +19,7 @@ class Dungeon(Room):
 
         kwargs['name'] = 'dungeon'
         kwargs['description'] = 'I am in a dungeon'
-        kwargs['inventory'] = {'rings on the wall', 'pit'}
+        kwargs['inventory'] = {'rings on the wall', 'pit', 'vent'}
         super().__init__(kwargs)
 
         self.help_verbs = ['UP', 'GO', 'HEL', 'TIE', 'TO',
@@ -36,10 +36,6 @@ class Dungeon(Room):
         match verb:
             case 'UP':
                 return callback('enter', 'workroom')
-
-            case 'GO':
-                if noun == 'UP':
-                    return callback('enter', 'workroom')
 
             case 'HEL':
                 if noun == 'PIT':
@@ -121,8 +117,15 @@ class Dungeon(Room):
                     verb = VERBS.get(verb, verb)
                     noun = NOUNS.get(noun, noun)
                     self.say(f"I can't {verb} {noun}")
+                    return False
 
                 return True
+
+            case "ENT":
+                match noun:
+                    case "VEN":
+                        self.say('You’re not the size of bat')
+                        return True
 
         return False
 
@@ -131,5 +134,5 @@ class Dungeon(Room):
         """ ... """
 
         return {
-            "UP": "dungeon",
+            "UP": "workroom",
         }

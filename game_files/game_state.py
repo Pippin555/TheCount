@@ -5,6 +5,8 @@ from collections import deque
 from jsons import dumps
 from jsons import loads
 
+from rooms.closet import Closet
+from rooms.courtyard import Courtyard
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -28,6 +30,9 @@ from rooms.draculas_bedroom import DraculasBedroom
 from rooms.workroom import Workroom
 from rooms.dungeon import Dungeon
 from rooms.pit import Pit
+from rooms.courtyard import Courtyard
+from rooms.closet import Closet
+
 
 from game_files.game_storage import GameStorage
 
@@ -57,7 +62,9 @@ class GameState:
             "Dracula's bedroom": DraculasBedroom(kwargs),
             "workroom": Workroom(kwargs),
             "dungeon": Dungeon(kwargs),
-            "pit": Pit(kwargs)
+            "pit": Pit(kwargs),
+            "courtyard": Courtyard(kwargs),
+            "closet": Closet(kwargs),
         }
 
         self.objects = [GO(*data) for data in OBJECT_DATA]

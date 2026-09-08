@@ -7,7 +7,10 @@ from game_files.game_state import GameState
 from game_files.game_handlers import GameHandler
 
 from texts import TEXTS
-from utils.command_router import CommandRouter
+
+from data import NOUNS
+
+from utils.string_builder import StringBuilder
 
 
 class StateMachine:
@@ -69,8 +72,11 @@ class StateMachine:
                 return True
 
             case "UNK" | "PWR":
-                output.append(TEXTS[verb])
-                return True
+                bld, aln = StringBuilder.bld_aln()
+                aln(f'issue with: "{command}"')
+                aln(TEXTS[verb])
+                output.append(str(bld))
+                return False
 
             case "LOO":
                 self._handler.where()
@@ -89,6 +95,32 @@ class StateMachine:
                     output.append(f"Go to bed to sleep, you are now here: {name}")
 
                 return True
+
+            case "WAI":
+                output.append('some time goes by')
+                return True
+
+            case 'LIG':
+                match noun[:3]:
+                    case 'TOR' | 'MAT':
+                        self._game.place(noun, 'player lit')
+                        noun = NOUNS.get(noun, noun)
+                        output.append(f'You lit the {noun}')
+                        return True
+
+            case 'EXT':
+                match noun:
+                    case 'TOR':
+                        output.append('You extinguished the TORCH')
+                        self._game.place('TOR', 'player')
+                        return True
+
+            case 'EAT':
+                match noun[:3]:
+                    case 'TAB':
+                        noun = NOUNS.get(noun, noun)
+                        output.append(f'You ate the {noun}')
+                        return True
 
             case _:
                 return self._handler.do_command(verb, noun)

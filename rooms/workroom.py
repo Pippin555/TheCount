@@ -16,7 +16,7 @@ class Workroom(Room):
 
         kwargs['name'] = 'workroom'
         kwargs['description'] = 'I am in a workroom'
-        kwargs['inventory'] = set()
+        kwargs['inventory'] = {'door', 'lock'}
         super().__init__(kwargs)
 
     def handle_command(self,
@@ -25,12 +25,38 @@ class Workroom(Room):
                        callback: Callable):
         """ ... """
 
-        if verb == "ENT" and noun == "DUM":
-            callback('enter', 'dumbwaiter workroom')
-            return True
+        match verb:
+            case "ENT":
+                match noun:
+                    case "DUM":
+                        return callback('enter', 'dumbwaiter workroom')
 
-        if verb == 'DOW':
-            return callback('enter', 'dungeon')
+                    case "VEN":
+                        self.say('You’re not the size of bat')
+                        return True
+
+                    case "DOO":
+                        return callback('enter', 'closet')
+
+            case 'DOW':
+                return callback('enter', 'dungeon')
+
+            case "GO":
+                match noun:
+                    case "DOW":
+                        return callback('enter', 'dungeon')
+
+            case "PIC":
+                match noun:
+                    case "LOC":
+                        self.say('You picked the lock of the door')
+                        return True
+
+            case 'OPE':
+                match noun:
+                    case "DOO":
+                        self.say('You opened the door')
+                        return True
 
         return False
 

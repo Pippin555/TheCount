@@ -6,7 +6,7 @@ from os.path import join
 from os.path import abspath
 from os.path import isfile
 
-from tkinter import Tk
+from tkinter import Tk, messagebox
 
 from imgdict.get_dict_img import get_ico
 from rooms.exchange import Exchange
@@ -54,6 +54,7 @@ class Gui:
         self.entry = EntryContainer(
             master=master,
             key='command',
+            command=self._continue,
             prompt='Command',
             prompt_width=10,
             on_return=self._command)
@@ -76,6 +77,11 @@ class Gui:
         master.after(100, self._update)
 
         self.process_input()
+
+    def _continue(self):
+        """ ... """
+
+        ...
 
     def text_click(self, event) -> None:
         """ ... """
@@ -126,9 +132,18 @@ class Gui:
     def process_input(self):
         """ ... """
 
+        result = True
         if self._in_queue:
             command = self._in_queue.popleft()
-            self._machine.do_command(command)
+            result = self._machine.do_command(command)
+            if not result:
+                ...
+            self.print(str(result))
+
+        if self._in_queue and not result:
+            if not messagebox.askyesno('Command Failed',
+                                       'Continue processing?'):
+                self._in_queue.clear()
 
         self.master.after(200, self.process_input)
 
