@@ -42,6 +42,28 @@ class Courtyard(Room):
                         self.say("Postmaster says he'll be delivering a package tomorrow.")
                         return True
 
+            case 'OPE':
+                match noun:
+                    case 'PAC':
+                        # this is either PKG for the PACKAGE, when unopened
+                        # or the PACK OF CIGARETTES when in possession
+                        if self._game.has('PKG', 'courtyard') and \
+                            self._game.has('PAC', 'package'):
+                            # meaning: opened
+                            self.say('I opened the package')
+                            self.say('I see a pack of cigarettes')
+                            return True
+
+            case 'TAK' | 'GET':
+                match noun:
+                    case 'PAC':
+                        self._game.place('PAC', 'player')
+                        self.say('I got the pack of cigarettes')
+                        return True
+
+            # case _:
+            #     ...
+
         return False
 
     @property

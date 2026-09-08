@@ -26,6 +26,7 @@ class Bedroom(Room):
         self.help_verbs = ['GO', 'HEL', 'TIE', 'TO', 'AUT',
                            'TAK', 'GET', 'DRO', 'LOO', 'SAV',
                            'LOA', 'QUI', 'RES']
+        self._window_open = False
 
     def handle_command(self,
                        verb:str,
@@ -38,10 +39,22 @@ class Bedroom(Room):
                 self.say(self.format_help(self.help_verbs))
                 return True
 
-            case 'GO':
+            case 'OPE':
                 match noun:
                     case 'WIN':
-                        return callback(verb='enter', noun='bedroom window')
+                        self.say('I opened the window')
+                        self._window_open = True
+                        return True
+
+            case 'GO' | "ENT":
+                match noun:
+                    case 'WIN':
+                        if self._window_open:
+                            return callback(verb='enter', noun='bedroom window')
+                        else:
+                            self.say("I can't enter a closed window")
+                            return True
+
                     case 'BED':
                         return callback(verb='enter', noun='bed')
 

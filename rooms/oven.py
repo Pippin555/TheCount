@@ -8,14 +8,15 @@ from typing import Callable
 from rooms.room import Room
 
 
-class Flowerbed(Room):
-    """ 'FlowerBed' below the 'Bedroom window' as 'room' in the game 'The Count' """
+class Oven(Room):
+    """ 'Hall'Oven' a 'room' in the game 'The Count' """
 
     def __init__(self, kwargs: dict):
+
         """ ... """
 
-        kwargs['name'] = 'flowerbed'
-        kwargs['description'] = 'I am on a flowerbed'
+        kwargs['name'] = 'oven'
+        kwargs['description'] = 'I am in a huge solar oven'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
 
@@ -25,17 +26,6 @@ class Flowerbed(Room):
                        callback: Callable):
         """ ... """
 
-        match verb:
-            case 'CLI':
-                match noun:
-                    case 'SHE':
-                        return callback(verb='enter', noun='bedroom window')
-
-            case 'ENT':
-                match noun:
-                    case 'WIN':
-                        return callback(verb='enter', noun="Dracula's bedroom")
-
         return False
 
     @property
@@ -43,5 +33,5 @@ class Flowerbed(Room):
         """ ... """
 
         return {
-            "Window": None
+            "WES": "kitchen",
         }

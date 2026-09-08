@@ -3,10 +3,8 @@
 from collections import deque
 
 from jsons import dumps
-from jsons import loads
 
-from rooms.closet import Closet
-from rooms.courtyard import Courtyard
+from rooms.oven import Oven
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -32,7 +30,10 @@ from rooms.dungeon import Dungeon
 from rooms.pit import Pit
 from rooms.courtyard import Courtyard
 from rooms.closet import Closet
-
+from rooms.bathroom import Bathroom
+from rooms.passage import Passage
+from rooms.crypt import Crypt
+from rooms.oven import Oven
 
 from game_files.game_storage import GameStorage
 
@@ -55,6 +56,7 @@ class GameState:
             "flowerbed": Flowerbed(kwargs),
             "hall": Hall(kwargs),
             "kitchen": Kitchen(kwargs),
+            "oven": Oven(kwargs),
             "dumbwaiter kitchen": DumbwaiterKitchen(kwargs),
             "dumbwaiter pantry": DumbwaiterPantry(kwargs),
             "dumbwaiter workroom": DumbwaiterWorkroom(kwargs),
@@ -65,12 +67,16 @@ class GameState:
             "pit": Pit(kwargs),
             "courtyard": Courtyard(kwargs),
             "closet": Closet(kwargs),
+            "bathroom": Bathroom(kwargs),
+            "passage": Passage(kwargs),
+            "crypt": Crypt(kwargs),
         }
 
         self.objects = [GO(*data) for data in OBJECT_DATA]
         self._location = "bed"
         self.day = 1
-        self.moves_to_sunset = 0
+        self.moves = 0
+        self.moves_to_sunset = 30
 
         self._inventory = set()
 
@@ -80,6 +86,15 @@ class GameState:
         output.append('[CLEAR]')
         output.append(TEXTS["INTRO"])
         GameStorage().register(label='state', save=self.save, load=self.load)
+
+    @property
+    def sunset(self) -> int:
+        """ -1: day 0: sunset 1: night """
+
+        def sign(x: int | float):
+            return int(x > 0) - int(x < 0)
+
+        return sign(self.moves - self.moves_to_sunset)
 
     def save(self):
         """ ... """
@@ -113,7 +128,7 @@ class GameState:
         output.append("I'm carrying the following:")
         found = False
         for obj in self.objects:
-            if obj.location == 'player':
+            if obj.location.startswith('player'):
                 aln(obj.name)
                 found = True
 
@@ -169,14 +184,41 @@ class GameState:
 
         return False
 
-    # def whereis(self, noun: str):
-    #     """ ... """
-    #
-    #     for obj in self.objects:
-    #         if obj.key == noun:
-    #             return obj.location
-    #
-    #     return None
+    def next_day(self):
+        """ ... """
+
+        self.day += 1
+        self.moves = 1
+
+    def next_move(self) -> tuple[int, int]:
+        """ ... """
+
+        self.moves += 1
+        return self.clock()
+
+    def clock(self) -> tuple[int, int]:
+        """ ... """
+
+        return (self.day, self.moves)
+
+    def getting_late(self):
+        """ ... """
+
+        self._output.append("It is getting dark and I am getting tired.")
+        day, move = self.clock()
+        self._output.append(f"It is day {day} and move {move}.")
+
+    def package_arrives(self):
+        """ ... """
+
+        self._output.append("***")
+        self._output.append("The bell at the front door was rung")
+
+        if self.has(noun='PKG', location=''):
+            self.place(noun='PKG', location='courtyard')
+
+        self._output.append("***")
+        self._output.append("")
 
     @property
     def rooms(self):

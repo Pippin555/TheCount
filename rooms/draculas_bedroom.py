@@ -15,10 +15,9 @@ class DraculasBedroom(Room):
         """ ... """
 
         kwargs['name'] = "Dracula's bedroom"
-        kwargs['inventory'] = {"Painting", }
+        kwargs['inventory'] = {"Dracula's Painting", "Window" }
         kwargs['description'] = "I am in Dracula's bedroom"
         super().__init__(kwargs)
-        self.painting = 'hanging'
 
     def handle_command(self,
                        verb: str,
@@ -26,13 +25,29 @@ class DraculasBedroom(Room):
                        callback: Callable) -> bool:
         """ ... """
 
-        if verb == 'REM' and noun == 'PAI':
-            if self.painting == 'hanging':
-                self.painting = 'removed'
-                for obj in self._game.objects:
-                    if obj.key == 'STA':
-                        obj.location = self.name
-                        return True
+        game = self._game
+        match verb:
+            case 'REM':
+                match noun:
+                    case 'POR':
+                        if game.has('POR', 'hanging'):
+                            self._inventory.clear()
+                            self.say("I removed Dracula's portrait")
+                            game.place('POR', 'player')
+                            game.place('STA', self.name)
+                            self._inventory.add('Passage')
+                            self.say("I found a tent stake")
+                            self.say("I found a passage")
+                            return True
+
+            case 'ENT':
+                match noun:
+                    case 'WIN':
+                        return callback('enter', 'flowerbed')
+
+                    case 'PAS':
+                        if not game.has('POR', 'hanging'):
+                            return callback('enter', 'passage')
 
         return False
 

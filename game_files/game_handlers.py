@@ -4,6 +4,7 @@ __author__ = 'Sihir'
 __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from data import NOUNS
+from data import VERBS
 
 from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
@@ -29,8 +30,10 @@ class GameHandler:
         """ ... """
 
         room = self._game.current_room
-        if room.handle_command(verb=verb[:3],
-                               noun=noun[:3] if noun else None,
+        verb = verb[:3]
+        noun = noun[:3] if noun else None
+        if room.handle_command(verb=verb,
+                               noun=noun,
                                callback=self.handle_callback):
             return True
 
@@ -61,7 +64,6 @@ class GameHandler:
                         return True
 
             case 'DRO':
-                key = noun[:3]
                 if self._game.has(noun=key, location='player'):
                     self._game.place(noun=key, location=location)
                     name = NOUNS.get(key, noun)
@@ -69,6 +71,7 @@ class GameHandler:
                     return True
 
                 else:
+                    noun = NOUNS.get(key, noun)
                     output.append(f"I don't have {noun}")
                     return False
 
@@ -105,6 +108,8 @@ class GameHandler:
 
                 return True
 
+        verb = VERBS.get(verb, verb)
+        noun = NOUNS.get(noun, noun)
         output.append(f"I can't {verb} {noun if noun else ''} in {location}")
         return False
 

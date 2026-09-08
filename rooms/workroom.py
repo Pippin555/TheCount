@@ -25,7 +25,7 @@ class Workroom(Room):
                        callback: Callable):
         """ ... """
 
-        print(f'workroom {verb} {noun}')
+        # print(f'workroom {verb} {noun}')
         match verb:
             case "ENT":
                 match noun:

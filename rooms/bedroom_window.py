@@ -50,6 +50,11 @@ class BedroomWindow(Room):
 
                 return True
 
+            case 'ENT':
+                match noun:
+                    case 'WIN':
+                        return callback(verb='enter', noun='bedroom')
+
         return False
 
     @property

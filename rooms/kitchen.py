@@ -25,10 +25,20 @@ class Kitchen(Room):
                        callback: Callable):
         """ ... """
 
-        if verb in ["GO", "ENT"] and noun == "DUM":
-            callback('enter', 'dumbwaiter kitchen')
-            return True
+        game = self._game
 
+        match verb:
+            case 'ENT' | 'GO':
+                match noun:
+                    case 'DUM':
+                        return callback('enter', 'dumbwaiter kitchen')
+
+                    case 'OVE':
+                        if game.sunset == -1:
+                            self.say('Solar oven is UNSAFE to enter in daytime')
+                            return True
+                        elif game.sunset == 1:
+                            return callback('enter', 'oven')
         return False
 
     @property
@@ -38,4 +48,5 @@ class Kitchen(Room):
         return {
             "WES": "dumbwaiter kitchen",
             "EAS": "hall",
+            "OVEN": None,
         }

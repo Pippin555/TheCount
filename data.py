@@ -22,6 +22,7 @@ VERBS = {
     "SLE": "SLEEP",
     "REA": "READ",
     "TO": "TO",
+    "LOC": "LOCK",
     "UNL": "UNLOCK",
     "EXT": "EXTINGUISH",
     "LIG": "LIGHT",
@@ -67,7 +68,7 @@ VERBS = {
     "REM": "REMOVE",
     "CLE": "CLEAR",
     "WHE": "WHEREIS",
-    "HAL": "HALT EXECUTION"
+    "EVE": "EVENING",
 }
 
 NOUNS = {
@@ -107,9 +108,11 @@ NOUNS = {
     "EAS": "Eath",
     "SOU": "South",
     "WES": "West",
-    "ROO": "ROOM",
-    "DOW": "DOWN",
-    "VEN": "VENT",
+    "ROO": "Room",
+    "DOW": "Down",
+    "VEN": "Vent",
+    "PAS": "Passage",
+    "SIG": "Sign",
     "1": "1",
     "2": "2",
     "3": "3",
@@ -133,13 +136,17 @@ OBJECT_DATA = [
     ('MAT', 'matches', 'pantry', True),
     ('TOR', 'torch', '', False),
     ('PAC', 'pack of cigarettes', 'package', False),
-    ('PKG', 'package', 'gate', False),
+    ('PKG', 'package', '', False),
     ('STA', 'tent stake', '', False),
     ('POS', 'postcard', 'courtyard', False),
     ('NOT', 'note', '', False),
     ('CLI', 'clip', '', False),
     ('VIA', 'vial', 'closet', False),
     ('TAB', 'tablets', 'closet', False),
+    ('POR', "Dracula's portrait", "hanging", False),
+    ('CIG', 'cigarette', '', False),
+    ('FIL', 'broad file', 'oven', False),
+    ('COF', "Coffin", "", False)
 ]
 
 

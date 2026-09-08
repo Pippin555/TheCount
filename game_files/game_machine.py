@@ -29,6 +29,15 @@ class StateMachine:
         """ ... """
 
         output = self._output
+        game = self._game
+
+        day, move = game.next_move()
+
+        if game.sunset == 0:
+            game.getting_late()
+
+        if day == 2 and move == 24:
+            game.package_arrives()
 
         if command == "":
             command = "look"
@@ -45,6 +54,7 @@ class StateMachine:
         verb, noun = parsed
         output.append(f'* {verb} {noun if noun else ""}')
         verb = verb[:3]
+        key = noun[:3] if noun else None
 
         match verb:
             case "INV":
@@ -52,22 +62,20 @@ class StateMachine:
                 return True
 
             case "GO":
-                if noun:
-                    self.go(noun[:3])
-                    return True
-                return False
+                return self.go(key) if key else False
 
             case "NOR" | "SOU" | "EAS" | "WES" | "RAI" | "LOW":
                 self.go(verb)
                 return True
 
             case "QUI":
-                self._game.exited()
+                game.exited()
                 output.append("you have exited the game, try: restart")
                 return True
 
             case "RES":
-                self._game = game = GameState()
+                game = game = GameState()
+                game.moves = 0
                 self._handler = GameHandler(game=game)
                 return True
 
@@ -79,7 +87,12 @@ class StateMachine:
                 return False
 
             case "LOO":
-                self._handler.where()
+                match noun:
+                    case None:
+                        self._handler.where()
+                    case 'WAT':
+                        output.append(f'day {game.day} move {game.moves}')
+
                 return True
 
             case "CLE":
@@ -87,10 +100,11 @@ class StateMachine:
                 return True
 
             case "SLE":
-                room = self._game.current_room
+                room = game.current_room
                 name = room.name
                 if name == 'Bed':
                     output.append('You went to sleep')
+                    game.next_day()
                 else:
                     output.append(f"Go to bed to sleep, you are now here: {name}")
 
@@ -100,20 +114,34 @@ class StateMachine:
                 output.append('some time goes by')
                 return True
 
-            case 'LIG':
-                match noun[:3]:
-                    case 'TOR' | 'MAT':
-                        self._game.place(noun, 'player lit')
-                        noun = NOUNS.get(noun, noun)
-                        output.append(f'You lit the {noun}')
-                        return True
+            case "EVE":
+                game.moves = game.moves_to_sunset - 1
+                return True
 
-            case 'EXT':
-                match noun:
+            case 'LIG':
+                match key:
+                    case 'TOR' | 'MAT':
+                        if game.has(noun=key, location='player'):
+                            game.place(key, 'player lit')
+                            noun = NOUNS.get(key, noun)
+                            output.append(f'You lit the {noun}')
+                            return True
+                        else:
+                            noun = NOUNS.get(noun, noun)
+                            output.append(f"I don't have a {noun}")
+                            return False
+
+            case 'EXT' | 'UNL':
+                match key:
                     case 'TOR':
-                        output.append('You extinguished the TORCH')
-                        self._game.place('TOR', 'player')
-                        return True
+                        noun = NOUNS.get(key, key)
+                        if game.has(noun=key, location='player lit'):
+                            game.place(noun=key, location='player')
+                            output.append(f'You have extinguised the {noun}')
+                            return True
+                        elif game.has(noun=key, location='player'):
+                            output.append(f"The {noun} was already extinguised")
+                            return True
 
             case 'EAT':
                 match noun[:3]:
