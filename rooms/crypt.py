@@ -47,6 +47,7 @@ class Crypt(Room):
                     case 'CIG':
                         # is it after sunset1 after 30 moves
                        if self._game.sunset == -1:
+                            self.say("A spooky voice is heard:")
                             self.say("SMOKING IS BAD FOR YOUR HEALTH!")
                             self.say("(Wait till the sun has set)")
                             return True

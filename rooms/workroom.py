@@ -16,7 +16,7 @@ class Workroom(Room):
 
         kwargs['name'] = 'workroom'
         kwargs['description'] = 'I am in a workroom'
-        kwargs['inventory'] = {'door', 'lock'}
+        kwargs['inventory'] = {'door', 'lock', 'vent'}
         super().__init__(kwargs)
 
     def handle_command(self,
@@ -25,7 +25,6 @@ class Workroom(Room):
                        callback: Callable):
         """ ... """
 
-        # print(f'workroom {verb} {noun}')
         match verb:
             case "ENT":
                 match noun:
@@ -33,6 +32,7 @@ class Workroom(Room):
                         return callback('enter', 'dumbwaiter workroom')
 
                     case "VEN":
+                        self.say("A spooky voice is heard")
                         self.say('You’re not the size of bat')
                         return True
 

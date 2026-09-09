@@ -35,7 +35,7 @@ class Closet(Room):
             case "EMP":
                 match noun:
                     case "VIA":
-                        self.say('You emptied the VIAL')
+                        self.say('I emptied the VIAL')
                         return True
 
         return False

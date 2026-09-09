@@ -78,7 +78,7 @@ class Dungeon(Room):
                     case "SHE":
                         # player gets the sheet
                         self._game.place('SHE', 'player')
-                        self.say('You untied the sheet')
+                        self.say('I untied the sheet')
 
                         # let the end of the sheet vanish
                         self._game.place('END', '')
@@ -93,7 +93,7 @@ class Dungeon(Room):
                 match noun:
                     case "SHE":
                         # dropping the sheet will reset the state machine
-                        self.say('You untied the sheet and dropped it')
+                        self.say('I untied the sheet and dropped it')
                         self._game.place('SHE', self.name)
                         self._game.place('END', '')
                         return True
@@ -118,14 +118,6 @@ class Dungeon(Room):
                     noun = NOUNS.get(noun, noun)
                     self.say(f"I can't {verb} {noun}")
                     return False
-
-                return True
-
-            case "ENT":
-                match noun:
-                    case "VEN":
-                        self.say('You’re not the size of bat')
-                        return True
 
         return False
 

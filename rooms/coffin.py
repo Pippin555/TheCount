@@ -7,6 +7,8 @@ from typing import Callable
 
 from rooms.room import Room
 
+from texts import TEXTS
+
 
 class Coffin(Room):
     """ 'Coffin' as 'room' in the game 'The Count' """
@@ -44,10 +46,15 @@ class Coffin(Room):
                         self._inventory= {'bolt cut', }
                         return True
 
-            # case 'GO':
-            #     match noun:
-            #         case 'UP':
-            #             return callback('enter', 'crypt')
+            case 'KIL':
+                match noun:
+                    case 'DRA':
+                        if self._game.has('STA') and \
+                            self._game.has('MAL') and \
+                            self._game.has('DRA', 'coffin'):
+
+                            self.say(TEXTS['WIN'])
+                            return True
         return False
 
     @property

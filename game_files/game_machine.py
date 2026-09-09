@@ -1,5 +1,4 @@
 """ game state machine """
-from idlelib.colorizer import matched_named_groups
 
 from parser import Parser
 
@@ -71,11 +70,6 @@ class StateMachine:
                 self.go(verb)
                 return True
 
-            case "QUI":
-                game.exited()
-                output.append("you have exited the game, try: restart")
-                return True
-
             case "RES":
                 self._game = game = GameState()
                 game.moves = 0
@@ -97,10 +91,10 @@ class StateMachine:
                 room = game.current_room
                 name = room.name
                 if name == 'Bed':
-                    output.append('You went to sleep')
+                    output.append('I went to sleep')
                     game.next_day()
                 else:
-                    output.append(f"Go to bed to sleep, you are now here: {name}")
+                    output.append(f"I shoud go to bed to sleep, I  am now here: {name}")
 
                 return True
 
@@ -118,7 +112,7 @@ class StateMachine:
                         noun = NOUNS.get(key, key)
                         if game.has(noun=key, location='player lit'):
                             game.place(noun=key, location='player')
-                            output.append(f'You have extinguised the {noun}')
+                            output.append(f'I have extinguised the {noun}')
                             return True
                         elif game.has(noun=key, location='player'):
                             output.append(f"The {noun} was already extinguised")

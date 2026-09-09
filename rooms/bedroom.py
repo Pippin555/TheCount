@@ -90,7 +90,7 @@ class Bedroom(Room):
                     case "SHE":
                         # player gets the sheet
                         self._game.place('SHE', 'player')
-                        self.say('You untied the sheet')
+                        self.say('I untied the sheet')
 
                         # let the end of the sheet vanish
                         self._game.place('END', '')

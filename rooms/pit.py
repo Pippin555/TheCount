@@ -35,10 +35,10 @@ class Pit(Room):
             case 'LIG':
                 match noun:
                     case 'MAT':
-                        self.say('You light a match')
+                        self.say('I lit a match')
                         if self._game.has('TOR', ''):
                             self._game.place('TOR', self.name)
-                            self.say('You found a TORCH!')
+                            self.say('I found a TORCH!')
                             return True
 
         return False

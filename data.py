@@ -54,7 +54,6 @@ VERBS = {
     "ATT": "ATTACK",
     "SAV": "SAVE",
     "LOA": "LOAD",
-    "QUI": "QUIT",
     "HEL": "HELP",
     "INV": "INVENTORY",
     "SCO": "SCORE",
@@ -71,6 +70,7 @@ VERBS = {
     "EVE": "EVENING",
     "MOV": "MOVES",
     "SIH": "SIHIR",
+    "KIL": "KILL",
 }
 
 NOUNS = {
@@ -98,14 +98,13 @@ NOUNS = {
     "DOO": "door",
     "LOC": "lock",
     "OVE": "oven",
-    "POR": "portrait",
+    "POR": "portrait of Dracula",
     "WIN": "window",
     "COF": "coffin",
     "BOL": "bolt",
     "DRA": "Dracula",
     "END": "end",
     "BED": "bed",
-    "PAI": "painting of Dracula",
     "NOR": "North",
     "EAS": "Eath",
     "SOU": "South",
@@ -150,63 +149,5 @@ OBJECT_DATA = [
     ('FIL', 'broad file', 'oven', False, True),
     ('COF', "Coffin", "", False, False),
     ('MAL', 'Rubber mallet', 'workroom', False, True),
+    ('DRA', 'Dracula', 'coffin', False, False),
 ]
-
-
-# obsolete
-ROOMS = {
-
-    "bathroom": {
-        "description": "I'm in a bathroom",
-        "exits": {
-            "SOU": "hall"
-        }
-    },
-
-    "courtyard": {
-        "description": "I'm outside the castle",
-        "exits": {
-            "WES": "hall",
-            "EAS": "castle gates",
-        }
-    },
-
-    "castle gates": {
-        "description": "I'm outside the castle gates",
-        "exits": {
-            "WES": "courtyard",
-            "EAS": "dead",
-        },
-        "fixed_objects": {"a large group of angry peasants"},
-    },
-
-    "dead": {
-        "description": "I was killed by the angry peasants",
-        "fixed_objects": {"a gravestone with the text 'Adventurer'"}
-    },
-
-    "closet": {
-        "description": "I'm in a closet",
-    },
-
-    "dungeon": {
-        "description": "I'm in a dungeon",
-        "exits": {
-            "UP": "workroom",
-        },
-        "fixed_objects": {"iron rings in the wall"},
-        "free_objects": set(),
-    },
-
-    "cellar": {
-        "description": "I'm in a dark cellar",
-    },
-
-    "crypt": {
-        "description": "I'm in a crypt",
-    },
-
-    "dark_passage": {
-        "description": "I'm in a dark passage",
-    },
-}

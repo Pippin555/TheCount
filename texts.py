@@ -24,4 +24,11 @@ Some command I know: help, save game, quit. score, take inventory.""",
     "TWO": "use no more than 2 words!",
 
     "PWR": "It's beyond my power to do that",
+
+    "WIN": """\
+I completed my task: Dracula has been killed 
+with a stake in his heart.
+When I reach the courtyard I am welcomed as a hero, 
+the cheering townspeople carry me away!
+    """
 }

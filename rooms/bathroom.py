@@ -30,7 +30,7 @@ class Bathroom(Room):
             case 'LOO':
                 match noun:
                     case 'MIR':
-                        self.say("I see your bitemarks and on my neck and I feel drained.")
+                        self.say("I see bitemarks and on my neck and I feel drained.")
                         self.say("I hope I can complete this adventure.")
                         return True
 

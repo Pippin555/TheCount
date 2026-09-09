@@ -85,7 +85,7 @@ class GameHandler:
                         if game.has(noun=key, location='player'):
                             game.place(key, 'player lit')
                             noun = NOUNS.get(key, noun)
-                            output.append(f'You lit the {noun}')
+                            output.append(f'I lit the {noun}')
                             return True
                         else:
                             noun = NOUNS.get(noun, noun)
@@ -120,7 +120,7 @@ class GameHandler:
                 noun = NOUNS.get(key, noun)
                 match key:
                     case 'TAB':
-                        output.append(f'You ate the {noun}')
+                        output.append(f'I ate the {noun}')
                         return True
 
             case "AUT":
