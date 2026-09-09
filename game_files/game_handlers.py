@@ -54,6 +54,10 @@ class GameHandler:
             case "GET" | "TAK":
                 for obj in game.objects:
                     if obj.key == key:
+                        if not obj.movable:
+                            output.append(f"I can't carry {noun if noun else 'that'}")
+                            return False
+
                         obj.location = 'player'
 
                         if obj.plural:
@@ -74,6 +78,50 @@ class GameHandler:
                     noun = NOUNS.get(key, noun)
                     output.append(f"I don't have {noun}")
                     return False
+
+            case 'LIG':
+                match key:
+                    case 'TOR' | 'MAT' | 'CIG':
+                        if game.has(noun=key, location='player'):
+                            game.place(key, 'player lit')
+                            noun = NOUNS.get(key, noun)
+                            output.append(f'You lit the {noun}')
+                            return True
+                        else:
+                            noun = NOUNS.get(noun, noun)
+                            output.append(f"I don't have a {noun}")
+                            return False
+
+            case "SMO":
+                match noun:
+                    case 'CIG':
+                        if game.has('CIG', 'player lit'):
+                            # to be able to drop it
+                            game.place("CIG", 'player')
+                            return True
+
+                        elif game.has('CIG', 'player'):
+                            self.say("I have no lit cigarette")
+                            return False
+
+            case "LOO":
+                match key:
+                    case None:
+                        self.where()
+
+                    case 'WAT':
+                        output.append(f'day {game.day} move {game.moves}')
+                        output.append(f'moves to sunset {game.moves_to_sunset}')
+                        output.append(f'sunset: {game.sunset}')
+
+                return True
+
+            case 'EAT':
+                noun = NOUNS.get(key, noun)
+                match key:
+                    case 'TAB':
+                        output.append(f'You ate the {noun}')
+                        return True
 
             case "AUT":
                 if noun.isnumeric():

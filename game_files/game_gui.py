@@ -7,6 +7,7 @@ from os.path import abspath
 from os.path import isfile
 
 from tkinter import Tk, messagebox
+from tkinter import simpledialog
 
 from imgdict.get_dict_img import get_ico
 from rooms.exchange import Exchange
@@ -54,7 +55,6 @@ class Gui:
         self.entry = EntryContainer(
             master=master,
             key='command',
-            command=self._continue,
             prompt='Command',
             prompt_width=10,
             on_return=self._command)
@@ -73,15 +73,11 @@ class Gui:
 
         router = CommandRouter()
         router.subscribe('auto', self.auto)
+        router.subscribe('moves', self.get_moves)
 
         master.after(100, self._update)
 
         self.process_input()
-
-    def _continue(self):
-        """ ... """
-
-        ...
 
     def text_click(self, event) -> None:
         """ ... """
@@ -138,7 +134,7 @@ class Gui:
             result = self._machine.do_command(command)
             if not result:
                 ...
-            self.print(str(result))
+                self.print(str(result))
 
         if self._in_queue and not result:
             if not messagebox.askyesno('Command Failed',
@@ -169,3 +165,16 @@ class Gui:
                     return
 
                 self._in_queue.append(line)
+
+    def get_moves(self) -> tuple[int, int] | None:
+        """ ... """
+
+        answer = simpledialog.askstring(title='Moves',
+                                        prompt='Enter day,move',
+                                        initialvalue='1,1')
+        if answer:
+            values = answer.split(',')
+            if (len(values) == 2):
+                return (int(values[0]), int(values[1]))
+
+        return None

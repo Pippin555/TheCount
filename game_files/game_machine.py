@@ -1,4 +1,5 @@
 """ game state machine """
+from idlelib.colorizer import matched_named_groups
 
 from parser import Parser
 
@@ -9,8 +10,10 @@ from game_files.game_handlers import GameHandler
 from texts import TEXTS
 
 from data import NOUNS
+from data import VERBS
 
 from utils.string_builder import StringBuilder
+from utils.command_router import CommandRouter
 
 
 class StateMachine:
@@ -52,7 +55,7 @@ class StateMachine:
             return True
 
         verb, noun = parsed
-        output.append(f'* {verb} {noun if noun else ""}')
+        output.append(f'* {day} {move}: {verb} {noun if noun else ""}')
         verb = verb[:3]
         key = noun[:3] if noun else None
 
@@ -74,7 +77,7 @@ class StateMachine:
                 return True
 
             case "RES":
-                game = game = GameState()
+                self._game = game = GameState()
                 game.moves = 0
                 self._handler = GameHandler(game=game)
                 return True
@@ -85,15 +88,6 @@ class StateMachine:
                 aln(TEXTS[verb])
                 output.append(str(bld))
                 return False
-
-            case "LOO":
-                match noun:
-                    case None:
-                        self._handler.where()
-                    case 'WAT':
-                        output.append(f'day {game.day} move {game.moves}')
-
-                return True
 
             case "CLE":
                 output.append('[CLEAR]')
@@ -118,19 +112,6 @@ class StateMachine:
                 game.moves = game.moves_to_sunset - 1
                 return True
 
-            case 'LIG':
-                match key:
-                    case 'TOR' | 'MAT':
-                        if game.has(noun=key, location='player'):
-                            game.place(key, 'player lit')
-                            noun = NOUNS.get(key, noun)
-                            output.append(f'You lit the {noun}')
-                            return True
-                        else:
-                            noun = NOUNS.get(noun, noun)
-                            output.append(f"I don't have a {noun}")
-                            return False
-
             case 'EXT' | 'UNL':
                 match key:
                     case 'TOR':
@@ -143,11 +124,30 @@ class StateMachine:
                             output.append(f"The {noun} was already extinguised")
                             return True
 
-            case 'EAT':
-                match noun[:3]:
-                    case 'TAB':
-                        noun = NOUNS.get(noun, noun)
-                        output.append(f'You ate the {noun}')
+            case 'MOV':
+                result = CommandRouter().handle('moves')
+                if isinstance(result, tuple):
+                    self._game.day, self._game.moves = result
+
+                return True
+
+            case 'SIH':
+                VERBS['WAR'] = "WARP"
+                NOUNS['COF'] = "COFFIN"
+                NOUNS['CRY'] = "CRYPT"
+                output.append('Changed to SIHIR mode,avaiable test rooms for WARP')
+                output.append('crypt')
+                output.append('coffin')
+                return True
+
+            case 'WAR':
+                match noun:
+                    case 'COF':
+                        self.warp("coffin")
+                        return True
+
+                    case 'CRY':
+                        self.warp("crypt")
                         return True
 
             case _:
@@ -168,3 +168,20 @@ class StateMachine:
 
         next = exits.get(noun, None)
         return handler.enter(location=next)
+
+    def warp(self, next: str):
+        """ ... """
+
+        game = self._game
+        match next:
+            case 'crypt':
+                # game.location = 'crypt'
+                game.place('PAC', 'player')
+                # game.place("COF", 'crypt')
+
+            case 'coffin':
+                game.place('CIG', 'player')
+                game.place('FIL', 'player')
+
+        self._handler.enter(location=next)
+        return True

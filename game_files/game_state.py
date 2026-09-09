@@ -4,7 +4,6 @@ from collections import deque
 
 from jsons import dumps
 
-from rooms.oven import Oven
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -34,6 +33,7 @@ from rooms.bathroom import Bathroom
 from rooms.passage import Passage
 from rooms.crypt import Crypt
 from rooms.oven import Oven
+from rooms.coffin import Coffin
 
 from game_files.game_storage import GameStorage
 
@@ -70,6 +70,7 @@ class GameState:
             "bathroom": Bathroom(kwargs),
             "passage": Passage(kwargs),
             "crypt": Crypt(kwargs),
+            "coffin": Coffin(kwargs),
         }
 
         self.objects = [GO(*data) for data in OBJECT_DATA]

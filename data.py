@@ -69,6 +69,8 @@ VERBS = {
     "CLE": "CLEAR",
     "WHE": "WHEREIS",
     "EVE": "EVENING",
+    "MOV": "MOVES",
+    "SIH": "SIHIR",
 }
 
 NOUNS = {
@@ -129,24 +131,25 @@ GO = GameObject
 
 # movable objects
 OBJECT_DATA = [
-    # key, name, location, plural
-    ('SHE', 'sheet', 'bed', False),
-    ('END', 'end of sheet', '', False),
-    ('GAR', 'clove of garlic', 'pantry', False),
-    ('MAT', 'matches', 'pantry', True),
-    ('TOR', 'torch', '', False),
-    ('PAC', 'pack of cigarettes', 'package', False),
-    ('PKG', 'package', '', False),
-    ('STA', 'tent stake', '', False),
-    ('POS', 'postcard', 'courtyard', False),
-    ('NOT', 'note', '', False),
-    ('CLI', 'clip', '', False),
-    ('VIA', 'vial', 'closet', False),
-    ('TAB', 'tablets', 'closet', False),
-    ('POR', "Dracula's portrait", "hanging", False),
-    ('CIG', 'cigarette', '', False),
-    ('FIL', 'broad file', 'oven', False),
-    ('COF', "Coffin", "", False)
+    # key, name, location, plural,  movable
+    ('SHE', 'sheet', 'bed', False, True),
+    ('END', 'end of sheet', '', False, True),
+    ('GAR', 'clove of garlic', 'pantry', False, True),
+    ('MAT', 'matches', 'pantry', True, True),
+    ('TOR', 'torch', '', False, True),
+    ('PAC', 'pack of cigarettes', 'package', False, True),
+    ('PKG', 'package', '', False, True),
+    ('STA', 'tent stake', '', False, True),
+    ('POS', 'postcard', 'courtyard', False, True),
+    ('NOT', 'note', '', False, True),
+    ('CLI', 'clip', '', False, True),
+    ('VIA', 'vial', 'closet', False, True),
+    ('TAB', 'tablets', 'closet', False, True),
+    ('POR', "Dracula's portrait", "hanging", False, True),
+    ('CIG', 'cigarette', '', False, True),
+    ('FIL', 'broad file', 'oven', False, True),
+    ('COF', "Coffin", "", False, False),
+    ('MAL', 'Rubber mallet', 'workroom', False, True),
 ]
 
 

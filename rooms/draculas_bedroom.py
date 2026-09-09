@@ -15,7 +15,7 @@ class DraculasBedroom(Room):
         """ ... """
 
         kwargs['name'] = "Dracula's bedroom"
-        kwargs['inventory'] = {"Dracula's Painting", "Window" }
+        kwargs['inventory'] = {"Dracula's Portrait", "Window" }
         kwargs['description'] = "I am in Dracula's bedroom"
         super().__init__(kwargs)
 
@@ -27,7 +27,7 @@ class DraculasBedroom(Room):
 
         game = self._game
         match verb:
-            case 'REM':
+            case 'REM' | 'TAK':
                 match noun:
                     case 'POR':
                         if game.has('POR', 'hanging'):

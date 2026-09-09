@@ -26,6 +26,12 @@ class Oven(Room):
                        callback: Callable):
         """ ... """
 
+        match verb:
+            case 'ENT' | 'GO':
+                match noun:
+                    case 'ROO':
+                        return callback('enter', 'kitchen')
+
         return False
 
     @property
@@ -34,4 +40,5 @@ class Oven(Room):
 
         return {
             "WES": "kitchen",
+            "ROOM": "kitchen",
         }

@@ -34,5 +34,5 @@ class Passage(Room):
 
         return {
             "NOR": "crypt",
-            "EAS": "dracula's bedroom",
+            "SOU": "Dracula's bedroom",
         }
