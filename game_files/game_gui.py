@@ -1,10 +1,13 @@
 """ GUI for 'The Count """
+
 from collections import deque
 from os import makedirs
 
 from os.path import join
 from os.path import abspath
 from os.path import isfile
+
+from sys import argv
 
 from tkinter import Tk, messagebox
 from tkinter import simpledialog
@@ -20,6 +23,8 @@ from utils.command_router import CommandRouter
 
 from game_files.game_machine import StateMachine
 
+from data import delay
+
 
 class Gui:
     """ ... """
@@ -28,6 +33,12 @@ class Gui:
                  master: Tk,
                  machine: StateMachine) -> None:
         """ ... """
+
+        self.blink = 200
+        iarg = iter(argv[1:])
+        for arg in iarg:
+            if arg == "--delay":
+                self.blink = int(next(iarg))
 
         self.master = master
         self._in_queue = deque()
@@ -141,7 +152,7 @@ class Gui:
                                        'Continue processing?'):
                 self._in_queue.clear()
 
-        self.master.after(200, self.process_input)
+        self.master.after(self.blink, self.process_input)
 
     def auto(self, noun: str):
         """ ... """

@@ -151,3 +151,5 @@ OBJECT_DATA = [
     ('MAL', 'Rubber mallet', 'workroom', False, True),
     ('DRA', 'Dracula', 'coffin', False, False),
 ]
+
+delay: int | None = None

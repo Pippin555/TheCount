@@ -20,12 +20,14 @@ class StateMachine:
 
     def __init__(self,
                  game: GameState,
-                 handler: GameHandler):
+                 handler: GameHandler,
+                 delay: int | None = None):
         """ ... """
 
         self._game = game
         self._output = game.output()
         self._handler = handler
+        self._delay = delay
 
     def do_command(self, command: str) -> bool:
         """ ... """

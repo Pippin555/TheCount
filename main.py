@@ -15,7 +15,8 @@ def main() -> int:
 
     game_state = GameState()
     game_handler = GameHandler(game=game_state)
-    game_machine = StateMachine(game=game_state, handler=game_handler)
+    game_machine = StateMachine(game=game_state,
+                                handler=game_handler)
 
     root = Tk()
     root.protocol("WM_DELETE_WINDOW", root.destroy)
