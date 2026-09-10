@@ -19,7 +19,7 @@ class Coffin(Room):
 
         kwargs['name'] = 'coffin'
         kwargs['description'] = 'I am in a coffin'
-        kwargs['inventory'] = {'bolt', }
+        kwargs['inventory'] = set()
         super().__init__(kwargs)
 
     def handle_command(self,
@@ -43,7 +43,7 @@ class Coffin(Room):
                 match noun:
                     case 'FIL':
                         self.say('The bolt is cut')
-                        self._inventory= {'bolt cut', }
+                        self._game.place('BOL', 'coffin cut')
                         return True
 
             case 'KIL':

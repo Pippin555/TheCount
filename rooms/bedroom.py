@@ -5,12 +5,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
 
-from enum import Enum
-from enum import auto
-
 from rooms.room import Room
-
-from game_files.game_storage import GameStorage
 
 
 class Bedroom(Room):
@@ -23,9 +18,9 @@ class Bedroom(Room):
         kwargs['description'] = 'I am in a bedroom'
         kwargs['inventory'] = {'bed', 'window'}
         super().__init__(kwargs)
-        self.help_verbs = ['GO', 'HEL', 'TIE', 'TO', 'AUT',
-                           'TAK', 'GET', 'DRO', 'LOO', 'SAV',
-                           'LOA', 'QUI', 'RES']
+        self.help_verbs = ['GO',  'HEL', 'TIE', 'TO', 'AUT',
+                           'TAK', 'GET', 'DRO', 'LOO', 'RES'
+                           ]
         self._window_open = False
 
     def handle_command(self,

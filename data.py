@@ -66,11 +66,10 @@ VERBS = {
     "PIC": "PICK",
     "REM": "REMOVE",
     "CLE": "CLEAR",
-    "WHE": "WHEREIS",
+    "WHE": "WHERE IS",
     "EVE": "EVENING",
     "MOV": "MOVES",
     "SIH": "SIHIR",
-    "KIL": "KILL",
 }
 
 NOUNS = {
@@ -149,7 +148,8 @@ OBJECT_DATA = [
     ('FIL', 'broad file', 'oven', False, True),
     ('COF', "Coffin", "", False, False),
     ('MAL', 'Rubber mallet', 'workroom', False, True),
-    ('DRA', 'Dracula', 'coffin', False, False),
+    ('DRA', 'Dracula', '', False, False),
+    ('BOL', 'bolt', 'coffin', False, False),
 ]
 
 delay: int | None = None

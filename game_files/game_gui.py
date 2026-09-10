@@ -124,6 +124,9 @@ class Gui:
     def print(self, message: str):
         """ ... """
 
+        with open(file=abspath(join('.', 'auto', 'log.txt')), mode='at', encoding='utf-8') as stream:
+            print(message, file=stream)
+
         bld = self.bld
         if message == '[CLEAR]':
             bld.clear()

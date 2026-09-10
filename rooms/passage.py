@@ -26,6 +26,8 @@ class Passage(Room):
                        callback: Callable):
         """ ... """
 
+        ...
+
         return False
 
     @property

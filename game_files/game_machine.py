@@ -95,8 +95,14 @@ class StateMachine:
                 if name == 'Bed':
                     output.append('I went to sleep')
                     game.next_day()
+
+                    if game.day == 3:
+                        if game.has('COF', 'crypt') or \
+                            game.has('COF', 'crypt open'):
+                            game.place('DRA', 'coffin')
+
                 else:
-                    output.append(f"I shoud go to bed to sleep, I  am now here: {name}")
+                    output.append(f"I should go to bed to sleep, I  am now here: {name}")
 
                 return True
 
@@ -127,11 +133,11 @@ class StateMachine:
 
                 return True
 
-            case 'SIH':
+            case 'SIH':  # backdoor commands for debugging purposes
                 VERBS['WAR'] = "WARP"
                 NOUNS['COF'] = "COFFIN"
                 NOUNS['CRY'] = "CRYPT"
-                output.append('Changed to SIHIR mode,avaiable test rooms for WARP')
+                output.append('Changed to SIHIR (magic) mode, available test rooms for WARP"')
                 output.append('crypt')
                 output.append('coffin')
                 return True
@@ -166,16 +172,22 @@ class StateMachine:
         return handler.enter(location=next)
 
     def warp(self, next: str):
-        """ ... """
+        """ this function sets the environment to test the room and it enters that room """
 
         game = self._game
         match next:
             case 'crypt':
-                # game.location = 'crypt'
+                # player has to GET/TAK CIG,
+                # LIGht CIG
+                # SMOke CIG
                 game.place('PAC', 'player')
-                # game.place("COF", 'crypt')
 
             case 'coffin':
+                # on the first visit:
+                # player has to LIGht CIGarette
+                # SMOke CIGarette
+                # CUT BOLt
+                # WITh FILe
                 game.place('CIG', 'player')
                 game.place('FIL', 'player')
 

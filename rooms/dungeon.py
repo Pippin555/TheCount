@@ -23,8 +23,8 @@ class Dungeon(Room):
         super().__init__(kwargs)
 
         self.help_verbs = ['UP', 'GO', 'HEL', 'TIE', 'TO',
-                           'TAK', 'GET', 'DRO', 'CLI', 'I',
-                           'LOO', 'SAV', 'AUT', 'QUI', 'RES'
+                           'TAK', 'GET', 'DRO', 'CLI', 'IMV',
+                           'LOO', 'AUT', 'RES'
                            ]
 
     def handle_command(self,

@@ -34,11 +34,15 @@ class Kitchen(Room):
                         return callback('enter', 'dumbwaiter kitchen')
 
                     case 'OVE':
+                        # -1 daytime
+                        #  0 sunset
+                        # +1 night
                         if game.sunset == -1:
                             self.say('Solar oven is UNSAFE to enter in daytime')
                             return True
                         elif game.sunset == 1:
                             return callback('enter', 'oven')
+
         return False
 
     @property

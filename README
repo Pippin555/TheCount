@@ -1,1 +1,54 @@
 The Count in Python after Scott Adams, 1979
+
+the main program is main.py
+in 'requirements.txt' are the requirements for the program
+
+on 10-09-2026:
+
+altgraph==0.17.5
+packaging==26.3
+pefile==2024.8.26
+pillow==12.3.0
+pyinstaller==6.22.2
+pyinstaller-hooks-contrib==2026.7
+pywin32-ctypes==0.2.3
+
+start the program:
+py main.py [--delay 200]
+
+the delay is im ms, to see it scroll at a given rate in auto mode.
+At 200 ms the program takes about 35 s to play "auto 10"  (165 moves)
+at 50 ms the program takes 10 s to play the same "auto"
+at 5000 ms the program takes about 18 minutes to play, nearly the
+same as ./documents/The Count walkthrough.mp4
+
+The walkthrough in the subfolder 'auto', it can be edited with Notepad
+or any development tool.
+When you enter 'auto 10' the file ./auto/script_10.txt will be used.
+
+This is not a complete implementation of the original game of 1979,
+but it completes the job.
+
+most important verbs:
+LOO       looks around the current room
+GET ...   pick up an item ... in the current room
+DRO ...   drop item ... in the current room
+INV       player's inventory
+GO  ...   go in a given direction
+ENT ...   enter a room/window to go to another room
+HEL       the help is only implemented in two or three rooms
+AUT ...   execute as script 1 .. 10 in folder auto
+
+nice to haves that are NOT implemented:
+SAV  ...  save the current state
+LOA  ...  reload the current state
+REC  ...  record input
+
+most important 'nouns':
+SHE       sheet
+STA       tent stake
+MAL       rubber mallet
+COF       coffin
+
+backdoor/debug command:
+WHE       where are the game objects?

@@ -5,8 +5,6 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
 
-from _collections import deque
-
 from rooms.room import Room
 
 

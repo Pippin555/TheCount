@@ -35,7 +35,6 @@ class Crypt(Room):
                         self.say("The sign says:")
                         self.say("POSITIVELY NO SMOKING ALLOWED HERE!")
                         self.say("Signed: Dracula")
-                        self.wait_counter = 1
                         return True
 
             case 'WAI':
@@ -62,7 +61,7 @@ class Crypt(Room):
                     case 'CIG':
                         if game.has('CIG', 'player'):
                             game.place('CIG', 'player lit')
-                            self.say('I lit a sigarette')
+                            self.say('I lit a cigarette')
                             return True
 
                         self.say('I have no cigarette')
@@ -72,23 +71,35 @@ class Crypt(Room):
                 match noun:
                     case 'CIG':
                         if game.has('CIG', 'player lit'):
-                            # reveal the coffin
-                            game.place("COF", self.name)
-                            self.say("There is a Coughin here")
-                            # to be able to drop it
-                            game.place("CIG", 'player')
+                            # if game.has('COF', 'crypt') or \
+                            #         game.has('COF', 'crypt open'):
+                            #     if game.has('BOL', 'coffin cut'):
+                            #         if game.has('STA'):
+                            #             if game.has('MAL'):
+                            #                 game.place('DRA', 'coffin')
+
+                            if game.has('COF', ''):
+                                # reveal the coffin
+                                game.place("COF", 'crypt')
+                                self.say("There is a Coughin (sic!) here")  # noqa
+                                # to be able to drop it
+                                game.place("CIG", 'player')
+
                             return True
 
                         elif game.has('CIG', 'player'):
                             self.say("I have no lit cigarette")
-                            return False
+                            return True
 
             case "OPE":
                 match noun:
                     case 'COF':
+                        if game.has('COF', 'crypt open'):
+                            return True
+
                         # when the coffin is revealed
-                        if game.has('COF', self.name):
-                            game.place('COF', self.name + ' open')
+                        if game.has('COF', 'crypt'):
+                            game.place('COF', 'crypt open')
                             self.say('The coffin is open')
                             return True
 

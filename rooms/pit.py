@@ -30,7 +30,6 @@ class Pit(Room):
             case 'CLI':
                 if noun == 'SHE':
                     return callback('enter', 'dungeon')
-                    return True
 
             case 'LIG':
                 match noun:

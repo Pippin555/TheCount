@@ -101,7 +101,7 @@ class GameHandler:
                             return True
 
                         elif game.has('CIG', 'player'):
-                            self.say("I have no lit cigarette")
+                            output.append("I have no lit cigarette")
                             return False
 
             case "LOO":

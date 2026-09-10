@@ -18,9 +18,9 @@ class BedroomWindow(Room):
         kwargs['description'] = 'I am on the window ledge'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
-        self.help_verbs = ['GO', 'HEL', 'AUT', 'LOA', 'QUI',
-                           'TAK', 'GET', 'DRO', 'LOO', 'SAV',
-                           'RES']
+        self.help_verbs = ['GO', 'HEL', 'AUT', 'RES',
+                           'TAK', 'GET', 'DRO', 'LOO'
+                           ]
 
     def handle_command(self,
                        verb:str,

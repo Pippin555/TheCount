@@ -5,8 +5,6 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
 
-from data import NOUNS
-
 from rooms.room import Room
 
 
@@ -31,7 +29,7 @@ class Courtyard(Room):
             case'REA':
                 match noun:
                     case 'POS':
-                        self.say("Its for DRACULA, its and EATING & GHOULING bill from")
+                        self.say("Its for DRACULA, its and EATING & GHOULING bill from")  # noqa
                         self.say("a local mortuary!")
                         self.say("There's a note PAPER CLIPPED to the postcard")
                         self._game.place('NOT', 'player')
