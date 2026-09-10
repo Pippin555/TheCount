@@ -198,5 +198,8 @@ class StateMachine:
                 game.place('CIG', 'player')
                 game.place('FIL', 'player')
 
+            case 'dungeon':
+                game.place('SHE', 'player')
+
         self._handler.enter(location=next)
         return True

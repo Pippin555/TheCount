@@ -173,9 +173,11 @@ class GameHandler:
 
             case "WHE":
                 output.append('-----')
+                game.objects.sort(key=lambda obj: obj.name)
                 for obj in game.objects:
                     pos = obj.location or 'hidden'
-                    output.append(f'{obj.key:3} {obj.name}: {pos}')
+                    state = obj.state or ''
+                    output.append(f'{obj.key:3} {obj.name}: {pos}, {state}')
                 return True
 
             case _:

@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Pit(Room):
@@ -20,16 +21,24 @@ class Pit(Room):
         kwargs['inventory'] = set()
         super().__init__(kwargs)
 
+        self.help_verbs.update({'CLI', 'LIG'})
+
+    @with_helper
     def handle_command(self,
                        verb:str,
-                       noun: str,
+                       noun: str| None,
                        callback: Callable):
         """ ... """
 
         match verb:
             case 'CLI':
-                if noun == 'SHE':
-                    return callback('enter', 'dungeon')
+                match noun:
+                    case None:
+                        self.say('Climb what?')
+                        return True
+
+                    case 'SHE':
+                        return callback('enter', 'dungeon')
 
             case 'LIG':
                 match noun:

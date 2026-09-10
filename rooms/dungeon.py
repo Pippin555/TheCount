@@ -7,9 +7,6 @@ from typing import Callable
 
 from rooms.room import Room
 
-from data import VERBS
-from data import NOUNS
-
 
 class Dungeon(Room):
     """ 'Dungeon' as 'room' in the game 'The Count' """
@@ -19,19 +16,19 @@ class Dungeon(Room):
 
         kwargs['name'] = 'dungeon'
         kwargs['description'] = 'I am in a dungeon'
-        kwargs['inventory'] = {'rings on the wall', 'pit', 'vent'}
+        kwargs['inventory'] = {'ring on the wall', 'pit'}
         super().__init__(kwargs)
 
-        self.help_verbs = ['UP', 'GO', 'HEL', 'TIE', 'TO',
-                           'TAK', 'GET', 'DRO', 'CLI', 'IMV',
-                           'LOO', 'AUT', 'RES'
-                           ]
+        self.help_verbs.update({'UP', 'TIE', 'TO', 'CLI'})
 
+    # the dungeon has no with_helper, this is a special case
     def handle_command(self,
-                       verb:str,
-                       noun: str,
+                       verb: str,
+                       noun: str | None,
                        callback: Callable):
         """ ... """
+
+        game = self._game
 
         match verb:
             case 'UP':
@@ -49,22 +46,22 @@ class Dungeon(Room):
             case "TIE":
                 match noun:
                     case '' | None:
-                        self.say('tie what')
+                        self.say('Tie what')
                         return True
 
                     case 'SHE':
-                        self.say('tie sheet to what')
+                        self.say('Tie sheet to what')
                         return True
 
             case "TO":
                 match noun:
                     case '':
-                        self.say('tie sheet to what')
+                        self.say('Tie sheet to what')
                         return True
 
                     case 'RIN':
                         self.say('The sheet is now tied to a ring')
-                        self._game.place('SHE', 'tied ring')
+                        game.place('SHE', 'dungeon', 'ring')
                         return True
 
                 return True
@@ -72,52 +69,83 @@ class Dungeon(Room):
             case "TAK" | "GET":
                 match noun:
                     case '' | None:
-                        self.say('take what')
+                        action = 'Take' if noun == 'TAK' else 'GET'
+                        self.say(f'{action} what?')
                         return True
 
                     case "SHE":
                         # player gets the sheet
-                        self._game.place('SHE', 'player')
-                        self.say('I untied the sheet')
+                        if game.has('SHE', ''):
+                            self.say('The sheet is lost')
+                            return True
 
+                        if game.has('SHE', 'player'):
+                            self.say('I already have the sheet')
+
+                        elif game.has('SHE', 'dungeon', 'ring'):
+                            self.say('I untied the sheet')
+
+                        elif game.has('SHE', 'dungeon'):
+                            self.say('I got the sheet')
+
+                        game.place('SHE', 'player')
                         # let the end of the sheet vanish
-                        self._game.place('END', '')
+                        game.place('END', '')
+
                         return True
 
                     case 'END':
+                        if game.has('SHE', ''):
+                            self.say('The sheet is lost')
+                            return True
+
                         self.say('taken the end of the sheet')
-                        self._game.place('END', 'player')
+                        game.place('END', 'player')
                         return True
 
             case 'DRO':
                 match noun:
+                    case None:
+                        self.say('Drop what?')
+                        return True
+
                     case "SHE":
                         # dropping the sheet will reset the state machine
-                        self.say('I untied the sheet and dropped it')
-                        self._game.place('SHE', self.name)
-                        self._game.place('END', '')
+                        if game.has('SHE', 'player'):
+                            if game.has('END', 'dungeon', 'ring'):
+                                game.place('SHE', '')
+                                game.place('END', '')
+                                self.say('You lost the sheet in the pit')
+                                return True
+
+                            game.place('SHE', 'dungeon')
+                            self.say('I dropped the sheet')
+
+                        elif game.has('SHE', 'dungeon', 'ring'):
+                            self.say('I untied the sheet and dropped it')
+                            game.place('SHE', 'dungeon')
+
+                        game.place('END', '')
                         return True
 
                     case 'END':
-                        if not self._game.has('END'):
+                        if not game.has('END'):
                             self.say('I do not hold the end of the sheet')
-                            return False
+                            return True
 
                         self.say('The end of the sheet is dropped in the pit')
-                        self._game.place('END', 'tied ring')
-
+                        self._game.place('END', 'dungeon', 'ring')
                         return True
 
             case 'CLI':
-                if noun == 'SHE' and \
-                    self._game.has('SHE', 'tied ring') and \
-                    self._game.has('END', 'tied ring'):
-                    return callback('enter', 'pit')
-                else:
-                    verb = VERBS.get(verb, verb)
-                    noun = NOUNS.get(noun, noun)
-                    self.say(f"I can't {verb} {noun}")
-                    return False
+                match noun:
+                    case None:
+                        self.say('Climb what?')
+                        return True
+
+                    case 'SHE':
+                        if self._game.has('END', 'dungeon', 'ring'):
+                            return callback('enter', 'pit')
 
         return False
 

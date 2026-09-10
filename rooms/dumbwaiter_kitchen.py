@@ -19,7 +19,7 @@ class DumbwaiterKitchen(Room):
         kwargs['description'] = 'I am in a dumb-waiter at the kitchen level'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
-        self.help_verbs.update({'ENT', })
+        self.help_verbs.update({'ENT', 'RAI', 'LOW'})
 
     @with_helper
     def handle_command(self,
@@ -30,11 +30,11 @@ class DumbwaiterKitchen(Room):
 
         match verb:
             case 'ENT':
-                if noun is None:
-                    self.say("Enter what?")
-                    return True
-
                 match noun:
+                    case None:
+                        self.say("Enter what?")
+                        return True
+
                     case 'ROO':
                         return callback('enter', 'kitchen')
 

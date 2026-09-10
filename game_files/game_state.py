@@ -166,21 +166,32 @@ class GameState:
 
         return found
 
-    def has(self, noun: str, location='player'):
+    def has(self,
+            noun: str,
+            location='player',
+            state: str | None = None):
         """ ... """
 
         for obj in self.objects:
-            if obj.key == noun and obj.location == location:
+            if (obj.key == noun and
+                    obj.location == location):
+                if state is not None:
+                    if obj.state == state:
+                        return True
                 return  True
 
         return False
 
-    def place(self, noun: str, location=''):
+    def place(self,
+              noun: str,
+              location='',
+              state: str | None = None):
         """ ... """
 
         for obj in self.objects:
             if obj.key == noun:
                 obj.location = location
+                obj.state = state
                 return True
 
         return False
