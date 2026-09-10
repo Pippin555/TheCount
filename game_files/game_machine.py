@@ -129,12 +129,24 @@ class StateMachine:
                 return True
 
             case 'SIH':  # backdoor commands for debugging purposes
+
+                warp_rooms = []
                 VERBS['WAR'] = "WARP"
-                NOUNS['COF'] = "COFFIN"
-                NOUNS['CRY'] = "CRYPT"
+                for name, room in self._game.rooms.items():
+                    key = name[:3].upper()
+                    if key in NOUNS:
+                        output.append(f"The {name} was already present as NOUN")
+                    else:
+                        NOUNS[key] = name
+                        warp_rooms.append(name)
+
+                # NOUNS['COF'] = "COFFIN"
+                # NOUNS['CRY'] = "CRYPT"
                 output.append('Changed to SIHIR (magic) mode, available test rooms for WARP"')
-                output.append('crypt')
-                output.append('coffin')
+                for name in warp_rooms:
+                    output.append(name)
+                # output.append('crypt')
+                # output.append('coffin')
                 return True
 
             case 'WAR':
@@ -146,6 +158,10 @@ class StateMachine:
                     case 'CRY':
                         self.warp("crypt")
                         return True
+
+                    case _:
+                        noun = NOUNS.get(key, noun)
+                        return self.warp(noun)
 
             case _:
                 return self._handler.do_command(verb, noun)
