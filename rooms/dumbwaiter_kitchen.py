@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class DumbwaiterKitchen(Room):
@@ -18,16 +19,24 @@ class DumbwaiterKitchen(Room):
         kwargs['description'] = 'I am in a dumb-waiter at the kitchen level'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
+        self.help_verbs.update({'ENT', })
 
+    @with_helper
     def handle_command(self,
-                       verb:str,
-                       noun: str,
+                       verb: str,
+                       noun: str | None,
                        callback: Callable):
         """ ... """
 
-        if verb == "ENT" and noun == "ROO":
-            callback('enter', 'kitchen')
-            return True
+        match verb:
+            case 'ENT':
+                if noun is None:
+                    self.say("Enter what?")
+                    return True
+
+                match noun:
+                    case 'ROO':
+                        return callback('enter', 'kitchen')
 
         return False
 

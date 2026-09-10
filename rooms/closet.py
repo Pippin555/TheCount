@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Closet(Room):
@@ -18,7 +19,9 @@ class Closet(Room):
         kwargs['inventory'] = {'empty vial'}
         kwargs['description'] = 'I am in a closet'
         super().__init__(kwargs)
+        self.help_verbs.update({'EMP', })
 
+    @with_helper
     def handle_command(self,
                        verb: str,
                        noun: str,

@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Bedroom(Room):
@@ -18,11 +19,10 @@ class Bedroom(Room):
         kwargs['description'] = 'I am in a bedroom'
         kwargs['inventory'] = {'bed', 'window'}
         super().__init__(kwargs)
-        self.help_verbs = ['GO',  'HEL', 'TIE', 'TO', 'AUT',
-                           'TAK', 'GET', 'DRO', 'LOO', 'RES'
-                           ]
+        self.help_verbs.update({'TIE', 'TO', 'OPE', 'ENT'})
         self._window_open = False
 
+    @with_helper
     def handle_command(self,
                        verb:str,
                        noun: str,
@@ -30,10 +30,6 @@ class Bedroom(Room):
         """ ... """
 
         match verb:
-            case 'HEL':
-                self.say(self.format_help(self.help_verbs))
-                return True
-
             case 'OPE':
                 match noun:
                     case 'WIN':

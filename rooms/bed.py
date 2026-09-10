@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Bed(Room):
@@ -18,10 +19,9 @@ class Bed(Room):
         kwargs['inventory'] = {'bed', 'pillow'}
         kwargs['description'] = 'I am lying in a large brass bed'
         super().__init__(kwargs)
+        self.help_verbs.update({'AUT',})
 
-        self.help_verbs = ['GET', 'HEL', 'LOO', 'DRO',
-                           'INV', 'AUT', 'RES']
-
+    @with_helper
     def handle_command(self,
                        verb: str,
                        noun: str,
@@ -33,10 +33,6 @@ class Bed(Room):
                 match noun:
                     case 'UP':
                         return callback(verb='enter', noun='bedroom')
-
-            case 'HEL':
-                self.say(self.format_help(self.help_verbs))
-                return True
 
         return False
 

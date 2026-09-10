@@ -7,11 +7,22 @@ from abc import ABC, abstractmethod
 
 from typing import Callable
 from typing import TYPE_CHECKING
+from functools import wraps
 
 from utils.string_builder import StringBuilder
 
 if TYPE_CHECKING:
     pass
+
+
+def with_helper(func):
+    @wraps(func)
+    def wrapper(self, verb, noun, callback):
+        if self.helper(verb=verb, noun=noun):
+            return True
+        return func(self, verb, noun, callback)
+
+    return wrapper
 
 
 class Room(ABC):
@@ -28,6 +39,9 @@ class Room(ABC):
 
         # optional argument
         self._inventory = kwargs.get('inventory', set())
+
+        self.help_verbs = {'GET', 'HEL', 'LOO', 'DRO', 'INV',
+                           'RES', 'TAK', 'GO', 'WAI'}
 
     def say(self, text: str):
         """ ... """
@@ -68,6 +82,16 @@ class Room(ABC):
         """ ... """
 
         ...
+
+    def helper(self, verb: str, noun: str):
+        """ ... """
+
+        match verb:
+            case 'HEL':
+                self.say(self.format_help(self.help_verbs))
+                return True
+
+        return False
 
     def format_help(self, verbs: list[str]) -> str:
         """ ... """

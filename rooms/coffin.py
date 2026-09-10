@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 from texts import TEXTS
 
@@ -21,7 +22,9 @@ class Coffin(Room):
         kwargs['description'] = 'I am in a coffin'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
+        self.help_verbs.update({'CUT', 'WIT', 'KIL'})
 
+    @with_helper
     def handle_command(self,
                        verb:str,
                        noun: str,

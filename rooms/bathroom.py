@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Bathroom(Room):
@@ -20,6 +21,7 @@ class Bathroom(Room):
         kwargs['inventory'] = {'Mirror', }
         super().__init__(kwargs)
 
+    @with_helper
     def handle_command(self,
                        verb:str,
                        noun: str,

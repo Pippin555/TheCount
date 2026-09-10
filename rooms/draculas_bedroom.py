@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class DraculasBedroom(Room):
@@ -19,15 +20,23 @@ class DraculasBedroom(Room):
         kwargs['description'] = "I am in Dracula's bedroom"
         super().__init__(kwargs)
 
+        self.help_verbs.update({'REM', 'ENT'})
+
+    @with_helper
     def handle_command(self,
                        verb: str,
-                       noun: str,
+                       noun: str | None,
                        callback: Callable) -> bool:
         """ ... """
 
         game = self._game
         match verb:
             case 'REM' | 'TAK':
+                if noun is None:
+                    action = 'Remove' if verb == 'REM' else 'Take'
+                    self.say(f'{action} what?')
+                    return True
+
                 match noun:
                     case 'POR':
                         if game.has('POR', 'hanging'):
@@ -41,6 +50,10 @@ class DraculasBedroom(Room):
                             return True
 
             case 'ENT':
+                if noun is None:
+                    self.say(f'Enter what?')
+                    return True
+
                 match noun:
                     case 'WIN':
                         return callback('enter', 'flowerbed')

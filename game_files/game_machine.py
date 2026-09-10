@@ -140,13 +140,9 @@ class StateMachine:
                         NOUNS[key] = name
                         warp_rooms.append(name)
 
-                # NOUNS['COF'] = "COFFIN"
-                # NOUNS['CRY'] = "CRYPT"
                 output.append('Changed to SIHIR (magic) mode, available test rooms for WARP"')
                 for name in warp_rooms:
                     output.append(name)
-                # output.append('crypt')
-                # output.append('coffin')
                 return True
 
             case 'WAR':

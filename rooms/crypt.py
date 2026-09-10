@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Crypt(Room):
@@ -19,7 +20,9 @@ class Crypt(Room):
         kwargs['description'] = 'I am in a crypt'
         kwargs['inventory'] = {'Sign'}
         super().__init__(kwargs)
+        self.help_verbs.update({'LIG', 'SMO', 'OPE', 'ENT'})
 
+    @with_helper
     def handle_command(self,
                        verb:str,
                        noun: str,
@@ -60,9 +63,13 @@ class Crypt(Room):
                 match noun:
                     case 'CIG':
                         if game.has('CIG', 'player'):
-                            game.place('CIG', 'player lit')
-                            self.say('I lit a cigarette')
-                            return True
+                            if game.has('MAT', 'player'):
+                                game.place('CIG', 'player lit')
+                                self.say('I lit a cigarette')
+                                return True
+                            else:
+                                self.say('I have no matches')
+                                return True
 
                         self.say('I have no cigarette')
                         return True
@@ -71,13 +78,6 @@ class Crypt(Room):
                 match noun:
                     case 'CIG':
                         if game.has('CIG', 'player lit'):
-                            # if game.has('COF', 'crypt') or \
-                            #         game.has('COF', 'crypt open'):
-                            #     if game.has('BOL', 'coffin cut'):
-                            #         if game.has('STA'):
-                            #             if game.has('MAL'):
-                            #                 game.place('DRA', 'coffin')
-
                             if game.has('COF', ''):
                                 # reveal the coffin
                                 game.place("COF", 'crypt')
@@ -87,7 +87,7 @@ class Crypt(Room):
 
                             return True
 
-                        elif game.has('CIG', 'player'):
+                        elif game.has('CIG', 'player') or game.has('CIG', ''):
                             self.say("I have no lit cigarette")
                             return True
 

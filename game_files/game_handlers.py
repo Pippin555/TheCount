@@ -52,6 +52,10 @@ class GameHandler:
 
         match verb:
             case "GET" | "TAK":
+                if key is None:
+                    output.append("Take or Get what?")
+                    return True
+
                 for obj in game.objects:
                     if obj.key == key:
                         if not obj.movable:
@@ -68,6 +72,10 @@ class GameHandler:
                         return True
 
             case 'DRO':
+                if key is None:
+                    output.append("Drop what?")
+                    return True
+
                 if self._game.has(noun=key, location='player'):
                     self._game.place(noun=key, location=location)
                     name = NOUNS.get(key, noun)
@@ -80,6 +88,10 @@ class GameHandler:
                     return False
 
             case 'LIG':
+                if key is None:
+                    output.append("Light what?")
+                    return True
+
                 match key:
                     case 'TOR' | 'MAT' | 'CIG':
                         if game.has(noun=key, location='player'):
@@ -93,7 +105,11 @@ class GameHandler:
                             return False
 
             case "SMO":
-                match noun:
+                if key is None:
+                    output.append("Smoke what?")
+                    return True
+
+                match key:
                     case 'CIG':
                         if game.has('CIG', 'player lit'):
                             # to be able to drop it
@@ -117,9 +133,13 @@ class GameHandler:
                 return True
 
             case 'EAT':
-                noun = NOUNS.get(key, noun)
+                if key is None:
+                    output.append("Eat what?")
+                    return True
+
                 match key:
                     case 'TAB':
+                        noun = NOUNS.get(key, noun)
                         output.append(f'I ate the {noun}')
                         return True
 
@@ -127,11 +147,12 @@ class GameHandler:
                 if noun.isnumeric():
                     router.handle('auto', noun)
                 else:
-                    output.append("Please specify a number for 'AUTO'")
+                    output.append("Please specify a number 1 .. 10 for 'AUTO'")
                 return True
 
             case "HEL":
-                output.append('Sorry, HELP is not implemented yet')
+                location = self._game.location
+                output.append(f'Sorry, HELP is not implemented yet for {location}')
                 return True
 
             case "SAV":
@@ -139,6 +160,7 @@ class GameHandler:
                     self.save(number=int(noun))
                 else:
                     output.append("Please specify a number 1..10 for 'SAVE'")
+                    output.append("not yet implemented")
                 return True
 
             case "LOA":
@@ -146,6 +168,7 @@ class GameHandler:
                     self.load(number=int(noun))
                 else:
                     output.append("Please specify a number 1..10 for 'LOAD'")
+                    output.append("not yet implemented")
                 return True
 
             case "WHE":

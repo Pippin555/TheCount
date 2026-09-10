@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Courtyard(Room):
@@ -18,7 +19,9 @@ class Courtyard(Room):
         kwargs['description'] = 'I am in a courtyard'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
+        self.help_verbs.update({'REA', 'OPE'})
 
+    @with_helper
     def handle_command(self,
                        verb:str,
                        noun: str,
@@ -58,9 +61,6 @@ class Courtyard(Room):
                         self._game.place('PAC', 'player')
                         self.say('I got the pack of cigarettes')
                         return True
-
-            # case _:
-            #     ...
 
         return False
 
