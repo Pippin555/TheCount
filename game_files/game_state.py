@@ -205,6 +205,22 @@ class GameState:
 
         return False
 
+    def carry_count(self) -> bool:
+        """ ... """
+
+        carried = []
+        for obj in self.objects:
+            if obj.location.startswith('player'):
+                carried.append(obj.name)
+
+        count = len(carried)
+        if count > 6:
+            self._output.append(f"Carrying too many items {count} > 6. ****")
+            for name in carried:
+                self._output.append(name)
+            return True
+        return False
+
     def next_day(self):
         """ ... """
 

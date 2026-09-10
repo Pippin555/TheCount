@@ -43,6 +43,9 @@ class StateMachine:
         if day == 2 and move == 24:
             game.package_arrives()
 
+        if game.carry_count():
+            ... # game.place('END', '')
+
         if command == "":
             command = "look"
 
