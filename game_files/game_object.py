@@ -14,3 +14,4 @@ class GameObject:
     location: str = ''
     plural: bool = False
     movable: bool = True
+    state: str = ''

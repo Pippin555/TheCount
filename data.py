@@ -129,27 +129,27 @@ GO = GameObject
 
 # movable objects
 OBJECT_DATA = [
-    # key, name, location, plural,  movable
-    ('SHE', 'sheet', 'bed', False, True),
-    ('END', 'end of sheet', '', False, True),
-    ('GAR', 'clove of garlic', 'pantry', False, True),
-    ('MAT', 'matches', 'pantry', True, True),
-    ('TOR', 'torch', '', False, True),
-    ('PAC', 'pack of cigarettes', 'package', False, True),
-    ('PKG', 'package', '', False, True),
-    ('STA', 'tent stake', '', False, True),
-    ('POS', 'postcard', 'courtyard', False, True),
-    ('NOT', 'note', '', False, True),
-    ('CLI', 'clip', '', False, True),
-    ('VIA', 'vial', 'closet', False, True),
-    ('TAB', 'tablets', 'closet', False, True),
-    ('POR', "Dracula's portrait", "hanging", False, True),
-    ('CIG', 'cigarette', '', False, True),
-    ('FIL', 'broad file', 'oven', False, True),
-    ('COF', "Coffin", "", False, False),
-    ('MAL', 'Rubber mallet', 'workroom', False, True),
-    ('DRA', 'Dracula', '', False, False),
-    ('BOL', 'bolt', 'coffin', False, False),
+    # key, name, location, plural,  movable, state
+    ('SHE', 'sheet', 'bed', False, True, ''),
+    ('END', 'end of sheet', '', False, True, ''),
+    ('GAR', 'clove of garlic', 'pantry', False, True, ''),
+    ('MAT', 'matches', 'pantry', True, True, ''),
+    ('TOR', 'torch', '', False, True, ''),
+    ('PAC', 'pack of cigarettes', 'package', False, True, ''),
+    ('PKG', 'package', '', False, True, ''),
+    ('STA', 'tent stake', '', False, True, ''),
+    ('POS', 'postcard', 'courtyard', False, True, ''),
+    ('NOT', 'note', '', False, True, ''),
+    ('CLI', 'clip', '', False, True, ''),
+    ('VIA', 'vial', 'closet', False, True, ''),
+    ('TAB', 'tablets', 'closet', False, True, ''),
+    ('POR', "Dracula's portrait", "hanging", False, True, ''),
+    ('CIG', 'cigarette', '', False, True, ''),
+    ('FIL', 'broad file', 'oven', False, True, ''),
+    ('COF', "coffin", "", False, False, ''),
+    ('MAL', 'rubber mallet', 'workroom', False, True, ''),
+    ('DRA', 'Dracula', '', False, False, ''),
+    ('BOL', 'bolt', 'coffin', False, False, ''),
 ]
 
 delay: int | None = None
