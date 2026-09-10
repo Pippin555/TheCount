@@ -16,7 +16,7 @@ class Closet(Room):
         """ ... """
 
         kwargs['name'] = 'Closet'
-        kwargs['inventory'] = {'empty vial'}
+        kwargs['inventory'] = {'vial'}
         kwargs['description'] = 'I am in a closet'
         super().__init__(kwargs)
         self.help_verbs.update({'EMP', })
@@ -39,6 +39,20 @@ class Closet(Room):
                 match noun:
                     case "VIA":
                         self.say('I emptied the VIAL')
+                        self._game.place('TAB', 'closet', '5')
+                        return True
+
+            case "TAK":
+                match noun:
+                    case "TAB":
+                        obj = self._game.object('TAB')
+                        if obj.location == 'closet':
+                            obj.location = 'player'
+                            count = obj.state
+                            self.say(f'I got {count} tablets')
+                        else:
+                            self.say('I see no tablets im the closet')
+
                         return True
 
         return False

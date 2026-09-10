@@ -94,9 +94,6 @@ class Crypt(Room):
             case "OPE":
                 match noun:
                     case 'COF':
-                        if game.has('COF', 'crypt open'):
-                            return True
-
                         # when the coffin is revealed
                         if game.has('COF', 'crypt'):
                             game.place('COF', 'crypt open')

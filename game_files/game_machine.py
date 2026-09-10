@@ -201,5 +201,8 @@ class StateMachine:
             case 'dungeon':
                 game.place('SHE', 'player')
 
+            case "workroom":
+                game.place('CLI', 'workroom')
+
         self._handler.enter(location=next)
         return True

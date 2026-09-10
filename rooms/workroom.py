@@ -6,6 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
+from rooms.room import with_helper
 
 
 class Workroom(Room):
@@ -19,15 +20,23 @@ class Workroom(Room):
         kwargs['inventory'] = {'door', 'lock', 'vent'}
         super().__init__(kwargs)
 
+        self.help_verbs.update({'ENT', 'PIC', 'OPE', 'LOC', 'CLO'})
+        self.door_locked = True
+
+    @with_helper
     def handle_command(self,
                        verb:str,
-                       noun: str,
+                       noun: str | None,
                        callback: Callable):
         """ ... """
 
         match verb:
             case "ENT":
                 match noun:
+                    case None:
+                        self.say("Enter what?")
+                        return True
+                    
                     case "DUM":
                         return callback('enter', 'dumbwaiter workroom')
 
@@ -37,6 +46,10 @@ class Workroom(Room):
                         return True
 
                     case "DOO":
+                        if self.door_locked:
+                            self.say('The door is locked')
+                            return True
+
                         return callback('enter', 'closet')
 
             case 'DOW':
@@ -44,29 +57,54 @@ class Workroom(Room):
 
             case "GO":
                 match noun:
+                    case None:
+                        self.say("Go where?")
+                        return True
+
                     case "DOW":
                         return callback('enter', 'dungeon')
 
             case "PIC":
                 match noun:
+                    case None:
+                        self.say("Pick what?")
+                        return True
+
                     case "LOC":
-                        self.say('You picked the lock of the door')
+                        if not self._game.has('CLI', 'player'):
+                            self.say('I do not have a paperclip')
+                            return True
+
+                        self.say('I picked the lock of the door')
+                        self.door_locked = False
                         return True
 
             case 'OPE':
                 match noun:
+                    case None:
+                        self.say("Open what?")
+                        return True
+
                     case "DOO":
                         self.say('You opened the door')
                         return True
 
             case 'CLO':
                 match noun:
+                    case None:
+                        self.say("Close what?")
+                        return True
+
                     case "DOO":
                         self.say('You closed the door')
                         return True
 
             case 'LOC':
                 match noun:
+                    case None:
+                        self.say("Lock what?")
+                        return True
+
                     case "DOO":
                         self.say('You locked the door')
                         return True

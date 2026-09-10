@@ -56,28 +56,38 @@ class GameHandler:
                     output.append("Take or Get what?")
                     return True
 
-                for obj in game.objects:
-                    if obj.key == key:
-                        if not obj.movable:
-                            output.append(f"I can't carry {noun if noun else 'that'}")
-                            return False
+                obj = game.object(key)
+                if not obj.movable:
+                    output.append(f"I can't carry {noun if noun else 'that'}")
+                    return False
 
+                if key == 'CIG':
+                    if game.has(noun='PAC', location='player'):
                         obj.location = 'player'
+                        output.append(f'I got a cigarette')
 
-                        if obj.plural:
-                            what = obj.name
-                        else:
-                            what = f'a {obj.name}'
-                        output.append(f'I got {what}')
-                        return True
+                elif obj.location == location:
+                    obj.location = 'player'
+
+                    if obj.plural:
+                        what = obj.name
+                    else:
+                        what = f'a {obj.name}'
+                    output.append(f'I got {what}')
+                else:
+                    name = NOUNS.get(key, key)
+                    if not obj.plural:
+                        name = 'a ' + name
+                    output.append(f'I do not see {name}')
+                return True
 
             case 'DRO':
                 if key is None:
                     output.append("Drop what?")
                     return True
 
-                if self._game.has(noun=key, location='player'):
-                    self._game.place(noun=key, location=location)
+                if game.has(noun=key, location='player'):
+                    game.place(noun=key, location=location)
                     name = NOUNS.get(key, noun)
                     output.append(f'I dropped the {name} in the {location}')
                     return True
@@ -139,8 +149,23 @@ class GameHandler:
 
                 match key:
                     case 'TAB':
-                        noun = NOUNS.get(key, noun)
-                        output.append(f'I ate the {noun}')
+                        obj = game.object('TAB')
+                        if obj is None:
+                            output.append('Object "tablets" does not exist')
+                            return False
+
+                        if not obj.location == 'player':
+                            output.append('I do not have tablets')
+                            return True
+
+                        count = int(obj.state) - 1
+                        if count < 0:
+                            output.append('I am out of tablets')
+                            return True
+
+                        game.place('TAB', obj.location, str(count))
+
+                        output.append(f'I ate a tablet')
                         return True
 
             case "AUT":

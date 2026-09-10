@@ -14,7 +14,7 @@ class Pantry(Room):
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'Pantry'
+        kwargs['name'] = 'pantry'
         kwargs['inventory'] = {'matches', 'garlic'}
         kwargs['description'] = 'I am in a pantry'
         super().__init__(kwargs)

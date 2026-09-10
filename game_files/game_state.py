@@ -182,6 +182,15 @@ class GameState:
 
         return False
 
+    def object(self, noun: str):
+        """ ... """
+
+        for obj in self.objects:
+            if obj.key == noun:
+                return obj
+
+        return None
+
     def place(self,
               noun: str,
               location='',

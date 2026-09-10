@@ -142,7 +142,7 @@ OBJECT_DATA = [
     ('NOT', 'note', '', False, True, ''),
     ('CLI', 'clip', '', False, True, ''),
     ('VIA', 'vial', 'closet', False, True, ''),
-    ('TAB', 'tablets', 'closet', False, True, ''),
+    ('TAB', 'tablets', '', False, True, ''),
     ('POR', "Dracula's portrait", "hanging", False, True, ''),
     ('CIG', 'cigarette', '', False, True, ''),
     ('FIL', 'broad file', 'oven', False, True, ''),

@@ -134,7 +134,11 @@ class Dungeon(Room):
                             return True
 
                         self.say('The end of the sheet is dropped in the pit')
-                        self._game.place('END', 'dungeon', 'ring')
+                        game.place('END', 'dungeon', 'ring')
+
+                        if game.has('SHE', 'player'):
+                            self.say("Don't lose the sheet in the pit!")
+
                         return True
 
             case 'CLI':
