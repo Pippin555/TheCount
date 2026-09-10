@@ -191,10 +191,18 @@ class GameState:
         self.day += 1
         self.moves = 1
 
+        # make the coffin invisible again
+        self.place('COF', '')
+        self.place('DRA', '')
+
     def next_move(self) -> tuple[int, int]:
         """ ... """
 
         self.moves += 1
+        if self.day == 3:
+            if self.moves == self.moves_to_sunset:
+                self.place('DRA', 'coffin')
+
         return self.clock()
 
     def clock(self) -> tuple[int, int]:

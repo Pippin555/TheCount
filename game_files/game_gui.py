@@ -2,6 +2,7 @@
 
 from collections import deque
 from os import makedirs
+from os import remove
 
 from os.path import join
 from os.path import abspath
@@ -124,18 +125,23 @@ class Gui:
     def print(self, message: str):
         """ ... """
 
-        with open(file=abspath(join('.', 'auto', 'log.txt')), mode='at', encoding='utf-8') as stream:
-            print(message, file=stream)
+        logfile = abspath(join('.', 'auto', 'log.txt'))
 
         bld = self.bld
         if message == '[CLEAR]':
             bld.clear()
-        else:
-            bld.append_line(message)
-            count = bld.count_lines()
-            if count > self.limit_lines:
-                pos = bld.position(number = count - self.limit_lines)
-                bld.delete(0, pos)
+            if isfile(logfile):
+                remove(logfile)
+            return
+
+        with open(file=logfile, mode='at', encoding='utf-8') as stream:
+            print(message, file=stream)
+
+        bld.append_line(message)
+        count = bld.count_lines()
+        if count > self.limit_lines:
+            pos = bld.position(number = count - self.limit_lines)
+            bld.delete(0, pos)
 
         self.txt.text = str(bld)
 

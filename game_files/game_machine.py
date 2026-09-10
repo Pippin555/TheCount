@@ -96,11 +96,6 @@ class StateMachine:
                     output.append('I went to sleep')
                     game.next_day()
 
-                    if game.day == 3:
-                        if game.has('COF', 'crypt') or \
-                            game.has('COF', 'crypt open'):
-                            game.place('DRA', 'coffin')
-
                 else:
                     output.append(f"I should go to bed to sleep, I  am now here: {name}")
 

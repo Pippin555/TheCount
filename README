@@ -42,7 +42,9 @@ AUT ...   execute as script 1 .. 10 in folder auto
 nice to haves that are NOT implemented:
 SAV  ...  save the current state
 LOA  ...  reload the current state
-REC  ...  record input
+REC  ...  record input,
+          although there is a log in ./auto/log.txt
+          that can be cleared by the CLE command
 
 most important 'nouns':
 SHE       sheet

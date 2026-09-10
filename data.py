@@ -105,7 +105,7 @@ NOUNS = {
     "END": "end",
     "BED": "bed",
     "NOR": "North",
-    "EAS": "Eath",
+    "EAS": "East",
     "SOU": "South",
     "WES": "West",
     "ROO": "Room",
