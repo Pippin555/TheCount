@@ -54,3 +54,9 @@ COF       coffin
 
 backdoor/debug command:
 WHE       where are the game objects?
+
+
+---------
+This program was never meant to be a commercial one.
+Everybody is free to change this game, but please do that on a personal branch.
+When I have time I can incorporate your changes in the main.
