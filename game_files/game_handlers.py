@@ -153,8 +153,10 @@ class GameHandler:
                 for obj in game.objects:
                     pos = obj.location or 'hidden'
                     output.append(f'{obj.key:3} {obj.name}: {pos}')
-
                 return True
+
+            case _:
+                output.append(f"Unimplemented verb: {verb}   ******")
 
         verb = VERBS.get(verb, verb)
         noun = NOUNS.get(noun, noun)
