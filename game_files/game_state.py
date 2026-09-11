@@ -81,8 +81,6 @@ class GameState:
         self.moves = 0
         self.moves_to_sunset = self.sunsets[self.day]
 
-        self._inventory = set()
-
         self.awake = False
         self.game_over = False
 
@@ -102,13 +100,7 @@ class GameState:
     def save(self):
         """ ... """
 
-        local = {}
-        for obj in self.objects:
-            local[obj.key] = obj.location
-
-        lst = [str(item) for item in self._inventory]
-        local['inventory'] = lst
-        local['location'] = self.location
+        local = {'inventory' : self.objects }
 
         GameStorage().store_value(section='state',
                                   name='local',
@@ -227,7 +219,7 @@ class GameState:
         """ ... """
 
         self.day += 1
-        self.moves = 1
+        self.moves = 0
         self.moves_to_sunset = self.sunsets[self.day]
 
         # make the coffin and Dracula invisible again
@@ -235,14 +227,14 @@ class GameState:
         self.place('DRA', '')
 
         if self.day == 2:
-            self.place('VIA', '')
             if self.has('VIA', 'player'):
                 self._output.append("The vial was stolen!")
+            self.place('VIA', '')
 
         if self.day == 3:
-            self.place('PAC', '')
             if self.has('PAC', 'player'):
                 self._output.append("The pack of cigarettes was stolen!")
+            self.place('PAC', '')
 
     def next_move(self) -> tuple[int, int]:
         """ ... """

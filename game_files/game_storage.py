@@ -49,7 +49,7 @@ class GameStorage(metaclass=Singleton):
 
         full = join(abspath("."), "auto")
         makedirs(full, exist_ok=True)
-        file = join(full, f'save_{number}.txt')
+        file = join(full, f'save_{number}.json')
 
         with open(file=file, mode='wt', encoding='utf-8') as stream:
             stream.write(dumps(self._volatile_data))
@@ -61,7 +61,7 @@ class GameStorage(metaclass=Singleton):
 
         full = join(abspath("."), "auto")
         makedirs(full, exist_ok=True)
-        file = join(full, f'save_{number}.txt')
+        file = join(full, f'save_{number}.json')
 
         if isfile(file):
             with open(file=file, mode='rt', encoding='utf-8') as stream:
