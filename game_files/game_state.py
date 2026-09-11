@@ -236,9 +236,13 @@ class GameState:
 
         if self.day == 2:
             self.place('VIA', '')
+            if self.has('VIA', 'player'):
+                self._output.append("The vial was stolen!")
 
         if self.day == 3:
             self.place('PAC', '')
+            if self.has('PAC', 'player'):
+                self._output.append("The pack of cigarettes was stolen!")
 
     def next_move(self) -> tuple[int, int]:
         """ ... """
