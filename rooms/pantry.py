@@ -15,7 +15,7 @@ class Pantry(Room):
         """ ... """
 
         kwargs['name'] = 'pantry'
-        kwargs['inventory'] = {'matches', 'garlic'}
+        kwargs['inventory'] = {'matches'}
         kwargs['description'] = 'I am in a pantry'
         super().__init__(kwargs)
 

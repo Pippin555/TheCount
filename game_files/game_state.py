@@ -234,6 +234,12 @@ class GameState:
         self.place('COF', '')
         self.place('DRA', '')
 
+        if self.day == 2:
+            self.place('VIA', '')
+
+        if self.day == 3:
+            self.place('PAC', '')
+
     def next_move(self) -> tuple[int, int]:
         """ ... """
 

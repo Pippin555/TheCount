@@ -1,0 +1,884 @@
+* 1 2: AUTO 10
+C:\Users\hsalo\source\repos\python\131\TheCount\auto
+* 1 3: GET SHE
+I do not see a sheet
+* 1 4: GET UP
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 1 5: GO NORTH
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 1 6: GO WEST
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 1 7: ENTER DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 1 8: RAISE DUMBWAITER
+
+I'm in a dumb-waiter, raised to the pantry level
+some exits are:
+EAS
+LOW
+
+* 1 9: ENTER ROOM
+
+I am in a pantry
+I see:
+matches
+clove of garlic
+some exits are:
+WES
+
+* 1 10: TAKE GARLIC
+I got a clove of garlic
+* 1 11: TAKE MATCHES
+I got matches
+* 1 12: ENTER DUMBWAITER
+
+I'm in a dumb-waiter, raised to the pantry level
+some exits are:
+EAS
+LOW
+
+* 1 13: LOWER DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 1 14: LOWER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 1 15: ENTER ROOM
+
+I am in a workroom
+I see:
+rubber mallet
+door
+vent
+lock
+some exits are:
+WES
+DOW
+
+* 1 16: GO DOWN
+
+I am in a dungeon
+I see:
+ring on the wall
+pit
+some exits are:
+UP
+
+* 1 17: TIE SHEET
+Tie sheet to what
+* 1 18: TO RING
+The sheet is now tied to a ring
+* 1 19: TAKE END
+taken the end of the sheet
+* 1 20: DROP END
+The end of the sheet is dropped in the pit
+* 1 21: CLIMB SHEET
+
+I am in a very dark pit
+some exits are:
+CLIMB
+
+* 1 22: LIGHT MATCH
+I lit a match
+I found a TORCH!
+* 1 23: TAKE TORCH
+I got a torch
+* 1 24: CLIMB SHEET
+
+I am in a dungeon
+I see:
+end of sheet
+sheet
+ring on the wall
+pit
+some exits are:
+UP
+
+* 1 25: GO UP
+
+I am in a workroom
+I see:
+rubber mallet
+door
+vent
+lock
+some exits are:
+WES
+DOW
+
+* 1 26: ENTER VENT
+A spooky voice is heard
+You’re not the size of bat
+* 1 27: INVENTORY 
+I'm carrying the following:
+clove of garlic
+matches
+torch
+
+None
+* 1 28: ENTER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 1 29: RAISE DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 1 30: ENTER ROOM
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 1 31: GO EAST
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 1 32: WAIT 
+some time goes by
+* 1 33: GO EAST
+
+I am in a courtyard
+I see:
+postcard
+some exits are:
+WES
+
+* 1 34: TAKE POSTCARD
+I got a postcard
+* 1 35: READ POSTCARD
+Its for DRACULA, its and EATING & GHOULING bill from
+a local mortuary!
+There's a note PAPER CLIPPED to the postcard
+* 1 36: TAKE CLIP
+I got a clip
+* 1 37: READ NOTE
+Postmaster says he'll be delivering a package tomorrow.
+* 1 38: DROP NOTE
+I dropped the note in the courtyard
+* 1 39: DROP POSTCARD
+I dropped the postcard in the courtyard
+It is getting dark and I am getting tired.
+It is day 1 and move 40.
+* 1 40: GO WEST
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 1 41: GO WEST
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 1 42: LIGHT TORCH
+I lit the torch
+* 1 43: ENTER DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 1 44: LOWER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 1 45: ENTER ROOM
+
+I am in a workroom
+I see:
+rubber mallet
+door
+vent
+lock
+some exits are:
+WES
+DOW
+
+* 1 46: PICK LOCK
+I picked the lock of the door
+* 1 47: OPEN DOOR
+You opened the door
+* 1 48: ENTER DOOR
+
+I am in a closet
+I see:
+vial
+some exits are:
+WES
+
+* 1 49: EMPTY VIAL
+I emptied the VIAL
+* 1 50: TAKE TABLETS
+I got 5 tablets
+* 1 51: EAT TABLETS
+I ate a tablet
+* 1 52: GO WEST
+
+I am in a workroom
+I see:
+rubber mallet
+door
+vent
+lock
+some exits are:
+WES
+DOW
+
+* 1 53: CLOSE DOOR
+You closed the door
+* 1 54: LOCK DOOR
+You locked the door
+* 1 55: ENTER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 1 56: RAISE DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 1 57: ENTER ROOM
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 1 58: LOOK WATCH
+day 1 move 58
+moves to sunset 40
+sunset: 1
+* 1 59: ENTER OVEN
+
+I am in a huge solar oven
+I see:
+broad file
+some exits are:
+WES
+ROOM
+
+* 1 60: TAKE FILE
+I got a broad file
+* 1 61: ENTER ROOM
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 1 62: GO EAST
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 1 63: GO SOUTH
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 1 64: ENTER BED
+
+I am lying in a large brass bed
+I see:
+bed
+pillow
+some exits are:
+GET UP
+
+* 1 65: EXTINGUISH TORCH
+I have extinguised the torch
+* 1 66: SLEEP 
+I went to sleep
+* 2 2: LOOK 
+
+I am lying in a large brass bed
+I see:
+bed
+pillow
+some exits are:
+GET UP
+
+* 2 3: DROP CLIP
+I dropped the paperclip in the Bed
+* 2 4: TAKE SHEETS
+I do not see a sheet
+* 2 5: GET UP
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 2 6: TIE SHEETS
+tie sheet to what
+* 2 7: TO BED
+The sheet is now tied to the bed
+* 2 8: TAKE END
+taken the end of the sheet
+* 2 9: OPEN WINDOW
+I opened the window
+* 2 10: ENTER WINDOW
+
+I am on the window ledge
+some exits are:
+WES
+
+* 2 11: DROP END
+I dropped the end of the sheet over the ledge of the window
+* 2 12: CLIMB SHEET
+
+I am on a flowerbed
+some exits are:
+Window
+
+* 2 13: ENTER WINDOW
+
+I am in Dracula's bedroom
+I see:
+Dracula's Portrait
+Window
+some exits are:
+WES
+
+* 2 14: REMOVE PORTRAIT
+I removed Dracula's portrait
+I found a tent stake
+I found a passage
+* 2 15: DROP PORTRAIT
+I dropped the portrait of Dracula in the Dracula's bedroom
+* 2 16: ENTER WINDOW
+
+I am on a flowerbed
+some exits are:
+Window
+
+* 2 17: CLIMB SHEET
+
+I am on the window ledge
+some exits are:
+WES
+
+* 2 18: ENTER WINDOW
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 2 19: GO NORTH
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 2 20: GO NORTH
+
+I am in a bathroom
+I see:
+Mirror
+some exits are:
+SOU
+
+* 2 21: LOOK MIRROR
+I see bitemarks and on my neck and I feel drained.
+I hope I can complete this adventure.
+* 2 22: GO SOUTH
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 2 23: WAIT 
+some time goes by
+***
+The bell at the front door was rung
+***
+
+* 2 24: EAT TABLET
+I ate a tablet
+It is getting dark and I am getting tired.
+It is day 2 and move 25.
+* 2 25: LIGHT TORCH
+I lit the torch
+* 2 26: GO EAST
+
+I am in a courtyard
+I see:
+package
+note
+postcard
+some exits are:
+WES
+
+* 2 27: OPEN PACKAGE
+I opened the package
+I see a pack of cigarettes
+* 2 28: TAKE PACK
+I got the pack of cigarettes
+* 2 29: GO WEST
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 2 30: GO SOUTH
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 2 31: ENTER WINDOW
+
+I am on the window ledge
+some exits are:
+WES
+
+* 2 32: EXTINGUISH TORCH
+I have extinguised the torch
+* 2 33: CLIMB SHEET
+
+I am on a flowerbed
+some exits are:
+Window
+
+* 2 34: ENTER WINDOW
+
+I am in Dracula's bedroom
+I see:
+Passage
+Dracula's portrait
+tent stake
+some exits are:
+WES
+
+* 2 35: LIGHT TORCH
+I lit the torch
+* 2 36: ENTER PASSAGE
+
+I am in a passage
+some exits are:
+NOR
+SOU
+
+* 2 37: GO NORTH
+
+I am in a crypt
+I see:
+Sign
+some exits are:
+SOU
+
+* 2 38: LOOK SIGN
+The sign says:
+POSITIVELY NO SMOKING ALLOWED HERE!
+Signed: Dracula
+* 2 39: WAIT 
+some time goes by
+* 2 40: EAT TABLET
+I ate a tablet
+* 2 41: DROP TABLETS
+I dropped the tablets in the crypt
+* 2 42: TAKE CIGARETTE
+I took a cigarette
+* 2 43: LIGHT CIGARETTE
+I lit a cigarette
+* 2 44: SMOKE CIGARETTE
+There is a Coughin (sic!) here
+* 2 45: DROP CIGARETTE
+I dropped the cigarette in the crypt
+* 2 46: OPEN COFFIN
+The coffin is open
+* 2 47: ENTER COFFIN
+
+I am in a coffin
+I see:
+bolt
+some exits are:
+UP
+
+* 2 48: CUT BOLT
+With what?
+* 2 49: WITH FILE
+The bolt is cut
+* 2 50: DROP FILE
+I dropped the large tempered nail file in the coffin
+* 2 51: GO UP
+
+I am in a crypt
+I see:
+Sign
+cigarette
+tablets
+some exits are:
+SOU
+
+* 2 52: GO SOUTH
+
+I am in a passage
+some exits are:
+NOR
+SOU
+
+* 2 53: GO SOUTH
+
+I am in Dracula's bedroom
+I see:
+Passage
+Dracula's portrait
+tent stake
+some exits are:
+WES
+
+* 2 54: GET CIGARETTE
+I got a cigarette
+* 2 55: ENTER WINDOW
+
+I am on a flowerbed
+some exits are:
+Window
+
+* 2 56: EXTINGUISH TORCH
+I have extinguised the torch
+* 2 57: CLIMB SHEET
+
+I am on the window ledge
+some exits are:
+WES
+
+* 2 58: ENTER WINDOW
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 2 59: ENTER BED
+
+I am lying in a large brass bed
+I see:
+bed
+pillow
+clip
+some exits are:
+GET UP
+
+* 2 60: SLEEP 
+I went to sleep
+* 3 2: LOOK 
+
+I am lying in a large brass bed
+I see:
+bed
+pillow
+clip
+some exits are:
+GET UP
+
+* 3 3: DROP GARLIC
+I dropped the dusty clove of garlic in the Bed
+* 3 4: TAKE SHEETS
+I do not see a sheet
+* 3 5: TAKE CLIP
+I got a clip
+* 3 6: GET UP
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 3 7: GO NORTH
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 3 8: GO WEST
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 3 9: ENTER DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 3 10: LOWER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 3 11: ENTER ROOM
+
+I am in a workroom
+I see:
+rubber mallet
+door
+vent
+lock
+some exits are:
+WES
+DOW
+
+* 3 12: PICK LOCK
+I picked the lock of the door
+* 3 13: DROP CLIP
+I dropped the paperclip in the workroom
+* 3 14: TAKE MALLET
+I got a rubber mallet
+* 3 15: OPEN DOOR
+You opened the door
+* 3 16: ENTER DOOR
+
+I am in a closet
+I see:
+vial
+some exits are:
+WES
+
+* 3 17: GO WEST
+
+I am in a workroom
+I see:
+lock
+door
+vent
+clip
+some exits are:
+WES
+DOW
+
+* 3 18: ENTER DUMBWAITER
+
+I'm in a dumb-waiter, lowered to the workroom level
+some exits are:
+EAS
+RAI
+
+* 3 19: RAISE DUMBWAITER
+
+I am in a dumb-waiter at the kitchen level
+some exits are:
+RAI
+EAS
+LOW
+
+* 3 20: ENTER ROOM
+
+I am in a kitchen
+some exits are:
+WES
+EAS
+OVEN
+
+* 3 21: GO EAST
+
+I am in a hall
+some exits are:
+SOU
+NOR
+WES
+EAS
+
+* 3 22: GO SOUTH
+
+I am in a bedroom
+I see:
+window
+bed
+some exits are:
+NOR
+BED
+
+* 3 23: OPEN WINDOW
+I opened the window
+* 3 24: TIE SHEETS
+tie sheet to what
+* 3 25: TO BED
+The sheet is now tied to the bed
+* 3 26: TAKE END
+taken the end of the sheet
+* 3 27: ENTER WINDOW
+
+I am on the window ledge
+some exits are:
+WES
+
+* 3 28: DROP END
+I dropped the end of the sheet over the ledge of the window
+* 3 29: CLIMB SHEET
+
+I am on a flowerbed
+some exits are:
+Window
+
+* 3 30: ENTER WINDOW
+
+I am in Dracula's bedroom
+I see:
+Passage
+Dracula's portrait
+tent stake
+some exits are:
+WES
+
+* 3 31: TAKE STA
+I got a tent stake
+* 3 32: LIGHT TORCH
+I lit the torch
+* 3 33: ENTER PASSAGE
+
+I am in a passage
+some exits are:
+NOR
+SOU
+
+* 3 34: GO NORTH
+
+I am in a crypt
+I see:
+Sign
+tablets
+some exits are:
+SOU
+
+It is getting dark and I am getting tired.
+It is day 3 and move 35.
+* 3 35: LIGHT CIGARETTE
+I lit a cigarette
+* 3 36: SMOKE CIGARETTE
+There is a Coughin (sic!) here
+* 3 37: DROP CIGARETTE
+I dropped the cigarette in the crypt
+* 3 38: OPEN COFFIN
+The coffin is open
+* 3 39: ENTER COFFIN
+
+I am in a coffin
+I see:
+Dracula
+broad file
+some exits are:
+UP
+
+* 3 40: KILL DRACULA
+I completed my task: Dracula has been killed 
+with a stake in his heart.
+When I reach the courtyard I am welcomed as a hero, 
+the cheering townspeople carry me away!
+    
