@@ -75,9 +75,11 @@ class GameState:
 
         self.objects = [GO(*data) for data in OBJECT_DATA]
         self._location = "bed"
+
+        self.sunsets = [0, 40, 25, 35]
         self.day = 1
         self.moves = 0
-        self.moves_to_sunset = 30
+        self.moves_to_sunset = self.sunsets[self.day]
 
         self._inventory = set()
 
@@ -226,8 +228,9 @@ class GameState:
 
         self.day += 1
         self.moves = 1
+        self.moves_to_sunset = self.sunsets[self.day]
 
-        # make the coffin invisible again
+        # make the coffin and Dracula invisible again
         self.place('COF', '')
         self.place('DRA', '')
 
