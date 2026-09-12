@@ -4,6 +4,7 @@ from collections import deque
 
 from jsons import dumps
 
+from rooms.lost import Lost
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -34,6 +35,9 @@ from rooms.passage import Passage
 from rooms.crypt import Crypt
 from rooms.oven import Oven
 from rooms.coffin import Coffin
+from rooms.lost import Lost
+from rooms.home import Home
+
 
 from game_files.game_storage import GameStorage
 
@@ -71,6 +75,8 @@ class GameState:
             "passage": Passage(kwargs),
             "crypt": Crypt(kwargs),
             "coffin": Coffin(kwargs),
+            "lost": Lost(kwargs),
+            "home": Home(kwargs),
         }
 
         self.objects = [GO(*data) for data in OBJECT_DATA]
@@ -124,7 +130,12 @@ class GameState:
         found = False
         for obj in self.objects:
             if obj.location.startswith('player'):
-                aln(obj.name)
+                match obj.key:
+                    case 'TAB' | 'CIG' | 'TOR' | 'PAC':
+                        aln(f'{obj.state} {obj.name} ({obj.location})')
+                    case _:
+                        aln(obj.name)
+
                 found = True
 
         if not found:
@@ -170,9 +181,9 @@ class GameState:
             if (obj.key == noun and
                     obj.location == location):
                 if state is not None:
-                    if obj.state == state:
-                        return True
-                return  True
+                    return obj.state == state
+                else:
+                    return True
 
         return False
 
@@ -240,10 +251,6 @@ class GameState:
         """ ... """
 
         self.moves += 1
-        if self.day == 3:
-            if self.moves == self.moves_to_sunset:
-                self.place('DRA', 'coffin')
-
         return self.clock()
 
     def clock(self) -> tuple[int, int]:
@@ -297,7 +304,7 @@ class GameState:
         if result is None:
             output = self._output
             output.append(f"I can't find {location}")
-            output.append("try 'restart'")
+            output.append("try 'RESTART' to play again")
             return None
         return result
 

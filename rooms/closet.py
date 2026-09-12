@@ -15,8 +15,8 @@ class Closet(Room):
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'Closet'
-        kwargs['inventory'] = {'vial'}
+        kwargs['name'] = 'closet'
+        kwargs['inventory'] = set()
         kwargs['description'] = 'I am in a closet'
         super().__init__(kwargs)
         self.help_verbs.update({'EMP', })
@@ -24,7 +24,7 @@ class Closet(Room):
     @with_helper
     def handle_command(self,
                        verb: str,
-                       noun: str,
+                       noun: str | None,
                        callback: Callable) -> bool:
         """ ... """
 
@@ -34,6 +34,8 @@ class Closet(Room):
                     case "DOO":
                         callback('enter', 'workroom')
                         return True
+                    case None:
+                        self.sat('Enter what?')
 
             case "EMP":
                 match noun:
@@ -42,7 +44,11 @@ class Closet(Room):
                         self._game.place('TAB', 'closet', '5')
                         return True
 
-            case "TAK":
+                    case None:
+                        self.say('Empty what?')
+                        return True
+
+            case "GET" | "TAK":
                 match noun:
                     case "TAB":
                         obj = self._game.object('TAB')

@@ -96,9 +96,15 @@ class Crypt(Room):
                     case 'COF':
                         # when the coffin is revealed
                         if game.has('COF', 'crypt'):
-                            game.place('COF', 'crypt open')
-                            self.say('The coffin is open')
-                            return True
+                            if game.has('BOL', 'coffin', 'cut') or game.has('DRA', ''): # when the bolt was cut
+                                game.place('COF', 'crypt open')
+                                self.say('The coffin is open')
+                            else:
+                                self.say('The coffin is locked from inside')
+                        else:
+                            self.say('There is no coffin in the crypt')
+
+                        return True
 
             case "ENT":
                 match noun:

@@ -31,6 +31,8 @@ class Coffin(Room):
                        callback: Callable):
         """ ... """
 
+        game = self._game
+
         match verb:
             case 'CUT':
                 match noun:
@@ -46,18 +48,31 @@ class Coffin(Room):
                 match noun:
                     case 'FIL':
                         self.say('The bolt is cut')
-                        self._game.place('BOL', 'coffin cut')
+                        game.place('BOL', 'coffin', 'cut')
                         return True
 
             case 'KIL':
                 match noun:
                     case 'DRA':
-                        if self._game.has('STA') and \
-                            self._game.has('MAL') and \
-                            self._game.has('DRA', 'coffin'):
+                        if (game.has('STA') and
+                                game.has('MAL') and
+                                game.has('DRA', 'coffin')):
+                            game.place('DRA', 'coffin', 'nailed')
 
                             self.say(TEXTS['WIN'])
+                            game.location = 'home'
                             return True
+
+            case 'CLO':
+                match noun:
+                    case 'COF':
+                        self.say("I close the coffin")
+                        self.say("... I should not have done that!")
+                        self.say("...... I suffocated")
+                        self.say("......... I lost the game")
+                        callback('enter', 'lost')
+                        return True
+
         return False
 
     @property

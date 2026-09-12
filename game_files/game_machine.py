@@ -37,6 +37,22 @@ class StateMachine:
 
         day, move = game.next_move()
 
+        match day:
+            case 1:
+                if move == game.moves_to_sunset + 3:
+                    if not game.has('GAR'):
+                        self._output.append("A bat settled on my shoulder and bit me in the neck")
+                        self._output.append("I have turned into a Vampire")
+                        self._handler.enter('lost')
+                        return True
+                    else:
+                        self._output.append("... A bat flew by")
+                        self._output.append("It smelled somthing strange and it laughed at me")
+
+            case 3:
+                if move == game.moves_to_sunset:
+                    game.place('DRA', 'coffin')
+
         if game.sunset == 0:
             game.getting_late()
 
@@ -158,6 +174,9 @@ class StateMachine:
                         self.warp("crypt")
                         return True
 
+                    case 'COU':
+                        self.warp("courtyard")
+
                     case _:
                         noun = NOUNS.get(key, noun)
                         return self.warp(noun)
@@ -206,6 +225,9 @@ class StateMachine:
 
             case "workroom":
                 game.place('CLI', 'workroom')
+
+            case "courtyard":
+                game.place('PKG', 'courtyard')
 
         self._handler.enter(location=next)
         return True

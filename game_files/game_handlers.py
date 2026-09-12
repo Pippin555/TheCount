@@ -166,6 +166,7 @@ class GameHandler:
                         game.place('TAB', obj.location, str(count))
 
                         output.append(f'I ate a tablet')
+                        output.append("I'm real PEPPY now!")
                         return True
 
             case "AUT":
@@ -258,7 +259,6 @@ class GameHandler:
         bld, aln = StringBuilder.bld_aln()
         aln('')
         aln(room.description)
-        # fixed = room.get('fixed_objects', None)
 
         objs = room.inventory
         if objs:
