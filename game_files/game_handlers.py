@@ -91,11 +91,14 @@ class GameHandler:
                     return True
 
                 if game.has(noun=key, location='player'):
-                    if key == 'MIR' and location != 'bed':
-                        output.append(f"The mirror shattered, that's 7 years bad luck!")
-                        game.place('MIR', '', 'shattered')
-                    else:
-                        location = 'pillow'
+                    if key == 'MIR':
+                        if location != 'bed':
+                            output.append(f"The mirror shattered, that's 7 years bad luck!")
+                            game.place('MIR', '', 'shattered')
+                            return True
+                        else:
+                            location = 'pillow'
+
                     game.place(noun=key, location=location)
                     obj = game.object(key)
                     output.append(f'I dropped the {obj.name} in the {location}')
@@ -149,6 +152,10 @@ class GameHandler:
                     case None:
                         self.where()
 
+                    case 'MIR':
+                        if game.has('MIR', 'player'):
+                            output.append(f"I see myself and I look tired")
+
                     case 'WAT':
                         output.append(f'day {game.day} move {game.moves}')
                         output.append(f'moves to sunset {game.moves_to_sunset}')
@@ -184,7 +191,7 @@ class GameHandler:
                         return True
 
             case "AUT":
-                if noun.isnumeric():
+                if noun and noun.isnumeric():
                     router.handle('auto', noun)
                 else:
                     output.append("Please specify a number 1 .. 10 for 'AUTO'")
