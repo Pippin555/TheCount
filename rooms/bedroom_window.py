@@ -32,13 +32,13 @@ class BedroomWindow(Room):
                 if noun == 'END':
                     if self._game.has('END'):
                         self.say('I dropped the end of the sheet over the ledge of the window')
-                        self._game.place('END', 'tied bed')
+                        self._game.place('END', 'bed', 'tied')
                         return True
 
             case 'CLI':
                 if noun == 'SHE' and \
-                    self._game.has('SHE', 'tied bed') and \
-                    self._game.has('END', 'tied bed'):
+                    self._game.has('SHE', 'bed', 'tied') and \
+                    self._game.has('END', 'bed', 'tied'):
                     callback(verb='enter', noun='flowerbed')
                 else:
                     self.say(f"I can't {verb} {noun}")

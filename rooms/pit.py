@@ -30,6 +30,8 @@ class Pit(Room):
                        callback: Callable):
         """ ... """
 
+        game = self._game
+
         match verb:
             case 'CLI':
                 match noun:
@@ -38,16 +40,25 @@ class Pit(Room):
                         return True
 
                     case 'SHE':
-                        return callback('enter', 'dungeon')
+                        if game.has('TOR', 'player', 'lit'):
+                            self.say('The sheet burned, you are now stuck')
+                            self.say("\nTry to 'RESTART'")
+                            game.place('SHE', '')
+                            game.place('END', '')
+                            return True
+
+                        else:
+                            return callback('enter', 'dungeon')
 
             case 'LIG':
                 match noun:
                     case 'MAT':
                         self.say('I lit a match')
-                        if self._game.has('TOR', ''):
-                            self._game.place('TOR', self.name)
+                        if game.has('TOR', ''):
+                            game.place('TOR', 'pit', '')
                             self.say('I found a TORCH!')
                             return True
+                    # case 'TOR':
 
         return False
 

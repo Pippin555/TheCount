@@ -25,11 +25,17 @@ class Flowerbed(Room):
                        callback: Callable):
         """ ... """
 
+        game = self._game
+
         match verb:
             case 'CLI':
                 match noun:
                     case 'SHE':
-                        return callback(verb='enter', noun='bedroom window')
+                        if (game.has('SHE', 'bed', 'tied') and
+                                game.has('END', 'bed', 'tied')):
+                            return callback(verb='enter', noun='bedroom window')
+                        else:
+                            self.say("The sheet came loose. You are stuck\n\nTry 'RESTART'")
 
             case 'ENT':
                 match noun:

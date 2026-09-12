@@ -67,7 +67,7 @@ class Bedroom(Room):
 
                     case 'BED':
                         self.say('The sheet is now tied to the bed')
-                        self._game.place('SHE', 'tied bed')
+                        self._game.place('SHE', 'bed', 'tied')
                         return True
 
                 return True

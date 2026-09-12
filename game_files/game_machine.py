@@ -111,7 +111,7 @@ class StateMachine:
             case "SLE":
                 room = game.current_room
                 name = room.name
-                if name == 'Bed':
+                if name == 'bed':
                     output.append('I went to sleep')
                     game.next_day()
 

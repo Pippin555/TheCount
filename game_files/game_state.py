@@ -131,8 +131,9 @@ class GameState:
         for obj in self.objects:
             if obj.location.startswith('player'):
                 match obj.key:
-                    case 'TAB' | 'CIG' | 'TOR' | 'PAC':
-                        aln(f'{obj.state} {obj.name} ({obj.location})')
+                    case 'TAB' | 'CIG' | 'TOR' | 'PAC' | 'SHE':
+                        state = f'{obj.state} ' if obj.state else ''
+                        aln(f'{state}{obj.name} ({obj.location})')
                     case _:
                         aln(obj.name)
 

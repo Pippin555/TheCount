@@ -6,7 +6,7 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 from typing import Callable
 
 from rooms.room import Room
-
+from rooms.room import with_helper
 
 class Pantry(Room):
     """ 'Pantry' as 'room' in the game 'The Count' """
@@ -15,19 +15,26 @@ class Pantry(Room):
         """ ... """
 
         kwargs['name'] = 'pantry'
-        kwargs['inventory'] = {'matches'}
+        kwargs['inventory'] = set()
         kwargs['description'] = 'I am in a pantry'
         super().__init__(kwargs)
 
+    @with_helper
     def handle_command(self,
                        verb: str,
-                       noun: str,
+                       noun: str| None,
                        callback: Callable) -> bool:
         """ ... """
 
-        if verb == "ENT" and noun == "DUM":
-            callback('enter', 'dumbwaiter pantry')
-            return True
+        match verb:
+            case 'ENT':
+                match noun:
+                    case 'DUM':
+                        callback('enter', 'dumbwaiter pantry')
+                    case _:
+                        self.say('Enter what?')
+
+                return True
 
         return False
 

@@ -15,8 +15,8 @@ class Bed(Room):
     def __init__(self, kwargs: dict):
         """ ... """
 
-        kwargs['name'] = 'Bed'
-        kwargs['inventory'] = {'bed', 'pillow'}
+        kwargs['name'] = 'bed'
+        kwargs['inventory'] = {'pillow'}
         kwargs['description'] = 'I am lying in a large brass bed'
         super().__init__(kwargs)
         self.help_verbs.update({'AUT',})

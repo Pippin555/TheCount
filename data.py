@@ -86,7 +86,7 @@ NOUNS = {
     "BOT": "bottle of Type V blood",
     "UP": "get up",
     "DUM": "dumbwaiter",
-    "PIT": "pit of death",
+    "PIT": "pit",
     "SHE": "sheet", # sheet
     "RIN": "ring", # ring in the wall
     "POS": "postcard",
@@ -150,6 +150,7 @@ OBJECT_DATA = [
     ('MAL', 'rubber mallet', 'workroom', False, True, ''),
     ('DRA', 'Dracula', '', False, False, ''),
     ('BOL', 'bolt', 'coffin', False, False, ''),
+    ('MIR', 'mirror', 'bathroom', False, True, ''),
 ]
 
 delay: int | None = None

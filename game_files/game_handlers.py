@@ -57,8 +57,12 @@ class GameHandler:
                     return True
 
                 obj = game.object(key)
+                if obj is None:
+                    output.append(f"I don't know what {key} is")
+                    return False
+
                 if not obj.movable:
-                    output.append(f"I can't carry {noun if noun else 'that'}")
+                    output.append(f"I can't carry {obj.name}")
                     return False
 
                 if key == 'CIG':
@@ -87,9 +91,14 @@ class GameHandler:
                     return True
 
                 if game.has(noun=key, location='player'):
+                    if key == 'MIR' and location != 'bed':
+                        output.append(f"The mirror shattered, that's 7 years bad luck!")
+                        game.place('MIR', '', 'shattered')
+                    else:
+                        location = 'pillow'
                     game.place(noun=key, location=location)
-                    name = NOUNS.get(key, noun)
-                    output.append(f'I dropped the {name} in the {location}')
+                    obj = game.object(key)
+                    output.append(f'I dropped the {obj.name} in the {location}')
                     return True
 
                 else:
@@ -105,10 +114,15 @@ class GameHandler:
                 match key:
                     case 'TOR' | 'MAT' | 'CIG':
                         if game.has(noun=key, location='player'):
-                            game.place(key, 'player lit')
-                            noun = NOUNS.get(key, noun)
-                            output.append(f'I lit the {noun}')
+                            obj = game.object(key)
+                            if obj is None:
+                                output.append(f"I don't know what {key} is")
+                                return False
+
+                            game.place(key, 'player', 'lit')
+                            output.append(f'I lit the {obj.name}')
                             return True
+
                         else:
                             noun = NOUNS.get(noun, noun)
                             output.append(f"I don't have a {noun}")
@@ -251,6 +265,7 @@ class GameHandler:
 
         output = self._output
         game = self._game
+
         room = game.current_room
         if room is None:
             output.append("I am lost")
@@ -265,6 +280,12 @@ class GameHandler:
             aln('I see:')
             for obj in objs:
                 aln(obj)
+
+        # already listed, check the object name, does it have a capital first character?
+        # for obj in game.objects:
+        #     if obj.location == room.name:
+        #         state = f'{obj.state} ' if obj.state else ''
+        #         aln(f'{state}{obj.name} ({obj.location})')
 
         exits = room.exits
         if exits:
