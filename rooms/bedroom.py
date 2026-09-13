@@ -5,6 +5,8 @@ __copyright__ = "© Sihir 2026-2026 all rights reserved"
 
 from typing import Callable
 
+from data import GameObject
+
 from rooms.room import Room
 from rooms.room import with_helper
 
@@ -17,17 +19,29 @@ class Bedroom(Room):
 
         kwargs['name'] = 'bedroom'
         kwargs['description'] = 'I am in a bedroom'
-        kwargs['inventory'] = {'bed', 'window'}
+        kwargs['inventory'] = {'bed', }
         super().__init__(kwargs)
         self.help_verbs.update({'TIE', 'TO', 'OPE', 'ENT'})
-        self._window_open = False
+        self._obj_bww = self._game.get_obj('BWW')
+
+    @property
+    def _window_open(self):
+        """ Return whether the window is open. """
+
+        return self._obj_bww.state == 'open'
+
+    @_window_open.setter
+    def _window_open(self, state: bool):
+        """ Set the window is open state """
+
+        self._obj_bww.state = 'open' if state else 'closed'
 
     @with_helper
     def handle_command(self,
                        verb: str,
                        noun: str | None,
                        callback: Callable):
-        """ ... """
+        """ process(verb, noun) for the Bedroom"""
 
         game = self._game
 

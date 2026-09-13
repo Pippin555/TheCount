@@ -93,7 +93,7 @@ class Room(ABC):
 
         return False
 
-    def format_help(self, verbs: list[str]) -> str:
+    def format_help(self, verbs: set[str]) -> str:
         """ ... """
 
         bld, aln = StringBuilder.bld_aln()

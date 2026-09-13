@@ -8,6 +8,7 @@ from rooms.lost import Lost
 from utils.string_builder import StringBuilder
 
 from data import GO
+from data import GameObject
 from data import OBJECT_DATA
 
 from texts import TEXTS
@@ -51,6 +52,44 @@ class GameState:
         self._output: deque = Exchange.output
         output = self._output
 
+        self.objects = [GO(*data) for data in OBJECT_DATA]
+        self.objects.extend([
+            GameObject(key='BWW',
+                       name="window_state",
+                       location='bedroom',
+                       plural=False,
+                       movable=False,
+                       state='closed'),
+
+            GameObject(key='DOO',
+                       name="workroom door",
+                       location='workroom',
+                       plural=False,
+                       movable=False,
+                       state='locked'),
+
+            GameObject(key='DAY',
+                       name="game_day",
+                       location='',
+                       plural=False,
+                       movable=False,
+                       state='1'),
+
+            GameObject(key='MOV',
+                       name="game_move",
+                       location='',
+                       plural=False,
+                       movable=False,
+                       state='0'),
+
+            GameObject(key='LOC',
+                       name="game_location",
+                       location='',
+                       plural=False,
+                       movable=False,
+                       state='bed'),
+        ])
+
         kwargs = {'game': self, 'output': output}
 
         self._rooms = {
@@ -79,20 +118,61 @@ class GameState:
             "home": Home(kwargs),
         }
 
-        self.objects = [GO(*data) for data in OBJECT_DATA]
-        self._location = "bed"
+        self._loc_obj = self.get_obj("LOC")
+        self._day_obj = self.get_obj('DAY')
+        self._mov_obj = self.get_obj('MOV')
 
         self.sunsets = [0, 40, 25, 35]
-        self.day = 1
-        self.moves = 0
         self.moves_to_sunset = self.sunsets[self.day]
-
-        self.awake = False
-        self.game_over = False
 
         output.append('[CLEAR]')
         output.append(TEXTS["INTRO"])
         GameStorage().register(label='state', save=self.save, load=self.load)
+
+    def get_obj(self, key: str) -> GameObject | None:
+        """ ... """
+
+        for obj in self.objects:
+            if obj.key == key:
+                return obj
+
+        return None
+
+    @property
+    def day(self) -> int:
+        """ get the day of the game (starts at 1) """
+
+        return int(self._day_obj.state)
+
+    @day.setter
+    def day(self, value: int):
+        """ set the day of the game (starts at 1) """
+
+        self._day_obj.state = str(value)
+
+    @property
+    def moves(self):
+        """ get the current move of the game (starts at 1) """
+
+        return int(self._mov_obj.state)
+
+    @moves.setter
+    def moves(self, value: int):
+        """ set the current move of the game (starts at 0) """
+
+        self._mov_obj.state = str(value)
+
+    @property
+    def location(self):
+        """ get the current move of the game (starts at 1) """
+
+        return self._loc_obj.state
+
+    @location.setter
+    def location(self, value: int):
+        """ set the current location of the game (starts at 0) """
+
+        self._loc_obj.state = value
 
     @property
     def sunset(self) -> int:
