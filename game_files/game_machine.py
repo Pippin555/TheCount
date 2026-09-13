@@ -65,6 +65,17 @@ class StateMachine:
         if command == "":
             command = "look"
 
+        if move > game.moves_to_sunset + 1:
+            if not game.has('TOR', 'player', 'lit'):
+                output.append("It is dangerous to move in the dark")
+
+        if move > game.moves_to_sunset + 2:
+            if not game.has('TOR', 'player', 'lit'):
+                output.append("You are stuck in the dark, you lost the game")
+                game.location = 'lost'
+                game.moves = 0
+                return False
+
         parsed = Parser.parse(command.upper())
 
         if parsed is None:

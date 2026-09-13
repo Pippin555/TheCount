@@ -41,10 +41,13 @@ class Pit(Room):
 
                     case 'SHE':
                         if game.has('TOR', 'player', 'lit'):
-                            self.say('The sheet burned, you are now stuck')
+                            if not game.has('SHE', ''):
+                                game.place('SHE', '')
+                                game.place('END', '')
+                                self.say('The sheet burned, you are now stuck')
+                            else:
+                                self.say('There is no sheet anymore, you are now stuck')
                             self.say("\nTry to 'RESTART'")
-                            game.place('SHE', '')
-                            game.place('END', '')
                             return True
 
                         else:
@@ -58,7 +61,6 @@ class Pit(Room):
                             game.place('TOR', 'pit', '')
                             self.say('I found a TORCH!')
                             return True
-                    # case 'TOR':
 
         return False
 

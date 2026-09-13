@@ -24,10 +24,12 @@ class Bedroom(Room):
 
     @with_helper
     def handle_command(self,
-                       verb:str,
-                       noun: str,
+                       verb: str,
+                       noun: str | None,
                        callback: Callable):
         """ ... """
+
+        game = self._game
 
         match verb:
             case 'OPE':
@@ -56,18 +58,27 @@ class Bedroom(Room):
                         return True
 
                     case 'SHE':
-                        self.say('tie sheet to what')
+                        if game.has('SHE', 'player'):
+                            self.say('tie sheet to what')
+                        else:
+                            self.say('I do not have a sheet')
                         return True
 
             case "TO":
                 match noun:
-                    case '':
-                        self.say('tie sheet to what')
+                    case '' | None:
+                        if game.has('SHE', 'player'):
+                            self.say('tie sheet to what')
+                        else:
+                            self.say('I do not have a sheet')
                         return True
 
                     case 'BED':
-                        self.say('The sheet is now tied to the bed')
-                        self._game.place('SHE', 'bed', 'tied')
+                        if game.has('SHE', 'player'):
+                            self.say('The sheet is now tied to the bed')
+                            self._game.place('SHE', 'bed', 'tied')
+                        else:
+                            self.say('I do not have a sheet')
                         return True
 
                 return True
@@ -80,16 +91,24 @@ class Bedroom(Room):
 
                     case "SHE":
                         # player gets the sheet
-                        self._game.place('SHE', 'player')
-                        self.say('I untied the sheet')
+                        if game.has('SHE', 'bed', 'tied'):
+                            self.say('I untied the sheet')
+                            game.place('SHE', 'player')
+                        elif game.has('SHE', 'bedroom', ''):
+                            self.say('I got the sheet')
+                            game.place('SHE', 'player', '')
 
                         # let the end of the sheet vanish
                         self._game.place('END', '')
+                        self.say("You can use the sheet on both ends to continue\ntry 'HELP'")
                         return True
 
                     case 'END':
-                        self.say('taken the end of the sheet')
-                        self._game.place('END', 'player')
+                        if game.has('SHE', 'bedroom', 'tied'):
+                            self.say('taken the end of the sheet')
+                            self._game.place('END', 'player')
+                        else:
+                            self.say("I already have the sheet")
                         return True
 
         return False

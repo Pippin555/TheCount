@@ -28,12 +28,25 @@ class Bed(Room):
                        callback: Callable) -> bool:
         """ ... """
 
+        game = self._game
+
         match verb:
             case 'GET':
                 match noun:
                     case 'UP':
                         return callback(verb='enter', noun='bedroom')
 
+            case 'DRO':
+                match noun:
+                    case 'SHE':
+                        if game.has('SHE', 'player'):
+                            if game.has('TOR', 'player', 'lit'):
+                                self.say('The sheet burned, you are now stuck')
+                                self.say("\ntry 'RESTART' to play again")
+                            else:
+                                game.place('SHE', 'bed', '')
+                        else:
+                            self.say('I have no sheet')
         return False
 
     @property
