@@ -64,7 +64,7 @@ class Crypt(Room):
                     case 'CIG':
                         if game.has('CIG', 'player'):
                             if game.has('MAT', 'player'):
-                                game.place('CIG', 'player lit')
+                                game.place('CIG', 'player', 'lit')
                                 self.say('I lit a cigarette')
                                 return True
                             else:
@@ -77,7 +77,7 @@ class Crypt(Room):
             case "SMO":
                 match noun:
                     case 'CIG':
-                        if game.has('CIG', 'player lit'):
+                        if game.has('CIG', 'player', 'lit'):
                             if game.has('COF', ''):
                                 # reveal the coffin
                                 game.place("COF", 'crypt')
@@ -87,7 +87,7 @@ class Crypt(Room):
 
                             return True
 
-                        elif game.has('CIG', 'player') or game.has('CIG', ''):
+                        else:
                             self.say("I have no lit cigarette")
                             return True
 

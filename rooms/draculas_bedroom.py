@@ -40,13 +40,12 @@ class DraculasBedroom(Room):
                 match noun:
                     case 'POR':
                         if game.has('POR', 'hanging'):
-                            self._inventory.clear()
                             self.say("I removed Dracula's portrait")
                             game.place('POR', 'player')
-                            game.place('STA', self.name)
-                            self._inventory.add('Passage')
+                            game.place('STA', "Dracula's bedroom")
                             self.say("I found a tent stake")
                             self.say("I found a passage")
+                            self._inventory = {'Window', 'Passage'}
                             return True
 
             case 'ENT':
