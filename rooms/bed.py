@@ -43,10 +43,13 @@ class Bed(Room):
                             if game.has('TOR', 'player', 'lit'):
                                 self.say('The sheet burned, you are now stuck')
                                 self.say("\ntry 'RESTART' to play again")
+                                return True
                             else:
                                 game.place('SHE', 'bed', '')
+                                return True
                         else:
                             self.say('I have no sheet')
+                            return True
         return False
 
     @property

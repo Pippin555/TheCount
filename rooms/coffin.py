@@ -58,7 +58,7 @@ class Coffin(Room):
                                 game.has('MAL') and
                                 game.has('DRA', 'coffin')):
                             game.place('DRA', 'coffin', 'nailed')
-
+                            game.place('STA', 'coffin', 'stuck')
                             self.say(TEXTS['WIN'])
                             game.location = 'home'
                             return True

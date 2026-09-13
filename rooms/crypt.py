@@ -97,7 +97,7 @@ class Crypt(Room):
                         # when the coffin is revealed
                         if game.has('COF', 'crypt'):
                             if game.has('BOL', 'coffin', 'cut') or game.has('DRA', ''): # when the bolt was cut
-                                game.place('COF', 'crypt open')
+                                game.place('COF', 'crypt', 'open')
                                 self.say('The coffin is open')
                             else:
                                 self.say('The coffin is locked from inside')
@@ -113,11 +113,11 @@ class Crypt(Room):
                             self.say('There is no coffin')
                             return True
 
-                        if game.has('COF', self.name):
+                        if game.has('COF', 'crypt', ''):
                             self.say('The coffin is closed')
                             return True
 
-                        if game.has('COF', self.name + ' open'):
+                        if game.has('COF', 'crypt', 'open'):
                             return callback('enter', 'coffin')
 
         return False

@@ -65,16 +65,21 @@ class StateMachine:
         if command == "":
             command = "look"
 
-        if move > game.moves_to_sunset + 1:
-            if not game.has('TOR', 'player', 'lit'):
+        if move == game.moves_to_sunset + 1:
+            tor = game.object('TOR')
+            if not tor.state == 'lit':
                 output.append("It is dangerous to move in the dark")
 
-        if move > game.moves_to_sunset + 2:
-            if not game.has('TOR', 'player', 'lit'):
-                output.append("You are stuck in the dark, you lost the game")
-                game.location = 'lost'
-                game.moves = 0
-                return False
+        if move > game.moves_to_sunset + 5:
+            tor = game.object('TOR')
+            if tor.state.isdigit():
+                ext = int(tor.state)
+                _, move = game.clock()
+                if move > ext + 4:
+                    output.append("You are stuck in the dark, you lost the game")
+                    game.location = 'lost'
+                    game.moves = 0
+                    return False
 
         parsed = Parser.parse(command.upper())
 
@@ -163,8 +168,9 @@ class StateMachine:
                 match key:
                     case 'TOR':
                         noun = NOUNS.get(key, key)
-                        if game.has(noun=key, location='player lit'):
-                            game.place(noun=key, location='player')
+                        if game.has(noun=key, location='player', state='lit'):
+                            day, move = game.clock()
+                            game.place(noun=key, location='player', state=str(move))
                             output.append(f'I have extinguised the {noun}')
                             return True
                         elif game.has(noun=key, location='player'):
