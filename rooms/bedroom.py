@@ -104,7 +104,7 @@ class Bedroom(Room):
                         return True
 
                     case 'END':
-                        if game.has('SHE', 'bedroom', 'tied'):
+                        if game.has('SHE', 'bed', 'tied'):
                             self.say('taken the end of the sheet')
                             self._game.place('END', 'player')
                         else:
