@@ -112,8 +112,28 @@ class StateMachine:
                 room = game.current_room
                 name = room.name
                 if name == 'bed':
+                    if game.day == 3:
+                        self._output.append("This adventure must be solved in 3 days. I am sorry, you lost")
+                        self.location = 'home'
+                        return True
+
                     output.append('I went to sleep')
-                    game.next_day()
+
+                    day, _ = game.next_day()
+
+                    # make the coffin and Dracula invisible again
+                    game.place('COF', '')
+                    game.place('DRA', '')
+
+                    if day == 2:
+                        if game.has('VIA', 'player'):
+                            self._output.append("The vial was stolen!")
+                        game.place('VIA', '')
+
+                    if day == 3:
+                        if game.has('PAC', 'player'):
+                            self._output.append("The pack of cigarettes was stolen!")
+                        game.place('PAC', '')
 
                 else:
                     output.append(f"I should go to bed to sleep, I  am now here: {name}")

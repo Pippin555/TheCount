@@ -227,26 +227,15 @@ class GameState:
             return True
         return False
 
-    def next_day(self):
+    def next_day(self) -> tuple[int, int]:
         """ ... """
+
 
         self.day += 1
         self.moves = 0
         self.moves_to_sunset = self.sunsets[self.day]
 
-        # make the coffin and Dracula invisible again
-        self.place('COF', '')
-        self.place('DRA', '')
-
-        if self.day == 2:
-            if self.has('VIA', 'player'):
-                self._output.append("The vial was stolen!")
-            self.place('VIA', '')
-
-        if self.day == 3:
-            if self.has('PAC', 'player'):
-                self._output.append("The pack of cigarettes was stolen!")
-            self.place('PAC', '')
+        return (self.day, self.moves)
 
     def next_move(self) -> tuple[int, int]:
         """ ... """

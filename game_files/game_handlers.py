@@ -282,17 +282,26 @@ class GameHandler:
         aln('')
         aln(room.description)
 
+         # alt_dct = {itm.name: itm for (_, itm) in game.objects.items()}
+
+        alt_dct = {itm.name: itm for itm in game.objects}
+
         objs = room.inventory
         if objs:
             aln('I see:')
             for obj in objs:
-                aln(obj)
+                if obj in alt_dct:
+                    value = alt_dct[obj]
+                    state = value.state
+                    state = f'{state} ' if state else ''
+                    aln(f'{state}{value.name}: {value.location}')
+                else:
+                    aln(obj)
 
         # already listed, check the object name, does it have a capital first character?
         # for obj in game.objects:
         #     if obj.location == room.name:
-        #         state = f'{obj.state} ' if obj.state else ''
-        #         aln(f'{state}{obj.name} ({obj.location})')
+
 
         exits = room.exits
         if exits:
