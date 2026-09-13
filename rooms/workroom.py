@@ -144,6 +144,8 @@ class Workroom(Room):
                             self.say('You locked the door')
                             return True
 
+                        self.say(f'The door is {self.door_state}')
+                        return True
         return False
 
     @property
