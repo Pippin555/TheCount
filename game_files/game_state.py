@@ -12,6 +12,7 @@ from os.path import dirname
 from jsons import dumps
 from jsons import loads
 
+from rooms.gate import Gate
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -45,6 +46,7 @@ from rooms.oven import Oven
 from rooms.coffin import Coffin
 from rooms.lost import Lost
 from rooms.home import Home
+from rooms.gate import Gate
 
 
 class GameState:
@@ -118,6 +120,7 @@ class GameState:
             "passage": Passage(kwargs),
             "crypt": Crypt(kwargs),
             "coffin": Coffin(kwargs),
+            "gate": Gate(kwargs),
             "lost": Lost(kwargs),
             "home": Home(kwargs),
         }

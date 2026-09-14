@@ -70,5 +70,5 @@ class Courtyard(Room):
 
         return {
             "WES": "hall",
-            # "EAS": "gate",
+            "EAS": "gate",
         }

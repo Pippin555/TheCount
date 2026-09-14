@@ -213,6 +213,7 @@ class StateMachine:
 
                     case 'COU':
                         self.warp("courtyard")
+                        return True
 
                     case _:
                         noun = NOUNS.get(key, noun)
