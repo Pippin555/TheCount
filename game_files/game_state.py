@@ -12,7 +12,6 @@ from os.path import dirname
 from jsons import dumps
 from jsons import loads
 
-from rooms.gate import Gate
 from utils.string_builder import StringBuilder
 
 from data import GO

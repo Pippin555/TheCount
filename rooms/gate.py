@@ -28,14 +28,19 @@ class Gate(Room):
         """ ... """
 
         if not self._yelled:
-            self._output.append('Angry townspeople throw stones at me')
-            self._output.append('They yell that I was supposed to kill Dracula!')
+            self.say('Angry townspeople throw stones at me')
+            self.say('They yell that I was supposed to kill Dracula!')
+            self._yelled = True
+        else:
+            self.say('I see a rather large stone coming at me')
+            self.say('...')
+            self.say("I can't escape from it, it hits me on the head and I die.")
+            callback('enter', 'lost')
+
         return True
 
     @property
     def exits(self) -> dict:
         """ ... """
 
-        return {
-            "WES": "courtyard",
-        }
+        return {}

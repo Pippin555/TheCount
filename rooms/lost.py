@@ -16,7 +16,7 @@ class Lost(Room):
         """ ... """
 
         kwargs['name'] = 'lost'
-        kwargs['description'] = 'Use "RESTART" to play again'
+        kwargs['description'] = 'You lost the game!'
         kwargs['inventory'] = set()
         super().__init__(kwargs)
 

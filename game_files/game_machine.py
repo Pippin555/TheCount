@@ -38,9 +38,9 @@ class StateMachine:
         day, move = game.next_move()
 
         match day:
-            case 1:
+            case 1 | 2:
                 if move == game.moves_to_sunset + 3:
-                    if not game.has('GAR'):
+                    if not game.has('GAR', 'player'):
                         self._output.append("A bat settled on my shoulder and bit me in the neck")
                         self._output.append("I have turned into a Vampire")
                         self._handler.enter('lost')
@@ -48,7 +48,6 @@ class StateMachine:
                     else:
                         self._output.append("... A bat flew by")
                         self._output.append("It smelled somthing strange and it laughed at me")
-
             case 3:
                 if move == game.moves_to_sunset:
                     game.place('DRA', 'coffin')
