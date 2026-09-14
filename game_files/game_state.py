@@ -2,9 +2,16 @@
 
 from collections import deque
 
-from jsons import dumps
+from os import makedirs
 
-from rooms.lost import Lost
+from os.path import abspath
+from os.path import join
+from os.path import isfile
+from os.path import dirname
+
+from jsons import dumps
+from jsons import loads
+
 from utils.string_builder import StringBuilder
 
 from data import GO
@@ -38,9 +45,6 @@ from rooms.oven import Oven
 from rooms.coffin import Coffin
 from rooms.lost import Lost
 from rooms.home import Home
-
-
-from game_files.game_storage import GameStorage
 
 
 class GameState:
@@ -127,7 +131,6 @@ class GameState:
 
         output.append('[CLEAR]')
         output.append(TEXTS["INTRO"])
-        GameStorage().register(label='state', save=self.save, load=self.load)
 
     def get_obj(self, key: str) -> GameObject | None:
         """ ... """
@@ -169,7 +172,7 @@ class GameState:
         return self._loc_obj.state
 
     @location.setter
-    def location(self, value: int):
+    def location(self, value: str):
         """ set the current location of the game (starts at 0) """
 
         self._loc_obj.state = value
@@ -182,23 +185,6 @@ class GameState:
             return int(x > 0) - int(x < 0)
 
         return sign(self.moves - self.moves_to_sunset)
-
-    def save(self):
-        """ ... """
-
-        local = {'inventory' : self.objects }
-
-        GameStorage().store_value(section='state',
-                                  name='local',
-                                  value = dumps(local))
-
-    def load(self):
-        """ ... """
-
-        local = GameStorage().load_value(section='state',
-                                         name='local',
-                                         default=dumps({}))
-        ...
 
     def inventory(self):
         """ ... """
@@ -245,7 +231,7 @@ class GameState:
         for obj in self.objects:
             if obj.key == noun:
                 found = True
-                obj.location = self._location
+                obj.location = self.location
 
         if not found:
             self._output.append(f"I don't have {noun}")
@@ -316,7 +302,6 @@ class GameState:
     def next_day(self) -> tuple[int, int]:
         """ ... """
 
-
         self.day += 1
         self.moves = 0
         self.moves_to_sunset = self.sunsets[self.day]
@@ -360,22 +345,10 @@ class GameState:
         return self._rooms
 
     @property
-    def location(self) -> str:
-        """ ... """
-
-        return self._location
-
-    @location.setter
-    def location(self, value: str) -> None:
-        """ ... """
-
-        self._location = value
-
-    @property
     def current_room(self):
         """ ... """
 
-        location = self._location
+        location = self.location
         result =  self._rooms.get(location, None)
         if result is None:
             output = self._output
@@ -392,4 +365,33 @@ class GameState:
     def exited(self) -> None:
         """ ... """
 
-        self._location = 'exited'
+        self.location = 'exited'
+
+    def save(self, number: int):
+        """ ... """
+
+        value = dumps(self.objects)
+        fname = join(abspath("."), "storage", f"save_{number:0>2}.json")
+        makedirs(dirname(fname), exist_ok=True)
+
+        with open(file=fname, mode='wt', encoding='utf-8') as stream:
+            stream.write(value)
+
+        self._output.append(f'Saved {fname}')
+
+    def load(self, number: int):
+        """ ... """
+
+        fname = join(abspath("."), "storage", f"save_{number:0>2}.json")
+        makedirs(dirname(fname), exist_ok=True)
+
+        if isfile(fname):
+            with open(file=fname, mode='rt', encoding='utf-8') as stream:
+                work = loads(stream.read())
+
+                for item in work:
+                    target = self.get_obj(item['key'])
+                    target.location = item['location']
+                    target.state = item['state']
+
+        self._output.append(f'Loaded {fname}')

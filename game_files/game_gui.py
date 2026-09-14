@@ -170,7 +170,7 @@ class Gui:
         full = join(abspath("."), "auto")
         output.append(full)
         makedirs(full, exist_ok=True)
-        file = join(full, f'script_{noun}.txt')
+        file = join(full, f'script_{int(noun):0>2}.txt')
         if not isfile(file):
             output.append(f"I can't find {file}")
             return False

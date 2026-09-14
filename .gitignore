@@ -1,6 +1,10 @@
 # Default ignored files
-.idea/
-build/
-dist/
-documents/
+/.idea/
+/build/
+/dist/
+/documents/
 /auto/log.txt
+/storage/
+/auto/script_01.txt
+/auto/script_02.txt
+/auto/script_03.txt

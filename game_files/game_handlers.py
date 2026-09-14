@@ -10,7 +10,6 @@ from utils.string_builder import StringBuilder
 from utils.command_router import CommandRouter
 
 from game_files.game_state import GameState
-from game_files.game_storage import GameStorage
 
 
 class GameHandler:
@@ -238,12 +237,12 @@ class GameHandler:
     def save(self, number: int):
         """ ... """
 
-        GameStorage().save(number=number)
+        self._game.save(number=number)
 
     def load(self, number: int):
         """ ... """
 
-        GameStorage().load(number=number)
+        self._game.load(number=number)
 
     def handle_callback(self, verb: str, noun: str) -> bool:
         """ ... """
@@ -263,7 +262,7 @@ class GameHandler:
             output.append("I can't go in that direction.")
             return False
 
-        game._location = location
+        game.location = location
         self.where()
         return True
 
