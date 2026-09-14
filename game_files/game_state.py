@@ -245,9 +245,6 @@ class GameState:
             location='player',
             state: str | None = None):
         """ ... """
-        #
-        # if ' ' in location:
-        #     raise ValueError('has: location cannot contain space')
 
         for obj in self.objects:
             if (obj.key == noun and
