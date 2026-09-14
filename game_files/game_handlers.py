@@ -137,7 +137,7 @@ class GameHandler:
 
                 match key:
                     case 'CIG':
-                        if game.has('CIG', 'player lit'):
+                        if game.has('CIG', 'player', 'lit'):
                             # to be able to drop it
                             game.place("CIG", 'player')
                             return True
@@ -206,7 +206,7 @@ class GameHandler:
                     self.save(number=int(noun))
                 else:
                     output.append("Please specify a number 1..10 for 'SAVE'")
-                    output.append("not yet implemented")
+
                 return True
 
             case "LOA":
@@ -214,7 +214,7 @@ class GameHandler:
                     self.load(number=int(noun))
                 else:
                     output.append("Please specify a number 1..10 for 'LOAD'")
-                    output.append("not yet implemented")
+
                 return True
 
             case "WHE":

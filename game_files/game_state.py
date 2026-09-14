@@ -379,6 +379,8 @@ class GameState:
 
         self._output.append(f'Saved {fname}')
 
+        return True
+
     def load(self, number: int):
         """ ... """
 
@@ -391,7 +393,14 @@ class GameState:
 
                 for item in work:
                     target = self.get_obj(item['key'])
-                    target.location = item['location']
-                    target.state = item['state']
+                    if target is not None:
+                        target.location = item['location']
+                        target.state = item['state']
 
-        self._output.append(f'Loaded {fname}')
+            self.moves_to_sunset = self.sunsets[self.day]
+            self._output.append(f'Loaded {fname}')
+            return True
+
+        else:
+            self._output.append(f"I can't find {fname}")
+            return False
